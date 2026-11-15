@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="theme-color" content="#F2EADB">
+<title>Nightlex — 7-day test</title>
+<!-- Сторінка для тестувальників (14.11.2026; з 15.11 — англійською, українська — перемикачем або ?lang=uk): інструкція, план на 7 днів, анкета. Нічого нікуди не надсилає:
+     відповіді зберігаються лише в цьому браузері (localStorage) і копіюються/надсилаються самим тестувальником. -->
+<style>
+@font-face{font-family:'Golos Text';font-weight:400 800;font-display:swap;src:url(fonts/golos-text-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Golos Text';font-weight:400 800;font-display:swap;src:url(fonts/golos-text-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Unbounded';font-weight:600 800;font-display:swap;src:url(fonts/unbounded-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-weight:600 800;font-display:swap;src:url(fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* світла «пісочна» тема — як на сторінці перевірки check.html (прохання користувача) */
+:root{color-scheme:light;--bg:#F2EADB;--card:#FFFBF3;--line:#E2D4BB;--ink:#2B241A;--mut:#76695A;--acc:#D9B66C;--acc-ink:#2B241A;--acc-t:#7E5B12}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Golos Text',-apple-system,system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:28px 16px 80px}
+h1{font:800 30px/1.15 Unbounded,sans-serif;margin:6px 0 10px}
+h2{font:700 19px/1.25 Unbounded,sans-serif;margin:0 0 10px}
+.kick{color:var(--mut);font-size:14px}
+.lead{font-size:17px}
+section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}
+.note{border-left:3px solid var(--acc);padding:2px 0 2px 12px;color:var(--mut);font-size:15px}
+a{color:var(--acc-t)}
+.cta{display:block;text-align:center;background:var(--acc);color:var(--acc-ink);text-decoration:none;font-weight:700;border-radius:16px;padding:15px;margin:14px 0 4px;font-size:17px}
+ol,ul{padding-left:22px;margin:8px 0}li{margin:5px 0}
+.day{display:grid;grid-template-columns:44px 1fr;gap:4px 10px;padding:10px 0;border-top:1px solid var(--line)}
+.day:first-of-type{border-top:0}.day b.n{font:700 20px Unbounded,sans-serif;color:var(--acc-t)}.day small{color:var(--mut);display:block}
+label.q{display:block;font-weight:600;margin:16px 0 6px}
+textarea,input[type=text]{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit;min-height:44px}
+textarea{min-height:76px;resize:vertical}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale.wide{grid-template-columns:repeat(6,1fr)}
+.scale label{text-align:center}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale span{display:block;border:1px solid var(--line);border-radius:10px;padding:9px 0;cursor:pointer;min-width:34px}
+.scale input:checked+span{background:var(--acc);color:var(--acc-ink);border-color:var(--acc);font-weight:700}
+.scale input:focus-visible+span{outline:2px solid var(--acc);outline-offset:2px}
+.ends{display:flex;justify-content:space-between;color:var(--mut);font-size:13px;margin-top:4px}
+button.send{width:100%;border:0;background:var(--acc);color:var(--acc-ink);font:700 17px 'Golos Text',sans-serif;border-radius:16px;padding:15px;margin-top:18px;cursor:pointer}
+#ok{color:var(--mut);font-size:14px;text-align:center;min-height:20px;margin-top:8px}
+.langs{display:flex;gap:6px;justify-content:flex-end;margin-bottom:6px}.langs button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font:600 14px 'Golos Text',sans-serif;cursor:pointer}.langs button.on{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+/* фон — градієнт від темнішого піску вгорі до світлішого внизу (нерухомий шар позаду вмісту) */
+html{background:var(--bg)}body{background:transparent!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#E3D3B6 0%,var(--bg) 42%,#FCF8F1 100%)}
+</style>
+</head>
+<body>
+<main>
+<div class="langs" role="group" aria-label="Language"><button type="button" data-l="en">English</button><button type="button" data-l="uk">Українською</button></div>
+<div class="kick" data-uk="Nightlex · для тестувальників">Nightlex · for testers</div>
+<h1 data-uk="Тест на 7 днів">7-day test</h1>
+<p class="lead" data-uk="Дякуємо, що допомагаєш! Протягом 7 днів займайся в Nightlex 10–20 хвилин на день, а потім заповни анкету внизу цієї сторінки (5 хвилин).">Thank you for helping! For 7 days, use Nightlex for 10–20 minutes a day, then fill in the short form at the bottom of this page (5 minutes).</p>
+<p data-uk="Nightlex — застосунок для українців, які вчать американську англійську або данську: слова з повторенням у потрібний момент, граматика, читання, діалоги й слухання. Чесна критика нам корисніша за похвалу.">Nightlex is an app for Ukrainians learning American English or Danish: words repeated at the right moment, grammar, reading, dialogues and listening. The app itself is in Ukrainian — the button names below are given in Ukrainian with a translation. Honest criticism helps us more than praise.</p>
+<p class="note" data-uk="Слова, речення й переклади створила модель штучного інтелекту, носії мови їх ще не перевіряли. Помітиш помилку в мові — це саме те, що ми шукаємо.">Words, sentences and translations were written by an AI and have not been checked by native speakers yet. If you spot a language mistake — that is exactly what we are looking for.</p>
+<a class="cta" href="./" data-uk="Відкрити Nightlex">Open Nightlex</a>
+
+<section>
+<h2 data-uk="Як почати">How to start</h2>
+<ol>
+<li data-uk="Відкрий &lt;a href=&quot;./&quot;&gt;tol1kus.github.io/nightlex&lt;/a&gt; на телефоні — у Safari (iPhone) або Chrome (Android).">Open <a href="./">tol1kus.github.io/nightlex</a> on your phone — in Safari (iPhone) or Chrome (Android).</li>
+<li data-uk="Додай на екран «Додому», щоб застосунок відкривався як звичайний і працював без інтернету:&lt;br&gt;iPhone — «Поділитися» → «На екран Додому»; Android — меню ⋮ → «Додати на головний екран».">Add it to your Home Screen so it opens like a normal app and works offline:<br>iPhone — Share → “Add to Home Screen”; Android — menu ⋮ → “Add to Home screen”.</li>
+<li data-uk="Обери мову: англійська (US) або данська.">Choose the language: English (US) or Danish.</li>
+<li data-uk="Трохи знаєш мову — пройди тест рівня (10–12 хв). Зовсім з нуля — натисни «Я зовсім новачок».">If you know the language a little — take the level test (10–12 min). Starting from zero — tap «Я зовсім новачок» (“I’m a complete beginner”).</li>
+<li data-uk="Обери мету і починай «День 1». Увімкни звук — слова озвучуються.">Choose a goal and start “Day 1”. Turn the sound on — words are read aloud.</li>
+</ol>
+</section>
+
+<section>
+<h2 data-uk="План на 7 днів">The 7-day plan</h2>
+<p data-uk="Щодня — план дня на вкладці «Сьогодні» (кнопка «Почати»), а потім одне додаткове завдання. Пропустив(ла) день — нічого страшного, просто продовжуй.">Every day — the daily plan on the «Сьогодні» (“Today”) tab (button «Почати», “Start”), then one extra task. Missed a day — no problem, just continue.</p>
+<div class="day"><b class="n">1</b><div data-uk="Лише план дня&lt;small&gt;Чи зрозуміло, що робити з першої хвилини? Скільки часу це забрало?&lt;/small&gt;">Only the daily plan<small>Is it clear what to do from the first minute? How long did it take?</small></div></div>
+<div class="day"><b class="n">2</b><div data-uk="«Словник»: знайди слово і додай своє&lt;small&gt;Чи легко додати слово? Чи правильний переклад?&lt;/small&gt;">«Словник» (“Dictionary”): find a word and add your own<small>Is it easy to add a word? Is the translation right?</small></div></div>
+<div class="day"><b class="n">3</b><div data-uk="«Шлях» → «Граматика»: одне правило&lt;small&gt;Чи зрозуміле пояснення? Чи вистачає прикладів?&lt;/small&gt;">«Шлях» → «Граматика» (“Path” → “Grammar”): one rule<small>Is the explanation clear? Are there enough examples?</small></div></div>
+<div class="day"><b class="n">4</b><div data-uk="«Читання»: один текст свого рівня&lt;small&gt;Чи підходить складність? Чи допомагає дотик до слова?&lt;/small&gt;">«Читання» (“Reading”): one text at your level<small>Is the difficulty right? Does tapping a word help?</small></div></div>
+<div class="day"><b class="n">5</b><div data-uk="«Розмова» → «Діалоги»: один діалог&lt;small&gt;Чи схоже на справжнє життя? Чи корисні пояснення помилок?&lt;/small&gt;">«Розмова» → «Діалоги» (“Talk” → “Dialogues”): one dialogue<small>Does it feel like real life? Are the mistake explanations useful?</small></div></div>
+<div class="day"><b class="n">6</b><div data-uk="«Я» → «Прогрес»; спробуй світлу тему (сонце вгорі головної)&lt;small&gt;Чи видно, що ти чогось навчився(лась)?&lt;/small&gt;">«Я» → «Прогрес» (“Me” → “Progress”); try the light theme (sun icon at the top of the home screen)<small>Can you see that you have learned something?</small></div></div>
+<div class="day"><b class="n">7</b><div data-uk="План дня і анкета нижче&lt;small&gt;Чи хочеться займатися далі?&lt;/small&gt;">The daily plan and the form below<small>Do you want to keep going?</small></div></div>
+</section>
+
+<section>
+<h2 data-uk="Якщо щось не так">If something goes wrong</h2>
+<p data-uk="Зроби знімок екрана і надішли тому, хто дав тобі посилання, з одним реченням: що ти робив(ла) і що пішло не так. Особливо цікаві помилки в мові, місця, де незрозуміло, що натиснути, неправильно зараховані відповіді й екрани, що зависли чи не вмістилися.">Take a screenshot and send it to the person who gave you the link, with one sentence: what you were doing and what went wrong. We are especially interested in language mistakes, places where it is unclear what to tap, answers marked wrongly, and screens that froze or did not fit.</p>
+</section>
+
+<section id="survey">
+<h2 data-uk="Анкета після 7 днів">Form after 7 days</h2>
+<p class="kick" data-uk="Відповіді зберігаються лише в цьому браузері, доки ти їх не надішлеш.">Your answers stay in this browser until you send them.</p>
+<label class="q" for="q1" data-uk="1. Яку мову вчив(ла), з якого рівня почав(ла), скільки днів із 7 займався(лась)?">1. Which language did you learn, at what level did you start, and how many of the 7 days did you practise?</label>
+<input type="text" id="q1" data-q="1. Мова, рівень, днів із 7">
+<label class="q" data-uk="2. Наскільки зрозуміло було, що робити кожного дня?">2. How clear was it what to do each day?</label>
+<div class="scale" data-name="q2" data-q="2. Зрозумілість (1–5)" data-from="1" data-to="5"></div><div class="ends"><span data-uk="зовсім незрозуміло">not clear at all</span><span data-uk="дуже зрозуміло">very clear</span></div>
+<label class="q" for="q3" data-uk="3. Де ти заплутався(лась) або застряг(ла) хоча б раз? Що сталося?">3. Where did you get confused or stuck at least once? What happened?</label>
+<textarea id="q3" data-q="3. Де заплутався(лась)"></textarea>
+<label class="q" for="q4" data-uk="4. Що сподобалося найбільше? А що було нудним, задовгим або зайвим?">4. What did you like most? And what was boring, too long or unnecessary?</label>
+<textarea id="q4" data-q="4. Сподобалось / нудно"></textarea>
+<label class="q" for="q5" data-uk="5. Чи помітив(ла) помилки в мові або в перекладах? Які?">5. Did you notice mistakes in the language or in the translations? Which ones?</label>
+<textarea id="q5" data-q="5. Помилки в мові"></textarea>
+<label class="q" data-uk="6. Наскільки ймовірно, що ти продовжиш займатися ще місяць?">6. How likely are you to keep practising for another month?</label>
+<div class="scale" data-name="q6" data-q="6. Продовжу ще місяць (0–10)" data-from="0" data-to="10"></div><div class="ends"><span data-uk="точно ні">definitely not</span><span data-uk="точно так">definitely yes</span></div>
+<label class="q" for="q6w" data-uk="Чому саме стільки?">Why exactly that number?</label>
+<textarea id="q6w" data-q="6. Чому"></textarea>
+<label class="q" for="q7" data-uk="7. Якби ти міг(могла) змінити одну річ у застосунку — що це було б?">7. If you could change one thing in the app — what would it be?</label>
+<textarea id="q7" data-q="7. Одна зміна"></textarea>
+<label class="q" for="q8" data-uk="Додатково: телефон, інші застосунки для мов (Duolingo тощо) — чим Nightlex кращий чи гірший?">Extra: your phone, other language apps (Duolingo etc.) — how is Nightlex better or worse?</label>
+<textarea id="q8" data-q="8. Телефон і порівняння"></textarea>
+<button class="send" id="send" type="button" data-uk="Надіслати відповіді">Send answers</button>
+<div id="ok" role="status"></div>
+</section>
+
+<section>
+<h2 data-uk="Твої дані">Your data</h2>
+<p data-uk="Увесь прогрес зберігається лише на твоєму телефоні: без реєстрації, реклами й аналітики. Ми не бачимо твоїх відповідей — лише те, що ти сам(а) надішлеш. Копія прогресу і видалення — «Налаштування» → «Дані» → «Приватність».">All progress is stored only on your phone: no sign-up, no ads, no analytics. We don’t see your answers — only what you send yourself. A copy of your progress and deleting it: «Налаштування» → «Дані» → «Приватність» (“Settings” → “Data” → “Privacy”).</p>
+<p data-uk="Дякуємо за час і чесність!">Thank you for your time and honesty!</p>
+</section>
+</main>
+<script>
+(function(){
+  const KEY='nightlex-test-survey';let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  const store=()=>{try{const o={};document.querySelectorAll('[data-q]').forEach(el=>{o[el.id||el.dataset.name]=val(el)});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}};
+  document.querySelectorAll('.scale').forEach(sc=>{const n=sc.dataset.name;if(+sc.dataset.to-+sc.dataset.from>5)sc.classList.add('wide');for(let i=+sc.dataset.from;i<=+sc.dataset.to;i++){
+    const l=document.createElement('label');const r=document.createElement('input');r.type='radio';r.name=n;r.value=i;r.setAttribute('aria-label',String(i));if(String(saved[n])===String(i))r.checked=true;
+    const s=document.createElement('span');s.textContent=i;l.append(r,s);sc.append(l)}});
+  document.querySelectorAll('input[type=text],textarea').forEach(el=>{if(saved[el.id])el.value=saved[el.id]});
+  function val(el){if(el.classList.contains('scale')){const c=el.querySelector('input:checked');return c?c.value:''}return el.value.trim()}
+  document.addEventListener('input',store);document.addEventListener('change',store);
+  // мова сторінки: англійська типово (тестувальники — данці, італійці, українці), ?lang=uk або збережений вибір — українська
+  let LANG='en';try{const q=new URLSearchParams(location.search).get('lang');LANG=q==='uk'||q==='en'?q:(localStorage.getItem(KEY+'-lang')||'en')}catch(e){}
+  const MSG={en:{sent:'Thank you! Your answers have been sent.',copied:'Answers copied — paste them into a message to the person who gave you the link.',copied2:'Answers copied — paste them into a message.',fail:'Could not copy — select the answers manually.',title:'Nightlex — 7-day form'},
+    uk:{sent:'Дякуємо! Відповіді надіслано.',copied:'Відповіді скопійовано — встав їх у повідомлення тому, хто дав посилання.',copied2:'Відповіді скопійовано — встав їх у повідомлення.',fail:'Не вдалося скопіювати — виділи відповіді вручну.',title:'Nightlex — анкета'}};
+  document.querySelectorAll('[data-uk]').forEach(el=>{el.dataset.en=el.innerHTML});
+  function setLang(l){LANG=l;document.documentElement.lang=l;document.querySelectorAll('[data-uk]').forEach(el=>{el.innerHTML=l==='uk'?el.dataset.uk:el.dataset.en});
+    document.querySelectorAll('.langs button').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);b.setAttribute('aria-pressed',String(b.dataset.l===l))});
+    document.title=l==='uk'?'Nightlex — тест на 7 днів':'Nightlex — 7-day test';try{localStorage.setItem(KEY+'-lang',l)}catch(e){}}
+  document.querySelectorAll('.langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));setLang(LANG);
+  document.getElementById('send').addEventListener('click',async()=>{
+    const M=MSG[LANG];const lines=['Nightlex — анкета після 7 днів ('+(LANG==='uk'?'українською':'англійською')+')',''];document.querySelectorAll('[data-q]').forEach(el=>{lines.push(el.dataset.q+': '+(val(el)||'—'))});
+    const text=lines.join('\n'),ok=document.getElementById('ok');
+    try{if(navigator.share){await navigator.share({title:M.title,text});ok.textContent=M.sent;return}}catch(e){if(e&&e.name==='AbortError')return}
+    try{await navigator.clipboard.writeText(text);ok.textContent=M.copied}
+    catch(e){const t=document.createElement('textarea');t.value=text;document.body.append(t);t.select();try{document.execCommand('copy');ok.textContent=M.copied2}catch(x){ok.textContent=M.fail}t.remove()}
+  });
+})();
+</script>
+</body>
+</html>

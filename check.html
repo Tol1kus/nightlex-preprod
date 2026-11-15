@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="theme-color" content="#F2EADB">
+<meta name="robots" content="noindex">
+<title>Nightlex — Sprogtjek</title>
+<!-- Сторінка перевірки для носіїв мови (15.11.2026). Носій не вчиться, а перевіряє: «Korrekt / Unaturligt / Ret».
+     Матеріал — check/{da|en}_{LV}.json (tools/review_export.js). Відповіді зберігаються лише в цьому браузері (localStorage)
+     і надсилаються самим носієм файлом / через «Поділитися» / копіюванням. Два носії на елемент — зводить tools/review_merge.py. -->
+<style>
+@font-face{font-family:'Golos Text';font-weight:400 800;font-display:swap;src:url(fonts/golos-text-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Golos Text';font-weight:400 800;font-display:swap;src:url(fonts/golos-text-latin-ext.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Golos Text';font-weight:400 800;font-display:swap;src:url(fonts/golos-text-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Unbounded';font-weight:600 800;font-display:swap;src:url(fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* світла «пісочна» тема (прохання користувача): теплий бежевий фон, картки кольору вершків, кнопка — пісок */
+:root{color-scheme:light;--bg:#F2EADB;--card:#FFFBF3;--card2:#F6EEDF;--line:#E2D4BB;--ink:#2B241A;--mut:#76695A;--acc:#D9B66C;--acc-ink:#2B241A;--ok:#2F7A33;--bad:#B4362F;--fix:#94600A;--blue:#3E569E}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.5 'Golos Text',-apple-system,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 110px);min-height:100dvh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit}
+h1{font:800 28px/1.15 Unbounded,sans-serif;margin:8px 0 8px}
+.mut{color:var(--mut)}.sm{font-size:14px}
+.sec{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:22px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{all:unset;cursor:pointer;padding:9px 13px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:700;display:inline-flex;gap:6px;align-items:baseline}
+.chip small{font-weight:600;color:var(--mut)}
+.chip.on{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}.chip.on small{color:inherit;opacity:.75}
+.chip:focus-visible,.btn:focus-visible,.ch:focus-visible,.tag:focus-visible,.ic:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+input.t,textarea.t{width:100%;font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+textarea.t{min-height:64px;resize:vertical}
+input.t:focus,textarea.t:focus{outline:none;border-color:var(--acc)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 18px;border-radius:18px;font-weight:800;font-size:17px;background:var(--acc);color:var(--acc-ink);width:100%;box-shadow:0 6px 16px -8px rgba(120,90,30,.45)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+.dock{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(env(safe-area-inset-bottom) + 14px);background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.dock .in{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px}
+.lv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lvb{all:unset;cursor:pointer;box-sizing:border-box;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px}
+.lvb b{display:block;font:800 18px Unbounded,sans-serif}.lvb small{color:var(--mut);font-size:12px}
+.lvb.on{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.bar{height:5px;border-radius:5px;background:var(--line);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--acc)}
+/* екран перевірки */
+.top{display:flex;align-items:center;gap:12px}
+.ic{all:unset;cursor:pointer;width:44px;height:44px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:20px;height:20px}
+.prog{flex:1;min-width:0}.prog .h{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);font-weight:700}
+.q{margin:18px 0 8px;color:var(--mut)}
+.item{display:flex;gap:14px;align-items:flex-start}
+.pic{width:76px;height:76px;flex:none;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.pic img{width:62px;height:62px;aspect-ratio:1/1}
+.lab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.x{font:800 23px/1.3 'Golos Text',sans-serif;margin:4px 0 0;word-break:break-word}
+.x mark{background:color-mix(in srgb,var(--bad) 25%,transparent);color:inherit;border-radius:6px;padding:0 3px}
+.x.hl mark{background:color-mix(in srgb,var(--acc) 25%,transparent)}
+.gl{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:14px;color:var(--mut)}
+.gl b{color:var(--ink);font-weight:600}
+.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.ch{all:unset;cursor:pointer;box-sizing:border-box;min-height:64px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:800;font-size:15px}
+.ch svg{width:20px;height:20px}
+.ch.ok{color:var(--ok)}.ch.bad{color:var(--bad)}.ch.fix{color:var(--fix)}
+.ch.on{border-color:currentColor;background:color-mix(in srgb,currentColor 12%,var(--card))}
+.det{margin-top:12px;border-color:color-mix(in srgb,var(--fix) 55%,var(--line))}
+.det label{display:block;font-size:13px;font-weight:800;color:var(--fix);margin:0 0 6px}
+.det label.c{color:var(--mut);margin-top:12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{all:unset;cursor:pointer;padding:6px 11px;border-radius:999px;background:var(--card2);font-size:13px;font-weight:700}
+.tag.on{background:color-mix(in srgb,var(--fix) 30%,var(--card2));color:var(--fix)}
+.links{display:flex;justify-content:space-between;margin-top:14px;font-size:14px}
+.lk{all:unset;cursor:pointer;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
+.note{font-size:13px;color:var(--mut);text-align:center}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 16px;border-radius:14px;font-weight:700;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+.stat{display:flex;gap:8px;margin:10px 0}.stat div{flex:1;background:var(--card2);border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font:800 20px Unbounded,sans-serif}.stat small{font-size:12px;color:var(--mut)}
+.center{margin:auto 0}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+/* фон — градієнт від темнішого піску вгорі до світлішого внизу (нерухомий шар позаду вмісту) */
+html{background:var(--bg)}body{background:transparent!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#E3D3B6 0%,var(--bg) 42%,#FCF8F1 100%)}
+</style>
+</head>
+<body>
+<main id="m"></main>
+<div class="dock" id="dock" hidden><div class="in" id="dockIn"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const UI={
+ da:{title:'Sprogtjek',intro:'Tak, fordi du hjælper! Du skal ikke lære noget — bare sige, om dansken lyder rigtigt. Alt er skrevet af en AI og er endnu ikke tjekket af en dansker.',
+  name:'Dit navn',namePh:'fx Mette',level:'Niveau',kind:'Hvad vil du tjekke?',start:'Start',cont:'Fortsæt',send:'Send dine svar',
+  q:'Lyder det her som naturligt dansk?',ok:'Korrekt',bad:'Unaturligt',fix:'Ret',yours:'Din version',comment:'Kommentar (valgfri)',why:'Hvad er galt? (valgfri)',
+  save:'Gem og næste',skip:'Spring over',back:'Forrige',gloss:'Engelsk',done:'tjekket',of:'af',
+  k:{all:'Alle',w:'Ord',s:'Sætninger',d:'Dialoger',t:'Tekster',g:'Grammatik'},kl:{w:'Ord',s:'Sætning',d:'Dialog',t:'Tekst',g:'Grammatik'},word:'ord',
+  tags:['Grammatik','Ordvalg','Stavning','Udtale','Oversættelse'],
+  sendT:'Send dine svar',sendI:'Svarene ligger kun på denne enhed. Send filen til den, der bad dig om hjælp.',file:'Hent fil',share:'Del',copy:'Kopiér',close:'Luk',
+  copied:'Kopieret',saved:'Gemt',empty:'Alt på dette niveau er tjekket — tak!',nothing:'Du har ikke tjekket noget endnu.',needName:'Skriv dit navn først',
+  two:'Hver linje tjekkes af to personer.',speak:'Hør',lang:'Sprog',loading:'Henter…'},
+ en:{title:'Language check',intro:'Thanks for helping! You don\'t need to learn anything — just tell us whether the English sounds right (American English). Everything was written by an AI and has not been checked by a native speaker yet.',
+  name:'Your name',namePh:'e.g. Mike',level:'Level',kind:'What do you want to check?',start:'Start',cont:'Continue',send:'Send your answers',
+  q:'Does this sound natural in American English?',ok:'Correct',bad:'Unnatural',fix:'Fix',yours:'Your version',comment:'Comment (optional)',why:'What\'s wrong? (optional)',
+  save:'Save & next',skip:'Skip',back:'Previous',gloss:'',done:'checked',of:'of',
+  k:{all:'All',w:'Words',s:'Sentences',d:'Dialogues',t:'Texts',g:'Grammar'},kl:{w:'Word',s:'Sentence',d:'Dialogue',t:'Text',g:'Grammar'},word:'word',
+  tags:['Grammar','Word choice','Spelling','Pronunciation','Not US English'],
+  sendT:'Send your answers',sendI:'Your answers are stored on this device only. Send the file to the person who asked you to help.',file:'Download file',share:'Share',copy:'Copy',close:'Close',
+  copied:'Copied',saved:'Saved',empty:'Everything on this level is checked — thank you!',nothing:'You haven\'t checked anything yet.',needName:'Please enter your name first',
+  two:'Every line is checked by two people.',speak:'Listen',lang:'Language',loading:'Loading…'}};
+const LVS=['A1','A2','B1','B2','C1','C2'],KEY='nightlex-check-v1';
+const IC={x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+ fix:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>',
+ spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16.5 9a4 4 0 0 1 0 6"/></svg>',
+ arr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'};
+let ST=load(),IDX=null,ITEMS=null,CUR=null,PICK=null,HIST=[];
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.res)return s}catch(e){}return {lang:'da',name:'',lv:'A1',kind:'all',res:{da:{},en:{}}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
+const T=()=>UI[ST.lang],$=id=>document.getElementById(id);
+function el(tag,attrs,...kids){const e=document.createElement(tag);for(const k in attrs||{}){const v=attrs[k];if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(k,v===true?'':v)}
+  kids.flat().forEach(c=>{if(c!=null)e.append(c.nodeType?c:document.createTextNode(String(c)))});return e}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),1600)}
+function res(){return ST.res[ST.lang]||(ST.res[ST.lang]={})}
+async function getIdx(){if(IDX)return IDX;try{IDX=await (await fetch('check/index.json',{cache:'no-cache'})).json()}catch(e){IDX={}}return IDX}
+async function getItems(lang,lv){const r=await fetch(`check/${lang}_${lv}.json`);if(!r.ok)throw new Error(r.status);return r.json()}
+function setDock(nodes){const d=$('dock'),i=$('dockIn');i.replaceChildren(...(nodes||[]));d.hidden=!nodes||!nodes.length}
+
+/* ---------- старт: мова, ім'я, рівень, що перевіряти ---------- */
+async function startScreen(){CUR=null;HIST=[];document.documentElement.lang=ST.lang;const t=T(),m=$('m'),idx=await getIdx(),R=res();
+  const cnt=lv=>((idx[ST.lang]||{}).byLevel||{})[lv]||{};
+  const doneLv=lv=>Object.values(R).filter(r=>r.lv===lv&&r.st!=='skip').length;
+  const total=Object.values(R).filter(r=>r.st!=='skip').length;
+  const name=el('input',{class:'t',id:'nm',value:ST.name||'',placeholder:t.namePh,autocomplete:'given-name','aria-label':t.name,oninput:e=>{ST.name=e.target.value.trim().slice(0,40);save()}});
+  m.replaceChildren(
+    el('div',{class:'mut sm'},'Nightlex'),el('h1',{},t.title),el('p',{},t.intro),el('p',{class:'mut sm'},t.two),
+    el('div',{class:'sec'},t.lang),el('div',{class:'chips'},...[['da','Dansk'],['en','English (US)']].map(([k,n])=>el('button',{class:'chip'+(ST.lang===k?' on':''),onclick:()=>{ST.lang=k;ITEMS=null;save();startScreen()}},n))),
+    el('div',{class:'sec'},t.name),name,
+    el('div',{class:'sec'},t.level),el('div',{class:'lv'},...LVS.map(lv=>{const c=cnt(lv).all||0,d=doneLv(lv);
+      return el('button',{class:'lvb'+(ST.lv===lv?' on':''),onclick:()=>{ST.lv=lv;ITEMS=null;save();startScreen()}},el('b',{},lv),el('small',{},`${d} / ${c}`),el('div',{class:'bar'},el('i',{style:`width:${c?Math.min(100,d/c*100):0}%`})))})),
+    el('div',{class:'sec'},t.kind),el('div',{class:'chips'},...['all','w','s','d','t','g'].map(k=>{const c=k==='all'?cnt(ST.lv).all:cnt(ST.lv)[k];if(k!=='all'&&!c)return null;
+      return el('button',{class:'chip'+(ST.kind===k?' on':''),onclick:()=>{ST.kind=k;save();startScreen()}},t.k[k],el('small',{},String(c||0)))})));
+  const go=el('button',{class:'btn',onclick:()=>{if(!ST.name){toast(t.needName);$('nm').focus();return}review()}},doneLv(ST.lv)?t.cont:t.start,el('span',{html:IC.arr,style:'display:flex;width:20px'}));
+  const snd=el('button',{class:'btn ghost',onclick:sendSheet},`${t.send} (${total})`);
+  setDock(total?[go,snd]:[go])}
+
+/* ---------- перевірка ---------- */
+function queue(){const R=res();return ITEMS.filter(i=>(ST.kind==='all'||i.k===ST.kind))}
+function nextItem(){const R=res(),q=queue();return q.find(i=>!R[i.id])||q.find(i=>R[i.id]&&R[i.id].st==='skip')||null}
+async function review(it){const t=T(),m=$('m');
+  if(!ITEMS){m.replaceChildren(el('p',{class:'mut center'},t.loading));setDock([]);try{ITEMS=await getItems(ST.lang,ST.lv)}catch(e){ITEMS=[];toast('Error '+e.message)}}
+  CUR=it||nextItem();PICK=null;
+  if(!CUR){m.replaceChildren(el('div',{class:'center'},el('h1',{},'✓'),el('p',{},t.empty)));setDock([el('button',{class:'btn',onclick:startScreen},t.close)]);return}
+  const R=res(),q=queue(),done=q.filter(i=>R[i.id]&&R[i.id].st!=='skip').length,prev=R[CUR.id];
+  PICK=prev&&prev.st!=='skip'?{st:prev.st,fix:prev.fix||'',note:prev.note||'',tags:(prev.tags||[]).slice()}:null;
+  const top=el('div',{class:'top'},el('button',{class:'ic','aria-label':t.close,html:IC.x,onclick:startScreen}),
+    el('div',{class:'prog'},el('div',{class:'h'},el('span',{},`${t.title} · ${ST.lv} · ${t.k[ST.kind]}`),el('span',{},`${done} / ${q.length}`)),el('div',{class:'bar'},el('i',{style:`width:${q.length?done/q.length*100:0}%`}))));
+  const lab=t.kl[CUR.k]+(CUR.k==='s'&&CUR.w?` · ${t.word.toUpperCase()}: ${CUR.w}`:CUR.k==='t'||CUR.k==='d'?` · ${CUR.src||''}`:'')+(CUR.k==='d'&&CUR.who&&CUR.who!=='→'?` · ${CUR.who}`:'');
+  const x=el('p',{class:'x'+(CUR.k==='s'?' hl':''),id:'x'});markText(x,CUR.x,CUR.k==='s'?CUR.w:'');
+  const pic=CUR.p?el('div',{class:'pic'},el('img',{src:`img/${CUR.p}.svg`,alt:'',width:62,height:62,onerror:e=>e.target.parentElement.remove()})):null;
+  const gl=el('div',{class:'gl'},el('button',{class:'ic','aria-label':t.speak,html:IC.spk,onclick:()=>say(CUR.x)}),CUR.g&&t.gloss?el('span',{},`${t.gloss}: `,el('b',{},CUR.g)):null);
+  const card=el('div',{class:'box'},el('div',{class:'item'},pic,el('div',{style:'min-width:0'},el('div',{class:'lab'},lab),x)),gl);
+  const chs=el('div',{class:'choices',role:'group'},...[['ok',IC.ok],['bad',IC.x],['fix',IC.fix]].map(([k,ic])=>el('button',{class:`ch ${k}`+(PICK&&PICK.st===k?' on':''),'aria-pressed':String(!!(PICK&&PICK.st===k)),onclick:()=>choose(k)},el('span',{html:ic,style:'display:flex'}),t[k])));
+  const det=el('div',{id:'det'});
+  const links=el('div',{class:'links'},HIST.length?el('button',{class:'lk',onclick:()=>{const p=HIST.pop();review(p)}},'← '+t.back):el('span'),el('button',{class:'lk',onclick:()=>{store('skip');go()}},t.skip+' →'));
+  m.replaceChildren(top,el('div',{class:'center'},el('p',{class:'q'},t.q),card,chs,det,links));
+  renderDet();
+  setDock([el('button',{class:'btn',id:'saveBtn',disabled:!PICK,onclick:()=>{if(!PICK)return;store(PICK.st);go()}},t.save,el('span',{html:IC.arr,style:'display:flex;width:20px'}))])}
+// виділяємо слово в реченні (без артикля / at / to), решту — як текст (жодного HTML з даних)
+function markText(node,text,word){const w=String(word||'').replace(/^(en|et|at|to|a|an|the)\s+/i,'').trim();
+  if(!w){node.textContent=text;return}const i=text.toLowerCase().indexOf(w.toLowerCase().slice(0,Math.max(3,w.length-2)));
+  if(i<0){node.textContent=text;return}let j=i;while(j<text.length&&/[\p{L}'-]/u.test(text[j]))j++;
+  node.append(text.slice(0,i),el('mark',{},text.slice(i,j)),text.slice(j))}
+function choose(k){const t=T();if(k==='ok'){PICK={st:'ok'};store('ok');go();return}
+  PICK={st:k,fix:PICK&&PICK.fix||(k==='fix'?CUR.x:''),note:PICK&&PICK.note||'',tags:PICK&&PICK.tags||[]};
+  document.querySelectorAll('.ch').forEach(b=>{const on=b.classList.contains(k);b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))});
+  renderDet();$('saveBtn').disabled=false;const f=$('fixIn')||$('noteIn');if(f){f.focus();if(f.id==='fixIn')f.setSelectionRange(f.value.length,f.value.length)}}
+function renderDet(){const t=T(),d=$('det');if(!d)return;d.replaceChildren();if(!PICK||PICK.st==='ok')return;
+  const box=el('div',{class:'box det'});
+  if(PICK.st==='fix')box.append(el('label',{for:'fixIn'},t.yours),el('input',{class:'t',id:'fixIn',value:PICK.fix,autocomplete:'off',autocapitalize:'off',spellcheck:'false',oninput:e=>PICK.fix=e.target.value}));
+  box.append(el('label',{class:'c',for:'noteIn'},PICK.st==='fix'?t.comment:t.why),el('textarea',{class:'t',id:'noteIn',oninput:e=>PICK.note=e.target.value},PICK.note));
+  box.append(el('div',{class:'tags'},...t.tags.map(g=>el('button',{class:'tag'+(PICK.tags.includes(g)?' on':''),'aria-pressed':String(PICK.tags.includes(g)),onclick:e=>{const i=PICK.tags.indexOf(g);if(i<0)PICK.tags.push(g);else PICK.tags.splice(i,1);e.currentTarget.classList.toggle('on');e.currentTarget.setAttribute('aria-pressed',String(i<0))}},g))));
+  d.append(box)}
+function store(st){const r={st,lv:CUR.lv,k:CUR.k,x:CUR.x,at:new Date().toISOString().slice(0,16)};
+  if(st==='fix'){const f=String(PICK.fix||'').trim();if(!f||f===CUR.x){r.st=PICK.note?'bad':'ok'}else r.fix=f}
+  if(st!=='ok'&&st!=='skip'){if(PICK.note)r.note=String(PICK.note).trim().slice(0,1000);if(PICK.tags&&PICK.tags.length)r.tags=PICK.tags.slice()}
+  res()[CUR.id]=r;save()}
+function go(){if(CUR)HIST.push(CUR);if(HIST.length>50)HIST.shift();review();window.scrollTo(0,0)}
+function say(s){try{const u=new SpeechSynthesisUtterance(s);u.lang=ST.lang==='da'?'da-DK':'en-US';const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.replace('_','-').startsWith(u.lang));if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+// клавіші на комп'ютері: 1 — правильно, 2 — неприродно, 3 — виправити
+document.addEventListener('keydown',e=>{if(!CUR||/input|textarea/i.test((e.target.tagName||'')))return;if(e.key==='1')choose('ok');else if(e.key==='2')choose('bad');else if(e.key==='3')choose('fix')});
+
+/* ---------- надіслати: файл / поділитися / копіювати ---------- */
+function payload(){const R=res(),items={};for(const id in R)if(R[id].st!=='skip')items[id]=R[id];return {app:'nightlex-check',v:1,lang:ST.lang,name:ST.name||'?',date:new Date().toISOString().slice(0,10),items}}
+function fname(p){return `nightlex-check-${p.lang}-${String(p.name).replace(/[^\p{L}\p{N}]+/gu,'-').slice(0,30)}-${p.date}.json`}
+function sendSheet(){const t=T(),p=payload(),v=Object.values(p.items),n=k=>v.filter(r=>r.st===k).length;
+  if(!v.length){toast(t.nothing);return}
+  const txt=JSON.stringify(p);
+  $('m').replaceChildren(el('div',{class:'top'},el('button',{class:'ic','aria-label':t.close,html:IC.x,onclick:startScreen}),el('b',{},t.sendT)),
+    el('div',{class:'center'},el('div',{class:'stat'},el('div',{},el('b',{},String(n('ok'))),el('small',{},t.ok)),el('div',{},el('b',{},String(n('bad'))),el('small',{},t.bad)),el('div',{},el('b',{},String(n('fix'))),el('small',{},t.fix))),
+      el('p',{class:'mut'},t.sendI)));
+  const file=new File([txt],fname(p),{type:'application/json'});
+  const btns=[el('button',{class:'btn',onclick:()=>{const a=el('a',{href:URL.createObjectURL(file),download:file.name});document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast(t.saved)}},t.file)];
+  if(navigator.canShare&&navigator.canShare({files:[file]}))btns.push(el('button',{class:'btn ghost',onclick:()=>navigator.share({files:[file],title:'Nightlex — '+t.title}).catch(()=>{})},t.share));
+  btns.push(el('button',{class:'btn ghost',onclick:()=>{(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast(t.copied)).catch(()=>{})}},t.copy));
+  setDock(btns)}
+// пряме посилання за мовою: check.html?lang=da — для данців, ?lang=en — для американців
+try{const q=new URLSearchParams(location.search).get('lang');if(q==='da'||q==='en'){if(ST.lang!==q)ITEMS=null;ST.lang=q;save()}}catch(e){}
+startScreen();
+</script>
+</body>
+</html>
