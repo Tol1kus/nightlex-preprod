@@ -3041,6 +3041,38 @@ body:has(#app>.sky-ob),body:has(#app>.nf-guide){padding-bottom:0!important}
 .sky-st-sheet .nf-lead{color:var(--sky-mut)}
 :root:not([data-theme="light"]) .sky-st-sheet .nf-lt{background:color-mix(in srgb,#fff 8%,transparent)}
 .sky-st-sheet .nf-lang.on{border-color:var(--lime-t)!important}  /* обрана мова — рамка акценту, як і раніше */
+/* статичні екрани (15.11.2026, рішення автора: «екран не можна совати вгору-вниз, вправо-вліво»):
+   без зсуву вбік і без «пружини» сторінки на iPhone; екран, що вміщається (онбординг), не рухається взагалі;
+   прокрутка лишається лише там, де вміст справді довший за екран */
+html,body{overflow-x:hidden;overscroll-behavior:none;touch-action:manipulation}
+/* короткі екрани (iPhone SE, 667px): онбординг теж уміщається */
+@media (max-height:700px){
+  .sky-ob-band{height:calc(96px + env(safe-area-inset-top,0px))!important}.sky-ob-band svg{height:92px!important}
+  .sky-ob-sheet .ds-q .ds-qlab,.sky-goal-scr h1{font-size:21px}
+  #app .pt-self-o button{min-height:54px;padding:7px 12px!important}
+  .sky-goal-scr .ds-goal{padding:7px 12px}.sky-goal-scr .ds-g-pic{width:40px;height:40px}
+  .sky-bubble p{font-size:14px;line-height:1.38}
+  #app .sky-gd{height:calc(140px + env(safe-area-inset-top,0px))}.sky-gd svg.nf-ff{height:140px}
+}
+/* ===== заставка запуску з новим логотипом (15.11.2026, рішення автора) ===== */
+.nf-splash.sp2{background:var(--sky-grad);gap:20px}
+.sp2-bg{position:absolute;opacity:0;animation:sp2Tw 1.6s ease-in-out infinite}
+.sp2-tile{position:relative;width:108px;height:108px;border-radius:30px;background:#232226;display:grid;place-items:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.06) inset;opacity:0;transform:scale(.55);animation:sp2Pop .55s cubic-bezier(.2,1.45,.4,1) .1s forwards}
+.sp2-n{font:700 66px/1 var(--serif);color:#fff;margin:6px 8px 0 0;opacity:0;transform:translateY(12px);animation:sp2Up .45s ease .4s forwards}
+.sp2-star{position:absolute;right:10px;top:8px;width:30px;height:30px;opacity:0;filter:drop-shadow(0 0 8px var(--lime));
+  animation:sp2Fly .75s cubic-bezier(.3,.7,.25,1) .7s forwards,sp2Star 1.4s ease-in-out 1.5s infinite}
+.sp2-word{font:700 34px var(--serif);letter-spacing:-.01em;color:var(--sky-ink);opacity:0;transform:translateY(10px);animation:sp2Up .5s ease 1.05s forwards}
+@keyframes sp2Pop{to{opacity:1;transform:scale(1)}}
+@keyframes sp2Up{to{opacity:1;transform:none}}
+@keyframes sp2Fly{0%{opacity:0;transform:translate(-110px,120px) scale(.25) rotate(-160deg)}55%{opacity:1}82%{transform:translate(0,0) scale(1.35) rotate(12deg)}100%{opacity:1;transform:none}}
+@keyframes sp2Star{0%,100%{transform:scale(1)}50%{transform:scale(.78) rotate(8deg)}}
+@keyframes sp2Tw{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.9;transform:scale(1)}}
+/* вікно запуску з'являється після довшої заставки */
+.nf-launch-in .nf-brand{animation-delay:2.05s}.nf-launch-in .nf-lead{animation-delay:2.2s}.nf-launch-in .nf-lang{animation-delay:2.35s}
+.nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
+/* самооцінка на iPhone SE — ще трохи щільніше, щоб уміщалась без прокрутки */
+@media (max-height:700px){#app .pt-self.sky-ob>.sky-ob-sheet{margin-top:6px}.pt-self-o{gap:6px!important}#app .pt-self-o button{min-height:50px}}
 </style>
 </head>
 <body>
@@ -7809,9 +7841,12 @@ launchScreen=function(){
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(NF_SPLASH_DONE||reduce||(typeof navigator!=='undefined'&&navigator.webdriver&&!window.NF_FORCE_SPLASH)){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
   const sp=document.createElement('div');sp.className='nf-splash';sp.setAttribute('aria-hidden','true');
-  sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">N</span></div><b class="nf-sp-word">Nightlex</b>`;
+  // 15.11.2026: заставка з новим логотипом (N + зірочка, як іконка застосунку): плитка «вистрибує», N підіймається, зірочка прилітає й мерехтить
+  sp.classList.add('sp2');
+  const tw=[[14,18,5],[82,12,4],[90,58,6],[8,70,4],[30,88,5],[70,84,4],[50,8,3]].map(([x,y,s],i)=>`<svg class="sp2-bg" style="left:${x}%;top:${y}%;width:${s*4}px;height:${s*4}px;animation-delay:${(i*.17).toFixed(2)}s" viewBox="-10 -10 20 20">${sparkle(0,0,9,'var(--star)')}</svg>`).join('');
+  sp.innerHTML=`${tw}<div class="sp2-tile"><span class="sp2-n">N</span><svg class="sp2-star" viewBox="-10 -10 20 20">${sparkle(0,0,9,'var(--lime)')}</svg></div><b class="sp2-word">Nightlex</b>`;
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
-  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,1700);
+  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,2000);
 };
 
 /* ---------- Провідник Світлик: після вибору мови пояснює, що зараз буде тест ----------
