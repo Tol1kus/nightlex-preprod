@@ -3023,6 +3023,24 @@ body:has(#app>.sky-ob),body:has(#app>.nf-guide){padding-bottom:0!important}
 .sky-opt-t b{font-size:15px}
 .sky-goal-scr .ds-goal{padding:9px 12px}
 .sky-goal-scr .ds-g-pic{width:44px;height:44px;border-radius:13px}
+/* ===== старт пропорційно (15.11.2026, «розтягни картинку, без пустого поля зверху, градієнт на беку») =====
+   сцена 390×440: на iPhone — на всю ширину; на коротких екранах звужується так, щоб аркушу лишалось ~330px */
+.sky-st-stage{aspect-ratio:390/440!important;width:min(100%,calc((100dvh - 350px) * 390 / 440))!important;max-width:460px}
+.sky-st-stage>svg{height:100%!important;aspect-ratio:auto!important}
+.sky-st .ds-orb-c{top:48.2%;font-size:50px}
+.sky-st-p{top:55.5%}
+.sky-st .sky-roofs{margin-top:-34px}
+/* аркуш: градієнт від темного до світлішого кольору дня (у світлій темі — від тоншого відтінку до світлого) і рівномірніші відступи */
+#app .sky-st-sheet{background:linear-gradient(180deg,var(--bg) 0%,var(--bg) 22%,color-mix(in srgb,var(--lime) 20%,var(--bg)) 100%);gap:14px;padding-top:22px}
+:root[data-theme="light"] #app .sky-st-sheet{background:linear-gradient(180deg,color-mix(in srgb,var(--lime) 14%,var(--bg)) 0%,var(--bg) 70%,color-mix(in srgb,#fff 55%,var(--bg)) 100%)}
+.sky-st-sheet .nf-lang{min-height:70px}
+/* аркуш старту зливається з небом (15.11.2026, «не чорний блок»): зверху колір дахів → глибокий колір неба → світліше донизу; картки — скляні */
+:root #app .sky-st-sheet,:root[data-theme="light"] #app .sky-st-sheet{background:linear-gradient(180deg,var(--roof) 0%,var(--sky-2) 42%,var(--sky-3) 100%)}
+.sky-st-sheet .nf-lang{background:var(--glass-bg)!important;border-color:color-mix(in srgb,var(--sky-ink) 14%,transparent)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+:root:not([data-theme="light"]) .sky-st-sheet .nf-logo{background:color-mix(in srgb,#fff 8%,transparent)!important}
+.sky-st-sheet .nf-lead{color:var(--sky-mut)}
+:root:not([data-theme="light"]) .sky-st-sheet .nf-lt{background:color-mix(in srgb,#fff 8%,transparent)}
+.sky-st-sheet .nf-lang.on{border-color:var(--lime-t)!important}  /* обрана мова — рамка акценту, як і раніше */
 </style>
 </head>
 <body>
@@ -22530,15 +22548,15 @@ function skyObProg(){try{const lv=maxLv(),lw=lvWords(lv),have=lw.filter(learned)
 /* ---------- старт: небо з місяцем (сонцем) і орбітою останніх зірок ---------- */
 // підпис: l — ліворуч від зірки, r — праворуч, b — під зіркою (біля країв екрана, щоб довге слово не обрізалось); 3-тє поле — місце для слова (px)
 const SKY_ORB=[[-110,'l',135],[-60,'r',113],[5,'b',120],[70,'r',135],[130,'l',94],[185,'b',120]];
-function skyStartHero(){const N=skyNight(),P=skyObProg(),{ws,real}=skyObWords(),cx=195,cy=205;
+function skyStartHero(){const N=skyNight(),P=skyObProg(),{ws,real}=skyObWords(),cx=195,cy=212,RX=142,RY=122,VH=440;  // вища сцена: небо на весь верх (15.11.2026)
   {const ord=SKY_ORB.map((o,k)=>k).sort((a,b)=>SKY_ORB[b][2]-SKY_ORB[a][2]),byLen=ws.map((w,k)=>k).sort((a,b)=>String(ws[b]||'').length-String(ws[a]||'').length),w2=[];
     ord.forEach((pk,i)=>{w2[pk]=ws[byLen[i]]});ws.splice(0,ws.length,...w2)}  // довші слова — туди, де більше місця
-  const pos=SKY_ORB.map(([a])=>{const r=a*Math.PI/180;return [+(cx+135*Math.cos(r)).toFixed(0),+(cy+100*Math.sin(r)).toFixed(0)]});
-  const orb=N?moonSVG(cx,cy,64,P.f,'st'):`${sunSVG(cx,cy,58,'st')}<circle cx="${cx}" cy="${cy}" r="74" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="10"/>${P.f>0?`<path d="${skyArc(cx,cy,74,0,Math.max(4,Math.min(359.9,P.f*360)))}" fill="none" stroke="var(--lime-t)" stroke-width="8" stroke-linecap="round"/>`:''}`;
+  const pos=SKY_ORB.map(([a])=>{const r=a*Math.PI/180;return [+(cx+RX*Math.cos(r)).toFixed(0),+(cy+RY*Math.sin(r)).toFixed(0)]});
+  const orb=N?moonSVG(cx,cy,70,P.f,'st'):`${sunSVG(cx,cy,64,'st')}<circle cx="${cx}" cy="${cy}" r="80" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="10"/>${P.f>0?`<path d="${skyArc(cx,cy,80,0,Math.max(4,Math.min(359.9,P.f*360)))}" fill="none" stroke="var(--lime-t)" stroke-width="8" stroke-linecap="round"/>`:''}`;
   return `<section class="sky-ob-hero sky-st" aria-label="Твоє небо"><div class="sky-st-stage">
-    <svg viewBox="0 0 390 400" aria-hidden="true">${bgStars(390,330,40,11)}<ellipse cx="${cx}" cy="${cy}" rx="135" ry="100" fill="none" stroke="var(--sky-mut)" stroke-opacity=".5" stroke-dasharray="2 7"/>${orb}${pos.map(([x,y])=>sparkle(x,y,10,'var(--star)',1,true)).join('')}</svg>
+    <svg viewBox="0 0 390 ${VH}" aria-hidden="true">${bgStars(390,VH-40,52,11)}<ellipse cx="${cx}" cy="${cy}" rx="${RX}" ry="${RY}" fill="none" stroke="var(--sky-mut)" stroke-opacity=".5" stroke-dasharray="2 7"/>${orb}${pos.map(([x,y])=>sparkle(x,y,10,'var(--star)',1,true)).join('')}</svg>
     <span class="ds-orb-c">${esc(LANG_CODE[S.lang]||S.lang.toUpperCase())}</span><small class="sky-st-p">${esc(P.txt)}</small>
-    ${pos.map(([x,y],k)=>ws[k]?`<span class="ds-chipf sky-orbw ${SKY_ORB[k][1]}" style="left:${(x/3.9).toFixed(2)}%;top:${(y/4).toFixed(2)}%"><b class="en${String(ws[k]).length>10?' sm':''}" lang="${S.lang}">${esc(ws[k])}</b></span>`:'').join('')}</div>
+    ${pos.map(([x,y],k)=>ws[k]?`<span class="ds-chipf sky-orbw ${SKY_ORB[k][1]}" style="left:${(x/3.9).toFixed(2)}%;top:${(y/VH*100).toFixed(2)}%"><b class="en${String(ws[k]).length>10?' sm':''}" lang="${S.lang}">${esc(ws[k])}</b></span>`:'').join('')}</div>
     <svg class="sky-roofs" viewBox="0 330 390 60" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${roofsSVG(330)}</svg></section>`}
 function skyLangTile(k){const R=(S.srs||{})[k]||{},n=Object.values(R).filter(x=>x&&x.lr).length,f=Math.min(1,.12+n/400);
   return `<svg width="34" height="34" aria-hidden="true">${(skyNight()||k===S.lang?moonSVG(17,17,15,f,'lt'+k,false):moonInk(17,17,15,f)).replace(/\s*\n\s*/g,'')}</svg><em>${esc(LANG_CODE[k]||k.toUpperCase())}</em>`}
