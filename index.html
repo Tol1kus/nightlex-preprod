@@ -13,6 +13,7 @@
 @font-face{font-family:'Unbounded';font-style:normal;font-weight:600 800;font-display:swap;src:url(fonts/unbounded-cyrillic.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116}
 @font-face{font-family:'Unbounded';font-style:normal;font-weight:600 800;font-display:swap;src:url(fonts/unbounded-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
 @font-face{font-family:'Unbounded';font-style:normal;font-weight:600 800;font-display:swap;src:url(fonts/unbounded-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Literata';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/literata-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 
 :root{
   --accent:#2f5bd3; --accent-soft:#e8eefc;
@@ -2854,6 +2855,82 @@ body.in-session #app:not(:has(> .top-row)):not(:has(> .nf-word)) > :last-child{m
 .lang-flag{display:inline-block;width:18px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
 /* повноекранні екрани (.ds-scr: перед читанням, поради, старт) — прозорі, щоб було видно градієнтний фон */
 .ds-scr{background:transparent!important}
+/* ===== Світлик: рівно в один екран, по центру, нерухомий, кнопка «Назад» (15.11.2026, рішення автора) ===== */
+header.ds-hd.nf-gd-hd{display:flex!important;align-items:center;gap:14px;padding-top:4px!important}
+.nf-back svg{transform:rotate(180deg)}
+#app>.nf-guide{display:flex;flex-direction:column;height:calc(100dvh - 16px - env(safe-area-inset-top,0px));min-height:0;overflow:hidden}
+#app>.nf-guide .nf-guide-hero{margin-top:auto}
+#app>.nf-guide .nf-guide-pts{margin-bottom:auto}
+#app>.nf-guide .ds-foot{flex:none;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+#app:has(>.nf-guide){padding-bottom:0!important;min-height:0!important}
+html:has(#app>.nf-guide){overflow:hidden;height:100%;overscroll-behavior:none}
+body:has(#app>.nf-guide){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+@media (max-height:700px){#app>.nf-guide .nf-ff{width:110px;height:110px}#app>.nf-guide .nf-say-b p{font-size:15px;line-height:1.4}#app>.nf-guide .nf-guide-hero{margin-top:auto}}
+/* ===== самооцінка: рівно в один екран, вміст по центру, нерухома, «Назад», рівень біля кожного варіанта (15.11.2026, рішення автора) ===== */
+#app>.pt-self{display:flex;flex-direction:column;height:calc(100dvh - 16px - env(safe-area-inset-top,0px));min-height:0;overflow:hidden}
+#app>.pt-self .ds-q{margin-top:auto;padding-top:0}
+#app>.pt-self .pt-self-o{margin-bottom:auto}
+#app>.pt-self .ds-foot{flex:none;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+#app>.pt-self .ds-qlab{font-size:24px;line-height:1.2;margin-top:0}
+#app>.pt-self .pt-self-o button{flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:12px;min-height:66px;padding:12px 16px}
+.pt-ot{display:flex;flex-direction:column;gap:2px;min-width:0;text-align:left}
+.pt-lv{flex:none;font-style:normal;font-weight:800;font-size:13px;padding:5px 10px;border-radius:999px;background:color-mix(in srgb,var(--lime) 18%,transparent);color:var(--lime-t)}
+#app>.pt-self .pt-self-o button:active{transform:scale(.98);border-color:var(--lime-t)}
+#app:has(>.pt-self){padding-bottom:0!important;min-height:0!important}
+html:has(#app>.pt-self){overflow:hidden;height:100%;overscroll-behavior:none}
+body:has(#app>.pt-self){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+@media (max-height:700px){#app>.pt-self .ds-qlab{font-size:21px}#app>.pt-self .pt-self-o button{min-height:56px;padding:8px 14px}#app>.pt-self .ds-qtr{font-size:13px}}
+/* ===== новий логотип і заставка запуску (15.11.2026, рішення автора) ===== */
+.nf-logo.nl-logo{position:relative;background:#232226!important;color:#fff!important;font:700 26px/1 Literata,Georgia,serif!important;box-shadow:0 6px 18px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08)}
+.nl-logo-s{position:absolute;right:5px;top:4px;width:11px;height:11px;fill:#BBA8FF;filter:drop-shadow(0 0 4px rgba(187,168,255,.7))}
+.nf-splash.nl-sp{background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 70%,#000) 0%,var(--bg) 55%,color-mix(in srgb,var(--lime) 26%,var(--bg)) 100%);gap:14px;transition:opacity .7s ease}
+.nl-tw{position:absolute;fill:var(--ink);opacity:0;animation:nlTw 1.8s ease-in-out infinite}
+:root[data-theme="light"] .nl-tw{fill:var(--lime-t)}
+.nl-glow{position:absolute;left:50%;top:50%;width:260px;height:260px;margin:-170px 0 0 -130px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 45%,transparent) 0%,transparent 65%);opacity:0;animation:nlGlow 1.2s ease .2s forwards}
+.nl-tile{position:relative;width:112px;height:112px;border-radius:32px;background:#232226;display:grid;place-items:center;border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 22px 50px rgba(0,0,0,.35);opacity:0;transform:scale(.5) rotate(-6deg);animation:nlPop .7s cubic-bezier(.2,1.45,.4,1) .15s forwards}
+.nl-n{font:700 70px/1 Literata,Georgia,serif;color:#fff;margin:8px 8px 0 0;opacity:0;transform:translateY(14px);animation:nlUp .55s ease .55s forwards}
+.nl-star{position:absolute;right:12px;top:10px;width:30px;height:30px;fill:#BBA8FF;opacity:0;filter:drop-shadow(0 0 9px rgba(187,168,255,.9));
+  animation:nlFly .95s cubic-bezier(.3,.7,.25,1) .95s forwards,nlStar 1.5s ease-in-out 1.95s infinite}
+.nl-burst{position:absolute;right:27px;top:25px;width:4px;height:4px;border-radius:50%;box-shadow:0 0 0 0 rgba(187,168,255,.9);opacity:0;animation:nlBurst .7s ease-out 1.75s forwards}
+.nl-word{font:700 36px Literata,Georgia,serif;letter-spacing:-.01em;color:var(--ink);opacity:0;transform:translateY(10px);animation:nlUp .6s ease 1.55s forwards;margin-top:6px}
+.nl-sub{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);opacity:0;animation:nlUp .6s ease 1.85s forwards}
+@keyframes nlPop{to{opacity:1;transform:none}}
+@keyframes nlUp{to{opacity:1;transform:none}}
+@keyframes nlGlow{to{opacity:1}}
+@keyframes nlFly{0%{opacity:0;transform:translate(-120px,130px) scale(.2) rotate(-200deg)}55%{opacity:1}80%{transform:translate(0,0) scale(1.45) rotate(14deg)}100%{opacity:1;transform:none}}
+@keyframes nlStar{0%,100%{transform:scale(1)}50%{transform:scale(.8) rotate(10deg)}}
+@keyframes nlBurst{0%{opacity:1;box-shadow:0 0 0 0 rgba(187,168,255,.9)}100%{opacity:0;box-shadow:0 0 0 46px rgba(187,168,255,0)}}
+@keyframes nlTw{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.85;transform:scale(1)}}
+/* вікно запуску з'являється, коли заставка розчиняється */
+.nf-launch-in .nf-brand{animation-delay:2.7s}.nf-launch-in .nf-lead{animation-delay:2.85s}.nf-launch-in .nf-lang{animation-delay:3s}
+.nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
+/* заставка: розчиняється швидко, а вміст старту з'являється вже після неї (без накладання двох шарів); світла тема — без сірого верху */
+.nf-splash.nl-sp{transition:opacity .4s ease}
+.nf-launch-in .nf-brand{animation-delay:3.05s}.nf-launch-in .nf-lead{animation-delay:3.2s}.nf-launch-in .nf-lang{animation-delay:3.35s}
+.nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
+:root[data-theme="light"] .nf-splash.nl-sp{background:linear-gradient(180deg,color-mix(in srgb,var(--lime) 32%,var(--bg)) 0%,var(--bg) 55%,color-mix(in srgb,#fff 60%,var(--bg)) 100%)}
+.nf-launch-in .nf-orbit-top{animation-delay:2.9s}.nf-launch-in.nf-quick .nf-orbit-top{animation-delay:0s}  /* орбіта слів — після заставки */
+/* ===== старт: прогрес у кільці, смужки рівня в картках, зірочки; рівно в один екран (83_launch_plus.js, 15.11.2026) ===== */
+#app>.nf-launch{display:flex;flex-direction:column;height:calc(100dvh - 16px - env(safe-area-inset-top,0px));min-height:0!important;overflow:hidden;padding-top:0!important}
+#app>.nf-launch .nf-orbit-top{flex:none;margin-top:auto!important;margin-bottom:auto!important}  /* орбіта свого розміру (слова й код — від її центру), по центру вільного місця */
+#app>.nf-launch .nf-brand{margin-top:6px}
+#app>.nf-launch .nf-lang:last-of-type{margin-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+#app:has(>.nf-launch){padding-bottom:0!important;min-height:0!important}
+html:has(#app>.nf-launch){overflow:hidden;height:100%;overscroll-behavior:none}
+body:has(#app>.nf-launch){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+.lp-sub{position:absolute;left:50%;top:calc(50% + 30px);transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--mut);white-space:nowrap;pointer-events:none}
+.nf-orbit-top .ds-orb-c{margin-top:-8px}
+.lp-tw{position:absolute;fill:var(--ink);opacity:0;animation:nlTw 2.4s ease-in-out infinite;pointer-events:none}
+:root[data-theme="light"] .lp-tw{fill:var(--lime-t)}
+.lp-bar{display:block;height:5px;border-radius:5px;background:color-mix(in srgb,var(--mut) 22%,transparent);margin-top:7px;overflow:hidden;max-width:180px}
+.lp-bar>i{display:block;height:100%;border-radius:5px;background:var(--lime-t)}
+.nf-launch .nf-lang.on .lp-bar>i{background:var(--lime)}
+@media (max-height:700px){#app>.nf-launch .nf-lead{margin-bottom:12px;font-size:14.5px}#app>.nf-launch .nf-lang{padding:11px 14px;margin-bottom:8px}#app>.nf-launch .nf-lt{width:46px;height:46px}}
+@media (min-height:780px){#app>.nf-launch .nf-orbit-top{scale:1.22}}  /* на високих телефонах орбіта більша — менше порожнього місця */
+/* напис прогресу — у два рядки, повністю всередині кільця (не залазить на нього) */
+.lp-sub{top:calc(50% + 20px);display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.15}
+.lp-sub b{font-size:12px;font-weight:800;color:var(--ink);opacity:.85}.lp-sub span{font-size:10.5px;font-weight:700;color:var(--mut)}
 </style>
 </head>
 <body>
@@ -7217,7 +7294,7 @@ function launchScreen(){
       lv=k===S.lang?(typeof maxLv==='function'?maxLv():''):((S.lvBy||{})[k]||[])[0]||(pl&&pl.lvl)||'',started=!!(pl||(S.beginner||{})[k]||lr);
     return `<button class="nf-lang ${k===S.lang?'on':''}" onclick="launchGo('${k}')"><span class="nf-lt ${k===S.lang?'lime':''}">${LANG_CODE[k]||k.toUpperCase()}</span><span><b>${NM[k]||k}</b><small>${started?`${lv?lv+' · ':''}${nW(lr)} вивчено`:'почати з короткого тесту рівня'}</small></span>${icn('chev')}</button>`};
   app.innerHTML=`<div class="onb nf-onb nf-full nf-launch">
-    <div class="nf-brand"><span class="nf-logo">N</span><b>Nightlex</b></div>
+    <div class="nf-brand">${nfLogoHTML()}<b>Nightlex</b></div>
     <p class="nf-lead">Твій провідник у вивченні мови. Кілька хвилин щодня — і нові слова залишаються з тобою.</p>
     ${ACTIVE_LANGS.map(card).join('')}
   </div>`;
@@ -7512,10 +7589,10 @@ const ptMu=start=>start+PT_CUT+0.45;
 const PT_SELF=[['Знаю лише кілька слів','алфавіт, привітання, числа',0],['Можу просту розмову','про себе, покупки, дорогу',1],
   ['Розумію серіали з субтитрами','листуюся, читаю прості статті',2],['Вільно читаю й говорю','роботу, новини, книжки — цією мовою',3]];
 function ptSelf(){applyTheme();document.body.classList.add('in-session');REDRAW=ptSelf;
-  app.innerHTML=`<div class="ds-scr pt-self"><header class="ds-top"><button class="ds-x" onclick="nfGuide()" aria-label="Назад">${icn('close')}</button>
+  app.innerHTML=`<div class="ds-scr pt-self"><header class="ds-top"><button class="ds-x nf-back" onclick="nfGuide()" aria-label="Назад">${icn('arrow')}</button>
     <div class="ds-prog"><div class="ds-prog-h"><span>Перед тестом</span><span>1 питання</span></div></div></header>
    <section class="ds-q"><p class="ds-qlab">Як ти оцінюєш свою ${langAcc()} зараз?</p><span class="ds-qtr">Тест почнеться з питань близько до твого рівня, а далі підлаштується сам — помилитися з відповіддю тут не страшно.</span></section>
-   <div class="ds-opts pt-self-o">${PT_SELF.map(([t,s,li])=>`<button onclick="ptStart(${li})"><b>${t}</b><small>${s}</small></button>`).join('')}</div>
+   <div class="ds-opts pt-self-o">${PT_SELF.map(([t,s,li])=>`<button onclick="ptStart(${li})"><span class="pt-ot"><b>${t}</b><small>${s}</small></span><em class="pt-lv">${li>=3?LEVELS[li]+'+':LEVELS[li]}</em></button>`).join('')}</div>
    <div class="ds-foot"><button class="nf-link" onclick="nfBeginner()">Я зовсім новачок — почати з A1 без тесту</button></div></div>`;window.scrollTo(0,0)}
 function ptStart(start){applyTheme();document.body.classList.add('in-session');start=ptClamp(+start||0);
   PX={n:0,k:0,start,th:ptMu(start),log:[],used:new Set(),usedG:new Set(),textDone:false,t0:Date.now(),sel:null,typed:'',q:null};ptNext()}
@@ -7622,9 +7699,12 @@ launchScreen=function(){
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(NF_SPLASH_DONE||reduce||(typeof navigator!=='undefined'&&navigator.webdriver&&!window.NF_FORCE_SPLASH)){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
   const sp=document.createElement('div');sp.className='nf-splash';sp.setAttribute('aria-hidden','true');
-  sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">N</span></div><b class="nf-sp-word">Nightlex</b>`;
+  // 15.11.2026: заставка з новим логотипом (N + лавандова зірочка): плитка вистрибує, N піднімається, зірочка прилітає по дузі й спалахує
+  sp.classList.add('nl-sp');
+  const tw=[[12,16,4],[84,10,3],[90,52,5],[7,64,3],[24,86,4],[74,82,3],[48,6,3],[60,30,2]].map(([x,y,s],i)=>`<svg class="nl-tw" style="left:${x}%;top:${y}%;width:${s*5}px;height:${s*5}px;animation-delay:${(.2+i*.19).toFixed(2)}s" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg>`).join('');
+  sp.innerHTML=`${tw}<div class="nl-glow"></div><div class="nl-tile"><span class="nl-n">N</span><svg class="nl-star" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg><i class="nl-burst"></i></div><b class="nl-word">Nightlex</b><small class="nl-sub">англійська · данська</small>`;
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
-  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,1700);
+  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,2700);
 };
 
 /* ---------- Провідник Світлик: після вибору мови пояснює, що зараз буде тест ----------
@@ -7640,7 +7720,7 @@ function nfGuide(){
   applyTheme();document.body.classList.add('in-session');REDRAW=nfGuide;
   const text='Привіт! Я Світлик — буду поруч, поки ти вчиш '+langAcc()+'. Зараз тобі треба пройти короткий тест: одне питання про тебе й 20 завдань, 10–12 хвилин. Він покаже твій рівень, і далі ми продовжимо разом.';
   app.innerHTML=`<div class="ds-scr nf-guide">
-    <header class="ds-hd ds-hd2">${dsDots(1)}</header>
+    <header class="ds-hd ds-hd2 nf-gd-hd"><button class="ds-x nf-back" onclick="launchScreen()" aria-label="Назад до вибору мови">${icn('arrow')}</button>${dsDots(1)}</header>
     <div class="nf-guide-hero">${NF_GUIDE_SVG}</div>
     <div class="nf-say-b"><small>Світлик</small><p id="nfSay" aria-live="polite"></p></div>
     <ul class="nf-guide-pts"><li>${icn('target')}<span>Слова, граматика, читання, слухання й письмо</span></li><li>${icn('refresh')}<span>Помилився — натисни «Переграти»</span></li><li>${icn('chart')}<span>Питання підлаштовуються під тебе</span></li></ul>
@@ -7687,6 +7767,10 @@ function nfOrbitWords(){ // 6 пар «англійською — українс
   if(pool.length<20)pool=(S.lang==='da'?[['hej','привіт'],['farve','колір'],['metro','метро'],['regning','рахунок'],['skøn','чудово'],['cykel','велосипед']]:[['hello','привіт'],['color','колір'],['subway','метро'],['check','рахунок'],['awesome','чудово'],['to go','з собою']]).map(([fg,uk])=>({fg,uk}));
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
   return pool.slice(0,6)}
+
+/* ---------- новий логотип Nightlex (15.11.2026, рішення автора): темна плитка, N (Literata), лавандова зірочка — як іконка застосунку ---------- */
+function nfSpark(x,y,s){const k=.18;return `M${x} ${y-s} Q${x+s*k} ${y-s*k} ${x+s} ${y} Q${x+s*k} ${y+s*k} ${x} ${y+s} Q${x-s*k} ${y+s*k} ${x-s} ${y} Q${x-s*k} ${y-s*k} ${x} ${y-s}Z`}
+function nfLogoHTML(){return `<span class="nf-logo nl-logo" aria-hidden="true">N<svg class="nl-logo-s" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg></span>`}
 
 /* ====================== ЕКРАН «ШЛЯХ» · варіант A «Маршрут» ======================
    Макет: canvas «Лінгво-гра — варіанти дизайну», сторінка «Шлях · 3 варіанти», артборд PV-A-Route.
@@ -10417,6 +10501,32 @@ on('screen',()=>{langFlagify();setTimeout(langFlagify,0)});
   ss.speak=function(u){q.push(u);if(tm)return;const w=Math.max(0,(typeof SND_END==='number'?SND_END:0)-performance.now());
     if(w<=0&&!(typeof ACX!=='undefined'&&ACX&&ACX.state==='running'))return flush();tm=setTimeout(flush,Math.min(400,w)+20)};
   const _cancel=ss.cancel.bind(ss);ss.cancel=function(){q=[];if(tm){clearTimeout(tm);tm=0}return _cancel()}}catch(e){}})();
+
+/* ---------- Старт (вибір мови) — покращення без зміни вмісту (15.11.2026, рішення автора: «покращити, а не змінити»):
+   кільце навколо коду мови = справжній прогрес рівня, під кодом «n / T до A2», у картках мов — смужка прогресу рівня,
+   довкола орбіти мерехтять зірочки; екран рівно в розмір телефона й нерухомий (як Світлик і самооцінка) ---------- */
+function lpLevelOf(k){const pl=S.placement&&S.placement[k];
+  return k===S.lang?(typeof maxLv==='function'?maxLv():'A1'):(((S.lvBy||{})[k]||[])[0]||(pl&&pl.lvl)||'A1')}
+function lpProg(k){const lv=lpLevelOf(k),R=(S.srs||{})[k]||{};let T=0,n=0;
+  for(const w of WORDS){if(w.lv!==lv||!w[k]||w.phrase)continue;T++;const x=R[w.id];if(x&&x.lr)n++}
+  const nx=LEVELS[Math.min(LEVELS.length-1,LEVELS.indexOf(lv)+1)];return {lv,nx,n,T,f:T?Math.min(1,n/T):0}}
+{const _lpLaunch=launchScreen;launchScreen=function(){const r=_lpLaunch.apply(this,arguments);try{
+  const root=document.querySelector('#app .nf-launch');if(!root||root.dataset.lp)return r;root.dataset.lp='1';
+  // кільце: дуга = частка вивчених слів рівня (мінімум крапка, щоб було видно початок)
+  const P=lpProg(S.lang),arc=root.querySelector('.nf-orbit-top svg path');
+  if(arc){const a=-Math.PI/2,b=a+Math.max(.04,P.f)*2*Math.PI*.999,R=62,cx=195,cy=125,x1=cx+R*Math.cos(a),y1=cy+R*Math.sin(a),x2=cx+R*Math.cos(b),y2=cy+R*Math.sin(b);
+    arc.setAttribute('d',`M${x1.toFixed(1)} ${y1.toFixed(1)} A${R} ${R} 0 ${b-a>Math.PI?1:0} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`)}
+  const c=root.querySelector('.nf-orbit-top .ds-orb-c');
+  if(c&&!root.querySelector('.lp-sub'))c.insertAdjacentHTML('afterend',`<small class="lp-sub"><b>${P.n} / ${P.T}</b>${P.nx!==P.lv?'<span>до '+P.nx+'</span>':''}</small>`);
+  // мерехтливі зірочки довкола орбіти
+  const o=root.querySelector('.nf-orbit-top');
+  if(o&&!o.querySelector('.lp-tw'))o.insertAdjacentHTML('beforeend',[[8,14,3],[88,10,4],[93,70,3],[4,78,4],[70,96,3],[24,4,2]].map(([x,y,s],i)=>
+    `<svg class="lp-tw" style="left:${x}%;top:${y}%;width:${s*5}px;height:${s*5}px;animation-delay:${(i*.35).toFixed(2)}s" viewBox="-10 -10 20 20" aria-hidden="true"><path d="${nfSpark(0,0,9)}"/></svg>`).join(''));
+  // картки мов: смужка прогресу рівня
+  root.querySelectorAll('.nf-lang').forEach(b=>{const m=(b.getAttribute('onclick')||'').match(/launchGo\('(\w+)'\)/);if(!m||b.querySelector('.lp-bar'))return;
+    const k=m[1],started=!!((S.placement||{})[k]||(S.beginner||{})[k]||Object.keys((S.srs||{})[k]||{}).length);if(!started)return;
+    const p=lpProg(k),sm=b.querySelector('small');if(sm)sm.insertAdjacentHTML('afterend',`<i class="lp-bar" aria-hidden="true"><i style="width:${Math.max(3,Math.round(p.f*100))}%"></i></i>`)});
+ }catch(e){console.error(e)}return r}}
 
 bootApp();bigLoad();
 </script>
