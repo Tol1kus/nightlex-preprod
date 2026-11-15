@@ -2995,6 +2995,34 @@ body:has(#app>.sky-ob),body:has(#app>.nf-guide){padding-bottom:0!important}
 #app>.nf-launch.sky-ob{padding-left:0!important;padding-right:0!important}  /* небо й аркуш — від краю до краю (без смужок по 4px) */
 .sky-orbw.b{transform:translate(-50%,26px)}  /* підпис під зіркою — біля країв екрана */
 .sky-orbw b.sm{font-size:13px}
+/* ===== онбординг компактніше (15.11.2026, «дуже розтягнуті екрани»): небо нижче й стискається на коротких екранах, менший текст і відступи ===== */
+/* старт: сцена з орбітою зберігає пропорції, але не вища за ~38% екрана */
+.sky-st-stage{width:min(100%,calc(38dvh * 390 / 360))}
+.sky-st-sheet .nf-brand b{font-size:26px}.sky-st-sheet .nf-logo{width:40px;height:40px;border-radius:12px}
+.sky-st-sheet .nf-lead{font-size:14px;line-height:1.4}
+.sky-st-sheet .nf-lang{min-height:64px;padding:8px 14px 8px 10px;border-radius:18px}
+.sky-st-sheet .nf-lt{width:44px;height:44px;border-radius:13px}
+#app .sky-ob-sheet{padding:18px 16px 10px}
+/* Світлик: небо нижче, бульбашка й пункти дрібніші */
+#app .sky-gd{height:calc(clamp(150px,26dvh,240px) + env(safe-area-inset-top,0px))}
+.sky-gd svg.nf-ff{height:clamp(150px,26dvh,240px)}
+.sky-bubble{margin:-20px 0 4px!important;padding:12px 14px!important;border-radius:18px!important}
+.sky-bubble small{font-size:14px}
+.sky-bubble p{font-size:14.5px;line-height:1.42}
+.nf-guide .nf-guide-pts{margin-top:10px;gap:6px}
+.nf-guide .nf-guide-pts li{font-size:13.5px;line-height:1.3}
+.nf-guide .nf-guide-pts li>svg{width:32px;height:32px;padding:8px;border-radius:10px}
+.sky-ob .ds-cta,.nf-guide .ds-cta{min-height:52px!important;border-radius:18px!important}
+/* самооцінка й мета: смуга неба нижча, заголовок і варіанти компактніші */
+.sky-ob-band{height:calc(clamp(110px,18dvh,170px) + env(safe-area-inset-top,0px))!important}
+.sky-ob-band svg{height:clamp(104px,17dvh,160px)!important}
+#app .pt-self.sky-ob>.sky-ob-sheet,#app .sky-goal-scr>.sky-ob-sheet{margin-top:clamp(20px,4dvh,56px)}
+.sky-ob-sheet .ds-q .ds-qlab,.sky-goal-scr h1{font-size:23px}
+#app .pt-self-o button{min-height:60px;padding:9px 12px!important;gap:12px}
+.sky-opt-m{width:40px;height:40px;border-radius:12px}
+.sky-opt-t b{font-size:15px}
+.sky-goal-scr .ds-goal{padding:9px 12px}
+.sky-goal-scr .ds-g-pic{width:44px;height:44px;border-radius:13px}
 </style>
 </head>
 <body>
@@ -22510,8 +22538,7 @@ function skyStartHero(){const N=skyNight(),P=skyObProg(),{ws,real}=skyObWords(),
   return `<section class="sky-ob-hero sky-st" aria-label="Твоє небо"><div class="sky-st-stage">
     <svg viewBox="0 0 390 400" aria-hidden="true">${bgStars(390,330,40,11)}<ellipse cx="${cx}" cy="${cy}" rx="135" ry="100" fill="none" stroke="var(--sky-mut)" stroke-opacity=".5" stroke-dasharray="2 7"/>${orb}${pos.map(([x,y])=>sparkle(x,y,10,'var(--star)',1,true)).join('')}</svg>
     <span class="ds-orb-c">${esc(LANG_CODE[S.lang]||S.lang.toUpperCase())}</span><small class="sky-st-p">${esc(P.txt)}</small>
-    ${pos.map(([x,y],k)=>ws[k]?`<span class="ds-chipf sky-orbw ${SKY_ORB[k][1]}" style="left:${(x/3.9).toFixed(2)}%;top:${(y/4).toFixed(2)}%"><b class="en${String(ws[k]).length>10?' sm':''}" lang="${S.lang}">${esc(ws[k])}</b></span>`:'').join('')}
-    <span class="sky-ob-chip sky-glass">${real?'останні зірки':'зірки дня'}</span></div>
+    ${pos.map(([x,y],k)=>ws[k]?`<span class="ds-chipf sky-orbw ${SKY_ORB[k][1]}" style="left:${(x/3.9).toFixed(2)}%;top:${(y/4).toFixed(2)}%"><b class="en${String(ws[k]).length>10?' sm':''}" lang="${S.lang}">${esc(ws[k])}</b></span>`:'').join('')}</div>
     <svg class="sky-roofs" viewBox="0 330 390 60" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${roofsSVG(330)}</svg></section>`}
 function skyLangTile(k){const R=(S.srs||{})[k]||{},n=Object.values(R).filter(x=>x&&x.lr).length,f=Math.min(1,.12+n/400);
   return `<svg width="34" height="34" aria-hidden="true">${(skyNight()||k===S.lang?moonSVG(17,17,15,f,'lt'+k,false):moonInk(17,17,15,f)).replace(/\s*\n\s*/g,'')}</svg><em>${esc(LANG_CODE[k]||k.toUpperCase())}</em>`}
@@ -22531,7 +22558,7 @@ function skyLangTile(k){const R=(S.srs||{})[k]||{},n=Object.values(R).filter(x=>
   const h=document.querySelector('#app .nf-guide-hero');if(!h||h.classList.contains('sky-ob-hero'))return;
   h.classList.add('sky-ob-hero','sky-gd');
   h.innerHTML=`<svg class="nf-ff" viewBox="0 0 390 300" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Світлик — світлячок-провідник">${bgStars(390,300,40,5)}
-    ${sparkle(70,90,10,'var(--star)',1,true)}${sparkle(318,70,9,'var(--star)',1,true)}${sparkle(340,190,11,'var(--star)',1,true)}${sparkle(40,200,6,'var(--star)',.9,true)}
+    ${sparkle(64,150,10,'var(--star)',1,true)}${sparkle(318,70,9,'var(--star)',1,true)}${sparkle(340,190,11,'var(--star)',1,true)}${sparkle(40,200,6,'var(--star)',.9,true)}
     ${svitlykTrail('M-10 290 C 40 270, 80 300, 120 290 S 170 250, 190 230')}${svitlykSVG(195,140,.6)}</svg>`;
   const b=document.querySelector('#app .nf-say-b');if(b)b.classList.add('sky-bubble');
   document.querySelectorAll('#app .nf-guide-pts li:last-child svg').forEach(s=>s.outerHTML=icn('star'));}catch(e){console.error(e)}}}
