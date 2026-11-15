@@ -3073,6 +3073,28 @@ html,body{overflow-x:hidden;overscroll-behavior:none;touch-action:manipulation}
 .nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
 /* самооцінка на iPhone SE — ще трохи щільніше, щоб уміщалась без прокрутки */
 @media (max-height:700px){#app .pt-self.sky-ob>.sky-ob-sheet{margin-top:6px}.pt-self-o{gap:6px!important}#app .pt-self-o button{min-height:50px}}
+/* ===== заставка довша (~3 с) і плавний перехід у старт; без порожніх смуг угорі й унизу (15.11.2026, рішення автора) ===== */
+.nf-splash.sp2{transition:opacity .9s ease}
+.sp2-tile{animation-delay:.15s;animation-duration:.7s}
+.sp2-n{animation-delay:.6s;animation-duration:.6s}
+.sp2-star{animation:sp2Fly 1s cubic-bezier(.3,.7,.25,1) 1.05s forwards,sp2Star 1.4s ease-in-out 2.05s infinite}
+.sp2-word{animation-delay:1.7s;animation-duration:.7s}
+/* вміст старту з'являється, поки заставка розчиняється (небо під нею те саме — кольори не стрибають) */
+.nf-launch-in .nf-brand{animation-delay:3.05s}.nf-launch-in .nf-lead{animation-delay:3.2s}.nf-launch-in .nf-lang{animation-delay:3.35s}
+.nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
+/* екрани з небом: смуга під годинником iPhone — колір верху неба (а не тла), низ сторінки — колір низу аркуша; аркуш до самого низу (safe area) */
+body:has(#app>.sky-ob)::before,body:has(#app>.nf-guide)::before,body:has(.nf-splash)::before{background:var(--sky-1)!important}
+body:has(#app>.nf-launch.sky-ob)::after{background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-1) 50%,var(--sky-3) 51%,var(--sky-3) 100%)!important}
+:root[data-theme="light"] body:has(#app>.nf-launch.sky-ob)::after{background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-1) 50%,color-mix(in srgb,#fff 55%,var(--bg)) 51%,color-mix(in srgb,#fff 55%,var(--bg)) 100%)!important}
+html:has(#app>.sky-ob),html:has(#app>.nf-guide){background:var(--sky-1)}
+#app .sky-st-sheet{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+
+/* ===== онбординг — повністю нерухомий (15.11.2026, рішення автора: «вимкни рухання вверх і вниз») =====
+   на iPhone .wrap має зверху відступ safe-area: висоту екрана зменшуємо на нього (інакше сторінка на ~47px довша й «їздить»);
+   саму сторінку закріплюємо: без прокрутки, без пружини, без зсуву */
+#app>.sky-ob,#app>.nf-guide,#app>.nf-launch.sky-ob{min-height:calc(100dvh - 16px - env(safe-area-inset-top,0px))!important}
+html:has(#app>.sky-ob),html:has(#app>.nf-guide){overflow:hidden;height:100%;overscroll-behavior:none}
+body:has(#app>.sky-ob),body:has(#app>.nf-guide){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none}
 </style>
 </head>
 <body>
@@ -7845,8 +7867,8 @@ launchScreen=function(){
   sp.classList.add('sp2');
   const tw=[[14,18,5],[82,12,4],[90,58,6],[8,70,4],[30,88,5],[70,84,4],[50,8,3]].map(([x,y,s],i)=>`<svg class="sp2-bg" style="left:${x}%;top:${y}%;width:${s*4}px;height:${s*4}px;animation-delay:${(i*.17).toFixed(2)}s" viewBox="-10 -10 20 20">${sparkle(0,0,9,'var(--star)')}</svg>`).join('');
   sp.innerHTML=`${tw}<div class="sp2-tile"><span class="sp2-n">N</span><svg class="sp2-star" viewBox="-10 -10 20 20">${sparkle(0,0,9,'var(--lime)')}</svg></div><b class="sp2-word">Nightlex</b>`;
-  const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
-  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,2000);
+  const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),900)};
+  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,3000);
 };
 
 /* ---------- Провідник Світлик: після вибору мови пояснює, що зараз буде тест ----------
