@@ -3265,6 +3265,32 @@ html{overflow-x:hidden}
   #app > .nf-hd{margin-top:0!important}
   #app > .nf-step .nf-cta{min-height:44px!important}
 }
+
+/* ---------- зручніші вправи (98_ex_comfort.js, 16.11.2026) ---------- */
+.btn.off,.btn:disabled.off{opacity:.45;box-shadow:none;pointer-events:none}
+/* Встав слово: обране слово в пропуску, кнопка «Перевірити» */
+.nf-ex .opts .opt.sel{border-color:var(--lime);background:color-mix(in srgb,var(--lime) 14%,var(--s1));color:var(--ink)}
+.nf-sentcard .blank.prev{color:var(--lime-t)!important;border-bottom:2px solid var(--lime);padding:0 4px}
+.fill-go{margin-top:14px;width:100%}
+/* Впиши слово: поле прямо в пропуску */
+.ft-inline{display:inline-block;margin:0 4px;vertical-align:baseline}
+.ft-inline input#ans{display:inline-block;min-width:4ch;max-width:100%;height:auto;padding:2px 6px;margin:0;border:0;border-bottom:2.5px solid var(--lime);border-radius:6px 6px 0 0;
+  background:color-mix(in srgb,var(--lime) 10%,transparent);color:var(--ink);font:inherit;font-weight:800;text-align:center;box-shadow:none;outline:none}
+.ft-inline input#ans:focus{background:color-mix(in srgb,var(--lime) 18%,transparent)}
+.ft-inline input#ans::placeholder{color:color-mix(in srgb,var(--lime-t) 70%,transparent);letter-spacing:.12em;font-weight:700}
+.blank.ft-done{font-weight:800;padding:0 4px;border-bottom:2.5px solid currentColor}.blank.okc{color:var(--ok)}.blank.badc{color:var(--bad)}
+.feedback.th.ft-hint-small{padding:6px 12px;font-size:13px}.feedback.th.ft-hint-small .th-mask{display:none}
+/* Склади речення: одна лінія, як на папері */
+.bd-card .build-line{border:0!important;border-radius:16px;background:var(--s1);padding:10px 12px 12px;min-height:66px;gap:8px;margin:14px 0 16px;
+}
+.bd-card .build-line.good{background-color:color-mix(in srgb,var(--ok) 14%,var(--s1))}.bd-card .build-line.badl{background-color:color-mix(in srgb,var(--bad) 12%,var(--s1))}
+.bd-card .bslot{min-width:42px;height:38px;border:0;border-bottom:2.5px solid color-mix(in srgb,var(--mut) 55%,transparent);border-radius:0;background:transparent}
+.bd-card .wtile{min-height:46px;padding:0 14px;font-size:17px;border-radius:14px}
+.bd-card .build-bank{gap:10px;margin-bottom:6px}
+.bd-card .row{display:flex;gap:10px;align-items:center}
+.bd-card .row .bd-reset{flex:none;width:52px;min-width:52px;height:52px;padding:0;border-radius:50%;display:grid;place-items:center}
+.bd-card .row .bd-reset svg{width:20px;height:20px}
+.bd-card .row .btn:not(.ghost){flex:1}
 </style>
 </head>
 <body>
@@ -11219,6 +11245,41 @@ const TODAY_REAL=today;
 today=function(d){if(d!==undefined)return TODAY_REAL(d);const t=TODAY_REAL();return SESS_DAY&&SESS_DAY<t?SESS_DAY:t};
 try{on('session:start',()=>{if(!SESS_DAY)SESS_DAY=TODAY_REAL()});
   on('home:before',()=>{SESS_DAY=null});on('screen',()=>{if(!document.body.classList.contains('in-session'))SESS_DAY=null})}catch(e){}
+
+/* ---------- Зручніші «Встав слово», «Впиши слово», «Склади речення» (16.11.2026, прохання автора: «не комфортна форма… оптимізувати й покращити»)
+   • Встав слово (fill): дотик ставить слово в пропуск (можна передумати), «Перевірити» — відповідь; повторний дотик по тому самому слову теж перевіряє.
+   • Впиши слово (fillt): поле — прямо в пропуску речення (видно все речення над клавіатурою), підказка — у самому пропуску.
+   • Склади речення (build): одна лінія, як на папері, без двох пунктирів; «Перевірити» активна, коли всі слова на місці; «Очистити» — кругла кнопка. ---------- */
+function exCur(){return typeof SS!=='undefined'&&SS&&SS.items?SS.items[SS.i]:null}
+// ---- Встав слово: спершу вибір, потім перевірка ----
+function fillPrev(i){const it=exCur();if(!it||it.kind!=='fill'||!it.order)return;if(document.querySelector('.nf-ex .opt[disabled]'))return;
+  if(it._sel===i)return fillGo();it._sel=i;
+  document.querySelectorAll('.nf-ex .opts .opt').forEach((b,k)=>b.classList.toggle('sel',k===i));
+  const bl=document.querySelector('.nf-sentcard .blank');if(bl){bl.textContent=it.order[i];bl.classList.add('prev')}
+  const go=document.getElementById('fillGo');if(go){go.disabled=false;go.classList.remove('off')}}
+function fillGo(){const it=exCur();if(!it||it._sel==null)return;const bl=document.querySelector('.nf-sentcard .blank');if(bl)bl.classList.remove('prev');
+  const go=document.getElementById('fillGo');if(go)go.remove();fillA(it._sel)}
+// ---- Впиши слово: поле в пропуску ----
+function filltInline(it){const bl=document.querySelector('.nf-sentcard .sentence .blank'),f=document.querySelector('.nf-ex form'),a=document.getElementById('ans');if(!bl||!f||!a)return;
+  const n=Math.max(4,Math.min(16,[...String(it.g&&it.g.answer||'')].length+1));
+  f.classList.add('ft-inline');a.style.width=n+'ch';a.placeholder='';a.setAttribute('aria-label','Пропущене слово');bl.replaceWith(f);
+  const btn=document.querySelector('.ft-act .btn:not(.ghost)');if(btn){btn.disabled=true;btn.classList.add('off');a.addEventListener('input',()=>{const e=!a.value.trim();btn.disabled=e;btn.classList.toggle('off',e)})}
+  setTimeout(()=>{try{a.focus({preventScroll:true})}catch(e){}},60)}
+{const _fh=filltHint;filltHint=function(){const r=_fh.apply(this,arguments);try{const it=exCur(),a=document.getElementById('ans'),m=document.querySelector('#fb .th-mask');
+  if(it&&a&&m&&a.closest('.ft-inline')){a.placeholder=m.textContent.replace(/\s{2,}/g,' ');if(!a.value)a.value='';const fb=document.querySelector('#fb .feedback.th');if(fb)fb.classList.add('ft-hint-small')}}catch(e){}return r}}
+{const _fa=filltA;filltA=function(){const it=exCur(),was=it&&it.answered;const r=_fa.apply(this,arguments);try{const f=document.querySelector('.ft-inline');if(f&&it&&it.answered&&!was){
+  const ok=!!document.querySelector('#fb .feedback.ok');const s=document.createElement('span');s.className='blank ft-done '+(ok?'okc':'badc');s.textContent=it.g.answer;f.replaceWith(s)}}catch(e){}return r}}
+// ---- Склади речення: «Перевірити» лише коли всі слова на місці ----
+{const _bd=buildDraw;buildDraw=function(){const r=_bd.apply(this,arguments);try{const it=exCur();if(!it||it.kind!=='build')return r;
+  const full=(it.picked||[]).length>=(it.target||[]).length,b=document.querySelector('.card .row .btn:not(.ghost)');if(b&&!it.done){b.disabled=!full;b.classList.toggle('off',!full)}}catch(e){}return r}}
+on('item:render',it=>{try{if(!it)return;
+  if(it.kind==='fill'&&document.querySelector('.nf-ex .opts')){it._sel=null;const os=[...document.querySelectorAll('.nf-ex .opts .opt')];
+    os.forEach((b,i)=>b.setAttribute('onclick',`fillPrev(${i})`));
+    document.querySelector('.nf-ex .opts').insertAdjacentHTML('afterend','<button class="btn big nf-cta fill-go off" id="fillGo" disabled onclick="fillGo()">Перевірити</button>')}
+  if(it.kind==='fillt'&&document.getElementById('ans'))filltInline(it);
+  if(it.kind==='build'&&document.getElementById('bline')){const card=document.getElementById('bline').closest('.card');if(card)card.classList.add('bd-card');
+    const rb=card&&card.querySelector('.row .btn.ghost');if(rb){rb.innerHTML=icn('refresh');rb.classList.add('bd-reset');rb.setAttribute('aria-label','Очистити')}}
+}catch(e){console.error(e)}});
 
 bootApp();bigLoad();
 </script>
