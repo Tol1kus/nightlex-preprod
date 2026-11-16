@@ -3008,6 +3008,48 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .bs-grid .bk-card>svg{position:absolute!important;top:8px!important;right:8px!important;width:18px!important;height:18px!important;margin:0!important}
 .bs-grid .bk-t b{overflow-wrap:anywhere;hyphens:auto}
 @media (max-width:360px){.bs-grid .bk-t b{font-size:11.5px}.bs-grid .bk-card{padding:9px 8px 10px!important}}
+.bs-after{margin:22px 0 8px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.bs-after .btn{width:100%}.bs-after small{color:var(--mut);font-size:12.5px}
+/* картки неправильних дієслів (85_irr_cards.js) */
+.irc-n{margin-left:auto;font-weight:800;color:var(--mut);font-size:14px}
+.irc-card{position:relative;margin:18px 0 10px;padding:22px 16px 18px;border-radius:26px;background:var(--s1);border:1px solid var(--line);text-align:center;cursor:pointer;
+  box-shadow:0 14px 36px rgba(0,0,0,.18)}
+.irc-uk{display:block;font-size:15px;color:var(--mut);margin-bottom:14px;font-weight:600}
+.irc-forms{display:flex;align-items:stretch;justify-content:center;gap:6px}
+.irc-f{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:6px;padding:12px 6px;border-radius:18px;background:color-mix(in srgb,var(--lime) 10%,var(--s2))}
+.irc-f span{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);line-height:1.2}
+.irc-f b{font:800 clamp(17px,5.2vw,24px)/1.15 Unbounded,sans-serif;color:var(--ink);overflow-wrap:anywhere}
+.irc-f.f2 b,.irc-f.f3 b{color:var(--lime-t)}
+.irc-arr{align-self:center;font-style:normal;color:var(--mut);font-weight:800}
+.irc-say{margin:16px auto 0}
+.irc-hint{text-align:center;margin:4px 0 16px}
+.irc-done .irr-go{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.irr-go{display:flex;flex-direction:column;gap:10px}
+/* «Числа» (86_numbers_plus.js): картки «цифра + слово», 4 в ряд — уміщаються в ширину */
+.np-lead{margin:6px 2px 4px;font-size:14px}
+.np-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.np-c{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:66px;padding:8px 4px;border-radius:16px;background:var(--s1);border:1px solid var(--line);text-align:center}
+.np-c b{font:800 22px/1 Unbounded,sans-serif;color:var(--lime-t)}
+.np-c small{font-size:11.5px;line-height:1.15;color:var(--ink);opacity:.85;overflow-wrap:anywhere}
+.np-c:active{transform:scale(.97);border-color:var(--lime-t)}
+.np-rule{margin-top:18px}
+@media (min-width:430px){.np-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.irc-f span em{display:block;font-style:normal;font-weight:600;text-transform:none;letter-spacing:0;font-size:11px;margin-top:2px;opacity:.85}
+/* ===== «Граматика» (87_grammar_plus.js, 16.11.2026) ===== */
+.gref-it summary{min-height:52px;padding:9px 12px;gap:12px}
+.gref-t b{font-size:15.5px;line-height:1.2}
+.gref-t small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+.gref-it{margin-bottom:8px}
+.gp-n{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--mut);border:1.5px solid var(--line);background:var(--s2)}
+.gp-n.ok{background:var(--lime);border-color:var(--lime);color:#111}.gp-n svg{width:15px;height:15px}
+.gref-it.gp-next{border-color:var(--lime-t);box-shadow:0 0 0 3px color-mix(in srgb,var(--lime) 16%,transparent);position:relative;overflow:hidden}
+.gref-it.gp-next::before{content:"";position:absolute;right:-50px;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 18%,transparent) 0%,transparent 70%);pointer-events:none}
+.gref-it.gp-next .gp-n{border-color:var(--lime-t);color:var(--lime-t)}
+.gp-tag{font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:color-mix(in srgb,var(--lime) 22%,transparent);color:var(--lime-t);vertical-align:2px;margin-left:4px}
+.gp-bar{display:block;height:4px;border-radius:4px;background:color-mix(in srgb,var(--mut) 22%,transparent);overflow:hidden;margin-top:5px;width:100%}
+.gp-bar>i{display:block;height:100%;border-radius:4px;background:var(--lime-t)}
+.gref-lvc .gp-bar{height:3px;margin-top:4px}
+.gref-lvh{flex-wrap:wrap}.gref-lvh>.gp-bar{flex-basis:100%;margin-top:8px}
 </style>
 </head>
 <body>
@@ -4225,7 +4267,7 @@ function alphabetScreen(){
   applyTheme();const A=ALPHA[S.lang];
   app.innerHTML=header()+`<div class="top-row"><button class="back" onclick="home()">← Назад</button><b style="font-size:18px">🔤 Алфавіт і вимова: ${L().name} ${L().flag}</b></div>
   <p class="muted" style="margin-top:0">Натисни на літеру, щоб почути її назву та слово-приклад. Українська вимова тут приблизна, орієнтуйся на звук.${A.note?' '+A.note:''}</p>
-  <div class="abc">${A.letters.map(([l,n])=>{const w=exampleFor(l);return `<button class="abc-k" onclick="abcTap(this,'${l}',${w?js(w[S.lang]):'null'})"><b>${l}${l.toLowerCase()}</b><small>${esc(n)}</small>${w?`<span class="abc-ex">${picHTML(w)}<i>${esc(stripArt(w[S.lang],S.lang))}</i></span>`:''}</button>`}).join('')}</div>
+  <div class="abc">${A.letters.map(([l,n])=>{const w=exampleFor(l);return `<button class="abc-k" onclick="abcTap(this,'${l}',${w?js(w[S.lang]):'null'})"><b>${l}</b><small>${esc(n)}</small>${w?`<span class="abc-ex">${picHTML(w)}<i>${esc(stripArt(w[S.lang],S.lang))}</i></span>`:''}</button>`}).join('')}</div>
   <div class="row"><button class="btn" onclick="startLetters()">🎧 Впізнай літеру на слух</button><button class="btn ghost" onclick="startSpell()">🔡 Слово по літерах</button></div>
   <h2>Правила вимови</h2>
   ${A.rules.map(r=>`<details class="rulebox"><summary>${esc(r.t)}</summary><div class="rule-body">${r.h}</div><div class="ex-row">${r.ex.map(x=>`<button class="mini" onclick="speak(${js(x)})">🔊 ${esc(x)}</button>`).join('')}</div></details>`).join('')}`;
@@ -4244,7 +4286,7 @@ function startSpell(){
 function renderLetter(it){
   app.innerHTML=topRow()+`<div class="card"><div class="q-label">🎧 Яку літеру ти чуєш?</div>
    <div style="text-align:center;margin:16px 0"><button class="listen-btn" onclick="speakLetter('${it.l}')">🔊</button></div>
-   <div class="opts grid4">${it.opts.map((o,i)=>`<button class="opt big-l" onclick="letterA(${i})">${o}${o.toLowerCase()}</button>`).join('')}</div><div id="fb"></div></div>`;
+   <div class="opts grid4">${it.opts.map((o,i)=>`<button class="opt big-l" onclick="letterA(${i})">${o}</button>`).join('')}</div><div id="fb"></div></div>`;
   setTimeout(()=>speakLetter(it.l),300);
 }
 function letterA(i){
@@ -10361,9 +10403,10 @@ function bsHTML(lv){const ks=(BS_LV[lv]||[]).filter(bsHas);if(!ks.length)return 
   return `<div class="bk-sec">Основи</div><div class="bk-grid bs-grid">${ks.map(bsCard).join('')}</div>`}
 function bsOpen(k){const I=BS_INFO[k],dn=basicsDone(k);
   bkSheet(`<span class="bk-pic bs-pic${k==='irr'?' sm':''}" aria-hidden="true">${bsPicTxt(k)}</span>`,I.t,dn?'пройдено · можна повторити':I.sub,
-    `<li class="bs-act"><button class="btn big" onclick="bkClose();${I.test}">Пройти тест</button></li>
-     <li class="bs-act"><button class="btn ghost" onclick="bkClose();${I.learn}">${k==='irr'?'Правило й таблиця':'Вчити: таблиця й правила'}</button></li>
-     ${I.train?`<li class="bs-act"><button class="btn ghost" onclick="bkClose();${I.train}">Тренажер</button></li>`:''}
+    // 16.11.2026 (рішення автора): спершу вчимо таблицю й правила, потім тест
+    `<li class="bs-act"><button class="btn big" onclick="bkClose();${I.learn}">1. ${k==='irr'?'Правило й таблиця':'Вчити: таблиця й правила'}</button></li>
+     ${I.train?`<li class="bs-act"><button class="btn ghost" onclick="bkClose();${I.train}">2. ${k==='irr'?'Картки · 3 форми':'Тренажер'}</button></li>`:''}
+     <li class="bs-act"><button class="btn ghost" onclick="bkClose();${I.test}">${I.train?'3':'2'}. Пройти тест</button></li>
      <li class="bs-note">Тест — ${k==='irr'?12:10} питань; від 70 % блок вважається пройденим.</li>`)}
 // тест алфавіту: 6 × «впізнай літеру на слух» + 4 × «слово по літерах»; заголовок «Алфавіт: готово!» зараховує блок
 function bsAbcTest(){if(typeof canSpeak!=='undefined'&&!canSpeak)return toast('Браузер не вміє озвучувати — тест алфавіту недоступний');
@@ -10379,6 +10422,13 @@ function bsNumTest(){const items=[],seen=new Set(),modes=['hear','read','write',
 {const _rb=rtBlocksHTML;rtBlocksHTML=function(lv){const h=_rb.apply(this,arguments);try{const b=bsHTML(lv);if(!b)return h;
   const allDone=(BS_LV[lv]||[]).filter(bsHas).every(basicsDone);
   return allDone?h.replace(/<\/div>$/,b+'</div>'):h.replace('<div class="bk-path">','<div class="bk-path">'+b)}catch(e){return h}}}
+
+/* 16.11.2026 (рішення автора: «спочатку вчити таблицю і правила, а потім пройти тест»):
+   внизу екранів «Алфавіт», «Цифри», «Неправильні дієслова» — кнопка «Вивчив — пройти тест» */
+function bsAfterLearn(k){try{const I=BS_INFO[k],a=document.getElementById('app');if(!I||!a||a.querySelector('.bs-after'))return;
+  a.insertAdjacentHTML('beforeend',`<div class="bs-after"><button class="btn big" onclick="${I.test}">Вивчив — пройти тест ${icn('arrow')}</button><small>${k==='irr'?12:10} питань · від 70 % — блок пройдено</small></div>`)}catch(e){}}
+for(const k of Object.keys(BS_INFO)){const fn=(BS_INFO[k].learn||'').replace(/\(.*$/,'');if(!fn||typeof window[fn]!=='function')continue;
+  const _o=window[fn];window[fn]=function(){const r=_o.apply(this,arguments);bsAfterLearn(k);return r}}
 
 /* ====================== НЕПРАВИЛЬНІ ДІЄСЛОВА: ПРАВИЛО, ТРЕНАЖЕР, ТЕСТ (15.11.2026, прохання користувача; англійська й данська) ======================
    Вхід — картка «Неправильні дієслова» в «Основах» на «Шляху» (A1, A2; 76_basics_blocks.js). Панель: «Правило й таблиця» (irrScreen),
@@ -10627,6 +10677,79 @@ function hpHome(){try{const app=document.getElementById('app');if(!app)return;
  }catch(e){console.error(e)}}
 on('home:after',hpHome);
 {const _hpHome=home;home=function(){const r=_hpHome.apply(this,arguments);hpHome();return r}}
+
+/* ---------- Неправильні дієслова — картки з усіма трьома формами (16.11.2026, рішення автора:
+   «давати зразу 3 форми для вивчення, як картки»). По 10 карток за раз: спершу ті, що ще не «знаю»;
+   «Ще вчу» — картка повернеться в кінці цього ж раунду; «Знаю» — S.irrKnown[мова]. Наприкінці — «Пройти тест». ---------- */
+let IRC=null;
+function ircKey(v){return v[0]}
+function ircLabels(){return S.lang==='da'?[['Форма 1','інфінітив'],['Форма 2','минуле'],['Форма 3','har/er + …']]:[['Форма 1','зараз'],['Форма 2','минуле'],['Форма 3','have + …']]}
+function ircForms(v){return S.lang==='da'?['at '+v[0],v[1],v[2]+' '+v[3]]:[v[0],v[1],v[2]]}
+function irrCards(){bkClose&&bkClose();const L_=irrList(),K=((S.irrKnown||{})[S.lang])||{};
+  const fresh=L_.filter(v=>!K[ircKey(v)]),old=L_.filter(v=>K[ircKey(v)]),deck=[...fresh,...shuffle(old.slice())].slice(0,10);
+  IRC={deck,i:0,n:deck.length,known:0};ircDraw()}
+function ircDraw(){applyTheme();document.body.classList.add('in-session');REDRAW=ircDraw;const c=IRC;if(!c)return irrScreen();
+  if(c.i>=c.deck.length)return ircDone();
+  const v=c.deck[c.i],F=ircForms(v),Lb=ircLabels(),uk=v[S.lang==='da'?4:3],pos=Math.min(c.n,c.i+1);
+  app.innerHTML=`<div class="top-row"><button class="back" onclick="IRC=null;irrScreen()" aria-label="Назад">${icn('back')}</button><b class="irr-h">Картки · 3 форми</b><span class="irc-n">${pos} / ${c.n}</span></div>
+   <div class="irc-card" onclick="irrSay(IRC.deck[IRC.i])">
+     <small class="irc-uk">${esc(uk)}</small>
+     <div class="irc-forms">${F.map((f,i)=>`<div class="irc-f f${i+1}"><span>${esc(Lb[i][0])}<em>${esc(Lb[i][1])}</em></span><b lang="${S.lang}">${esc(f)}</b></div>`).join('<i class="irc-arr" aria-hidden="true">→</i>')}</div>
+     <button class="nf-say irc-say" onclick="event.stopPropagation();irrSay(IRC.deck[IRC.i])" aria-label="Прослухати всі форми">${icn('speaker')}</button>
+   </div>
+   <p class="irc-hint muted">Прочитай уголос усі три форми. Натисни на картку — почуєш їх.</p>
+   <div class="nf-wbtns irc-btns"><button class="nf-b2" onclick="ircAns(false)">Ще вчу</button><button class="nf-b1" onclick="ircAns(true)">Знаю ${icn('check')}</button></div>`;
+  setTimeout(()=>{try{if(IRC&&IRC.deck[IRC.i]===v&&S.tts!==false)irrSay(v)}catch(e){}},300)}
+function ircAns(ok){const c=IRC;if(!c)return;const v=c.deck[c.i];
+  if(ok){S.irrKnown=S.irrKnown||{};S.irrKnown[S.lang]=S.irrKnown[S.lang]||{};S.irrKnown[S.lang][ircKey(v)]=1;c.known++;save();try{snd&&snd('ok')}catch(e){}}
+  else c.deck.push(v);  // «Ще вчу» — ще раз наприкінці раунду
+  c.i++;ircDraw()}
+function ircDone(){const c=IRC,all=irrList().length,K=Object.keys(((S.irrKnown||{})[S.lang])||{}).length;
+  app.innerHTML=`<div class="card result irc-done"><h2>Картки пройдено</h2><p class="muted">Знаєш ${K} з ${all} дієслів. Тепер перевір себе.</p>
+   <div class="irr-go"><button class="btn big" onclick="IRC=null;irrTest()">Пройти тест ${icn('arrow')}</button>
+   <button class="btn ghost" onclick="irrCards()">Ще 10 карток</button><button class="btn ghost" onclick="IRC=null;irrScreen()">До таблиці</button></div></div>`}
+/* екран «Неправильні дієслова»: перша кнопка — «Вчити картками», тест — після */
+{const _irScr=irrScreen;irrScreen=function(){const r=_irScr.apply(this,arguments);try{const g=document.querySelector('#app .irr-go');
+  if(g&&!g.querySelector('.irc-go'))g.innerHTML=`<button class="btn big irc-go" onclick="irrCards()">Вчити картками · 3 форми</button><button class="btn ghost" onclick="irrTrain()">Тренажер</button><button class="btn ghost" onclick="irrTest()">Пройти тест</button>`}catch(e){}return r}}
+/* панель «Основ»: картки — другим кроком */
+if(typeof BS_INFO!=='undefined'&&BS_INFO.irr){BS_INFO.irr.train='irrCards()'}
+
+/* ---------- «Числа» зрозуміло (16.11.2026, рішення автора: «блок з числами — нічого не ясно»):
+   замість голої сітки 0–100 — розділи з цифрою І словом: 0–10, 11–19, десятки, як складати 21–99, великі числа.
+   Дотик — озвучення. Правило — нижче, коротко. Таблиця вміщається в ширину екрана. ---------- */
+function npCard(n,yr){const w=numWord(n,yr);return `<button class="np-c" onclick="speak(${js(yr?numWord(n,true):String(n))})" aria-label="${esc(n+' — '+w)}"><b>${n}</b><small lang="${S.lang}">${esc(w)}</small></button>`}
+function npSec(t,sub,ns,yr){return `<div class="np-sec"><div class="bk-sec">${esc(t)}${sub?` <small>${esc(sub)}</small>`:''}</div><div class="np-grid">${ns.map(n=>npCard(n,yr)).join('')}</div></div>`}
+{const _npScr=numbersScreen;numbersScreen=function(){const r=_npScr.apply(this,arguments);try{
+  const a=document.getElementById('app'),g=a&&a.querySelector('.numgrid');if(!g||a.querySelector('.np-wrap'))return r;
+  const h2=g.previousElementSibling,say=a.querySelector('#numsay'),rule=a.querySelector('.rule');
+  const html=`<div class="np-wrap"><p class="np-lead muted">Натисни на картку — почуєш число. Спершу 0–19, далі десятки — і з них складаються всі інші.</p>
+    ${npSec('0–10','основа',[0,1,2,3,4,5,6,7,8,9,10])}
+    ${npSec('11–19',S.lang==='en'?'майже всі на -teen':'запам’ятати',[11,12,13,14,15,16,17,18,19])}
+    ${npSec('Десятки',S.lang==='en'?'на -ty':'',[20,30,40,50,60,70,80,90,100])}
+    ${npSec('Як складати 21–99',S.lang==='en'?'десяток + одиниці через дефіс':S.lang==='da'?'спершу одиниці, потім десяток':'',[21,35,47,58,99])}
+    ${npSec('Великі числа','',[101,250,1000,2026])}</div>`;
+  if(h2&&/Таблиця/.test(h2.textContent))h2.remove();g.insertAdjacentHTML('beforebegin',html);g.remove();if(say)say.remove();
+  if(rule){rule.classList.add('np-rule');a.querySelector('.np-wrap').after(rule)}  // правило — після карток
+ }catch(e){console.error(e)}return r}}
+
+/* ---------- «Граматика» — покращення без зміни вмісту (16.11.2026, рішення автора: «покращити і удосконалити»):
+   номер уроку в кружечку (пройдений — галочка), наступний урок підсвічено «Далі», формула — в один рядок,
+   компактніші картки (на екрані вдвічі більше уроків), смужки прогресу в чипах рівнів і в заголовку рівня ---------- */
+function gpBar(n,t){const f=t?Math.round(100*n/t):0;return `<i class="gp-bar" aria-hidden="true"><i style="width:${Math.max(n?6:0,f)}%"></i></i>`}
+function gpEnhance(){try{const a=document.getElementById('app');if(!a||!a.querySelector('.gref-it'))return;
+  // чипи рівнів: «0/20» → смужка
+  a.querySelectorAll('.gref-lvc').forEach(c=>{if(c.querySelector('.gp-bar'))return;const m=(c.textContent||'').match(/(\d+)\s*\/\s*(\d+)/);if(m)c.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))});
+  const h=a.querySelector('.gref-lvh');if(h&&!h.querySelector('.gp-bar')){const m=(h.textContent||'').match(/(\d+)\s*з\s*(\d+)/);if(m)h.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))}
+  let nextSet=!!a.querySelector('.gref-it.gp-next');
+  a.querySelectorAll('.gref-blk').forEach(b=>{let k=0;b.querySelectorAll(':scope > .gref-it').forEach(it=>{k++;const s=it.querySelector(':scope > summary');if(!s||s.querySelector('.gp-n'))return;
+    const done=!!s.querySelector('em.ok');it.classList.toggle('gp-done',done);
+    s.insertAdjacentHTML('afterbegin',`<span class="gp-n${done?' ok':''}" aria-hidden="true">${done?icn('check'):k}</span>`);
+    if(!done&&!nextSet){nextSet=true;it.classList.add('gp-next');const t=s.querySelector('.gref-t b');if(t)t.insertAdjacentHTML('beforeend',' <em class="gp-tag">Далі</em>')}})})
+ }catch(e){console.error(e)}}
+{const _gpRef=grammarRef;grammarRef=function(){const r=_gpRef.apply(this,arguments);gpEnhance();return r}}
+// пошук / розгортання перемальовують частину списку — доповнюємо нові картки
+(function(){try{const app=document.getElementById('app');if(!app||typeof MutationObserver!=='function')return;let t=0;
+  new MutationObserver(()=>{if(t)return;t=setTimeout(()=>{t=0;if(document.querySelector('#app .gref-it:not(:has(.gp-n))'))gpEnhance()},30)}).observe(app,{childList:true,subtree:true})}catch(e){}})();
 
 bootApp();bigLoad();
 </script>
