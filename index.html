@@ -3069,6 +3069,28 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .rp-full-b{padding:0 14px 14px;line-height:1.6;color:var(--ink);opacity:.9}
 .rp-su{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.45;max-width:280px}
 .rp-su small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-bottom:2px}
+/* переклад при дотику (88_reader_plus.js): плашка над словом */
+#gtext .gl,#gtext .rw{position:relative}
+.rp-gl{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);z-index:5;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis;
+  font:700 13px/1.25 'Golos Text',system-ui,sans-serif;font-style:normal;letter-spacing:0;padding:4px 9px;border-radius:9px;background:var(--lime);color:#111;
+  box-shadow:0 6px 16px rgba(0,0,0,.28);pointer-events:none;animation:rpGl .16s ease-out}
+.rp-gl::after{content:"";position:absolute;left:50%;top:100%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--lime)}
+@keyframes rpGl{from{opacity:0;transform:translate(-50%,4px)}to{opacity:1;transform:translate(-50%,0)}}
+/* «Читання» вкладка (89_read_plus.js) */
+.tp-tod.r9-tod{display:grid!important;grid-template-columns:auto 1fr auto;column-gap:12px;align-items:center;position:relative;overflow:hidden}
+.tp-tod.r9-tod>.r9-pic{grid-column:1;grid-row:1 / span 3}
+.tp-tod.r9-tod>small,.tp-tod.r9-tod>b,.tp-tod.r9-tod>span:not(.r9-pic){grid-column:2;min-width:0}
+.tp-tod.r9-tod>.ic,.tp-tod.r9-tod>svg{grid-column:3;grid-row:1 / span 3}
+.tp-tod.r9-tod::before{content:"";position:absolute;right:-50px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 20%,transparent) 0%,transparent 70%);pointer-events:none}
+.r9-pic{flex:none;width:52px;height:52px;border-radius:14px;background:#EEEBE5;display:grid;place-items:center;overflow:hidden;color:#555}
+.r9-pic img{width:100%;height:100%;object-fit:contain}.r9-pic svg{width:24px;height:24px}
+.gref-lvc.lk small{display:flex;justify-content:center;opacity:.7}
+.bk-t em.r9-next,.r9-next{display:block;font-style:normal;font-size:12.5px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--lime-t);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r9-start{margin-top:6px}
+.r9-t{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;margin-bottom:8px;border-radius:18px;background:var(--s1);border:1px solid var(--line)}
+.r9-t>svg{flex:none;width:18px;height:18px;color:var(--mut);margin-left:auto}
+.r9-tx{display:flex;flex-direction:column;min-width:0;gap:1px}.r9-tx b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r9-tx small{font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r9-tx em{font-style:normal;font-size:11.5px;color:var(--lime-t)}
 </style>
 </head>
 <body>
@@ -10789,11 +10811,51 @@ function rpFullTrHTML(t){const uk=String(t.uk||'').trim();if(!uk)return '';
   return `<details class="rp-full"><summary>${icn('lang')} Переклад усього тексту</summary><div class="rp-full-b">${esc(uk).replace(/\n+/g,'<br><br>')}</div></details>`}
 {const _rpA=rdRenderA;rdRenderA=function(){const r=_rpA.apply(this,arguments);try{const a=document.getElementById('app'),t=RD&&RD.t;if(!a||!t)return r;
   const h=a.querySelector('.rd-hero');if(h&&!a.querySelector('.rp-nw'))h.insertAdjacentHTML('afterend',rpWordsHTML(t));
-  const g=a.querySelector('#gtext');if(g&&!a.querySelector('.rp-full'))g.insertAdjacentHTML('afterend',rpFullTrHTML(t))}catch(e){console.error(e)}return r}}
-// дотик до слова/фрази: під перекладом слова — переклад усього речення
-{const _rpPop=rdPop;rdPop=function(el){const r=_rpPop.apply(this,arguments);try{const p=document.getElementById('rdPop'),s=el.closest('[data-s]');if(!p||!s||!RD)return r;
-  const su=rdSu(RD.t,+s.dataset.s);if(su){p.querySelector('.rd-pt').insertAdjacentHTML('afterend',`<div class="rp-su"><small>Усе речення</small>${esc(su)}</div>`);
-    const rr=el.getBoundingClientRect(),ph=p.offsetHeight;if(rr.bottom+ph+40>window.innerHeight)p.style.top=Math.max(window.scrollY+8,rr.top+window.scrollY-ph-10)+'px'}}catch(e){}return r}}
+  }catch(e){console.error(e)}return r}}
+/* 16.11.2026 (уточнення автора: «лише при дотику — натискаєш на слово і бачиш переклад»):
+   без окремих блоків і великого віконця: дотик до слова — маленька плашка з перекладом прямо над словом + озвучення;
+   повторний дотик (або дотик деінде) — плашка зникає */
+rdPop=function(el){const had=!!el.querySelector(':scope > .rp-gl');rdPopClose();if(had)return;
+  const wd=String(el.dataset.w||el.textContent||'').replace(/^(the|a|an)\s+(?=\S)/i,''),tr=rdWordTr(el);
+  el.classList.add('on');el.insertAdjacentHTML('beforeend',`<span class="rp-gl" lang="uk" aria-live="polite">${tr?esc(tr):'—'}</span>`);
+  try{speak(wd)}catch(e){}};
+{const _rpClose=rdPopClose;rdPopClose=function(){const r=_rpClose.apply(this,arguments);document.querySelectorAll('.rp-gl').forEach(x=>x.remove());return r}}
+
+/* ---------- «Читання» (вкладка) — покращення без зміни вмісту (16.11.2026, рішення автора: «покращити сам блок і удосконалити»):
+   «Текст дня» з картинкою й новими словами; чипи рівнів — смужка прогресу, закриті — замок;
+   у картках груп — смужка й «Далі: …»; під групами — «Почни з цих»: 3 наступні непрочитані тексти рівня ---------- */
+const R9_SKIP=/^(the|and|with|from|for|that|how|its|our|who|what|one|two|three|four|five|six|seven|eight|nine|ten|red|blue|green|yellow|brown|black|white|grey|gray|pink|orange|purple|big|small|famous)$/i;
+function r9Forms(x){const f=[x];if(/ies$/i.test(x))f.push(x.slice(0,-3)+'y');if(/(s|x|ch|sh)es$/i.test(x))f.push(x.slice(0,-2));if(/s$/i.test(x))f.push(x.slice(0,-1));return f}
+function r9Pic(t){try{const ok=x=>x&&x.length>2&&!R9_SKIP.test(x);
+  const ws=String(t.title||'').replace(/[^A-Za-z' ]/g,' ').split(/\s+/).filter(ok).reverse().flatMap(r9Forms);
+  let p=rdPicFor(ws);if(p)return p;
+  // емодзі тексту (t.pic) → слово з тим самим емодзі й малюнком
+  const em=[...String(t.pic||'')].filter(c=>/\p{Extended_Pictographic}/u.test(c)).map(c=>c.replace(/\uFE0F/g,''));
+  for(const e of em){const w=WORDS.find(x=>x.img&&x.pic&&x.pic.replace(/\uFE0F/g,'')===e&&typeof PICS!=='undefined'&&PICS[x.img]);if(w)return picHTML(w)}
+  return rdPicFor(rdNw(t).map(x=>x[0]).filter(ok).flatMap(r9Forms))||''}catch(e){return ''}}
+function r9Meta(t){let nw=0;try{nw=rdNw(t).length}catch(e){}const m=typeof tpReadMin==='function'?tpReadMin(t):rdMins(t);
+  return `≈ ${m} хв${nw?` · ${nw} ${pluralUk(nw,['нове слово','нові слова','нових слів'])}`:''}`}
+function r9Lock(){return `<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>`}
+function r9Enhance(){try{const a=document.getElementById('app');if(!a||a.dataset.r9)return;const ts=textsFor(true);if(!a.querySelector('.gref-lvs'))return;a.dataset.r9='1';
+  const lv=typeof rdLv==='function'?rdLv(ts):'A1';
+  // текст дня
+  const td=a.querySelector('.tp-tod');if(td){const m=(td.getAttribute('onclick')||'').match(/openText\((\d+)\)/),t=m&&ts.find(x=>x.idx===+m[1]);
+    if(t){td.insertAdjacentHTML('afterbegin',`<span class="r9-pic">${r9Pic(t)||icn('bookopen')}</span>`);td.classList.add('r9-tod');
+      const sp=td.querySelector(':scope > span:not(.r9-pic)');if(sp)sp.textContent=(t.title_uk?t.title_uk+' · ':'')+r9Meta(t)}}
+  // чипи рівнів
+  a.querySelectorAll('.gref-lvc').forEach(c=>{const s=c.querySelector('small');if(!s)return;if(c.classList.contains('lk')){s.innerHTML=r9Lock();return}
+    const m=s.textContent.match(/^(\d+)\/(\d+)/);if(m&&typeof gpBar==='function')c.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))});
+  // картки груп
+  a.querySelectorAll('.bk-card[onclick*="rdOpenGroup"]').forEach(c=>{const m=(c.getAttribute('onclick')||'').match(/rdOpenGroup\('([^']+)','([^']+)'\)/);if(!m)return;
+    const xs=ts.filter(t=>t.lv===m[2]&&rdGroup(t)===m[1]),dn=xs.filter(rdDone).length,nx=xs.find(t=>!rdDone(t)),tx=c.querySelector('.bk-t');
+    if(tx&&!tx.querySelector('.gp-bar')&&typeof gpBar==='function')tx.insertAdjacentHTML('beforeend',`${nx?`<em class="r9-next">Далі: ${esc(nx.title)}</em>`:''}${gpBar(dn,xs.length)}`)});
+  // «Почни з цих»
+  const list=a.querySelector('.bk-list')||a.querySelector('.rd-groups')||a.querySelector('.gref-lvs');
+  const nxt=ts.filter(t=>t.lv===lv&&!rdDone(t)&&!(typeof lvOK==='function'&&!lvOK(t.lv))).slice(0,3);
+  if(nxt.length&&!a.querySelector('.r9-start')){const html=`<div class="r9-start"><div class="bk-sec">Почни з цих</div>${nxt.map(t=>`<button class="r9-t" onclick="openText(${t.idx})"><span class="r9-pic">${r9Pic(t)||icn('bookopen')}</span><span class="r9-tx"><b lang="${S.lang}">${esc(t.title)}</b><small>${esc(t.title_uk||'')}</small><em>${esc(r9Meta(t))}</em></span>${icn('chev')}</button>`).join('')}</div>`;
+    const anchor=a.querySelector('.bk-list')||list;if(anchor)anchor.insertAdjacentHTML('afterend',html)}
+ }catch(e){console.error(e)}}
+{const _r9=readTab;readTab=function(){const r=_r9.apply(this,arguments);r9Enhance();return r}}
 
 bootApp();bigLoad();
 </script>
