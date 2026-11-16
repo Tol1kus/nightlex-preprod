@@ -2965,6 +2965,32 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 @media (prefers-reduced-motion:reduce){.hp-tw,.wg-dots span.today i{animation:none}}
 /* нижнє меню на вузьких екранах: усі 6 вкладок уміщаються */
 @media (max-width:360px){#tabbar button{font-size:10.5px;min-width:0;padding-left:0;padding-right:0}#tabbar button small,#tabbar button span{font-size:10.5px}#tabbar{padding-left:4px!important;padding-right:4px!important}}
+/* ===== різні пристрої (16.11.2026, рішення автора: «щоб дизайн пристосовувався до телефонів, планшетів…») ===== */
+/* телефон горизонтально: нерухомі екрани (старт, Світлик, самооцінка) не вміщаються по висоті — знімаємо закріплення, дозволяємо прокрутку;
+   старт — у дві колонки: орбіта ліворуч, логотип, текст і мови праворуч */
+@media (orientation:landscape) and (max-height:540px){
+  html:has(#app>.nf-launch),html:has(#app>.nf-guide),html:has(#app>.pt-self),
+  body:has(#app>.nf-launch),body:has(#app>.nf-guide),body:has(#app>.pt-self){overflow:auto!important;height:auto!important;touch-action:auto!important}
+  #app>.nf-guide,#app>.pt-self{height:auto!important;min-height:0!important;overflow:visible!important}
+  #app>.nf-launch{height:auto!important;overflow:visible!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px;align-items:center;padding-bottom:16px}
+  #app>.nf-launch>.nf-orbit-top{grid-column:1;grid-row:1 / span 6;margin:0 auto!important;scale:1!important}
+  #app>.nf-launch>*:not(.nf-orbit-top){grid-column:2}
+  #app>.nf-launch .nf-lead{margin-bottom:12px}
+}
+/* планшети: усе трохи більше, головна у дві колонки, нижнє меню компактне по центру */
+@media (min-width:700px) and (min-height:700px){
+  .wrap{max-width:900px}
+  #app{zoom:1.18}
+  #tabbar{max-width:600px;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important}
+  #app:has(>.nf-step){display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:22px;align-items:start}
+  #app:has(>.nf-step)>.nf-hd{grid-column:1 / -1}
+  #app:has(>.nf-step)>.nf-step{grid-column:1;grid-row:2 / span 8}
+  #app:has(>.nf-step)>*:not(.nf-hd):not(.nf-step){grid-column:2}
+}
+@media (min-width:700px) and (min-height:700px){
+  /* нерухомі екрани: висота з урахуванням збільшення (zoom 1.18), щоб кнопки внизу були на екрані */
+  #app>.nf-launch,#app>.nf-guide,#app>.pt-self{height:calc((100dvh - 16px - env(safe-area-inset-top,0px)) / 1.18)!important}
+}
 </style>
 </head>
 <body>
