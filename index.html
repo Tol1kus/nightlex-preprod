@@ -11073,7 +11073,9 @@ const GOAL_LIFE={
   exam:/школ|освіт|навчанн|академічн|мислення|думки|аргумент|наука|новини|зв'язні/i,
   self:/вільний час|вихідні|хобі|друзі|кіно|серіал|музик|мистецтв|літератур|книжк|(?:^|\s)спорт|почутт|стосунк|дозвілл/i};
 const GOAL_NAMES=[['work','Робота','листи, зустрічі, співбесіда'],['travel','Подорожі','аеропорт, готель, місто'],['exam','Іспит',''],['self','Для себе','фільми, книжки, спілкування']];
-function goalMatch(t){const re=GOAL_LIFE[S.goal];if(!re||!t||typeof CUR_T==='undefined')return false;const c=CUR_T[t.id];return !!(c&&re.test(c.life||''))}
+// данська «Іспит» — ще й суспільство, закон, історія, політика (Indfødsretsprøven / Medborgerskabsprøven, Prøve i Dansk)
+const GOAL_EXAM_DA=/школ|освіт|навчанн|академічн|мислення|думки|аргумент|новини|суспільств|закон|право|історі|політик|віра/i;
+function goalMatch(t){const re=S.goal==='exam'&&S.lang==='da'?GOAL_EXAM_DA:GOAL_LIFE[S.goal];if(!re||!t||typeof CUR_T==='undefined')return false;const c=CUR_T[t.id];return !!(c&&re.test(c.life||''))}
 {const _gp=themePrio;themePrio=function(t){const p=_gp(t);try{const c=t&&typeof CUR_T!=='undefined'&&CUR_T[t.id];
   if(c&&c.o>GOAL_KEEP&&goalMatch(t))return -4000+GOAL_KEEP+0.5+c.o/10000}catch(e){}return p}}
 function goalSheet(){if(typeof bkSheet!=='function')return;
@@ -11083,6 +11085,35 @@ function goalSet(k){S.goal=k;save();if(typeof bkClose==='function')bkClose();toa
 {const _gs=settingsScreen;settingsScreen=function(){const r=_gs.apply(this,arguments);try{if(document.querySelector('#app .goal-row'))return r;
   const anchor=[...document.querySelectorAll('#app .k-srow')].find(x=>/Час на день/.test(x.textContent));const g=GOAL_NAMES.find(x=>x[0]===(S.goal||'work'));
   if(anchor)anchor.insertAdjacentHTML('beforebegin',`<button class="k-srow goal-row" onclick="goalSheet()"><span>Мета</span><span class="k-val">${esc(g?g[1]:'')} ›</span></button>`)}catch(e){console.error(e)}return r}}
+
+/* ---------- 5 варіантів вивчення (16.11.2026, рішення автора: «щоб у 2–3 учнів, що починають, не було одне й те саме»)
+   Кожен НОВИЙ учень (для кожної мови окремо) автоматично отримує варіант 1–5 (S.variant[мова]).
+   • База A1 однакова для всіх і йде першою: алфавіт, цифри, теми «Знайомство», «Сім'я», «Числа й гроші», «Дні й дати» (VAR_BASE).
+   • Далі на кожному рівні — свій порядок БЛОКІВ тем (життєва тема плану: «Місто», «Одяг»…); усередині блоку теми по порядку плану.
+   • Блоки під мету (94_goal.js) усе одно йдуть першими після бази.
+   • Слова в темі — свій порядок (ряди: числа, дні, місяці — як були). Діалоги — як були (епізоди історії йдуть по черзі).
+   Хто вже вчився цією мовою (є вивчені слова) — варіант 0: порядок не змінюється. В автотестах (jsdom, webdriver) — 0, якщо тест не задав сам.
+   Номер варіанта видно в «Налаштуваннях» → «Додатково» (щоб тестувальник міг сказати, який у нього). ---------- */
+const VAR_N=5;
+const VAR_BASE=new Set(['Знайомство',"Сім'я",'Числа й гроші','Дні й дати']);
+function varHash(s){let h=2166136261;s=String(s);for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0)/4294967296}
+function lvVariant(lang){lang=lang||S.lang;S.variant=S.variant||{};const v=S.variant[lang];if(v!=null)return v|0;
+  let nv=0;try{const test=/jsdom/i.test(navigator.userAgent||'')||navigator.webdriver;const R=(S.srs||{})[lang]||{};const started=Object.values(R).some(x=>x&&x.lr);
+    if(!test&&!started)nv=1+Math.floor(Math.random()*VAR_N)}catch(e){}
+  S.variant[lang]=nv;try{save()}catch(e){}return nv}
+function varBase(t){const c=t&&typeof CUR_T!=='undefined'&&CUR_T[t.id];return !!(c&&(c.lv||'A1')==='A1'&&VAR_BASE.has(c.life))}
+// теми плану: база A1 → блоки під мету → решта блоків у порядку варіанта (усередині блоку — за планом)
+{const _vp=themePrio;themePrio=function(t){try{const c=t&&typeof CUR_T!=='undefined'&&CUR_T[t.id];if(!c)return _vp(t);const v=lvVariant();if(!v)return _vp(t);
+  if(varBase(t))return -4000+c.o*0.001;
+  const goal=typeof goalMatch==='function'&&goalMatch(t);
+  return -3900+(goal?0:10)+varHash(v+'|'+(c.lv||'A1')+'|'+c.life)+c.o*1e-6}catch(e){return _vp(t)}}}
+// слова в темі — свій порядок для варіанта (база A1 і ряди — як були)
+{const _vw=themeWordsNS;themeWordsNS=function(t){const ws=_vw.apply(this,arguments);try{const v=lvVariant();if(!v||!t||varBase(t)||t.special)return ws;
+  return ws.map(w=>[w,varHash(v+'|'+w.id)]).sort((a,b)=>a[1]-b[1]).map(x=>x[0])}catch(e){return ws}}}
+// діалоги НЕ перемішуємо: на A1 це епізоди історії «Друге життя» (ep_*), що йдуть по черзі
+// «Налаштування» → «Додатково»: номер варіанта
+{const _vs=settingsScreen;settingsScreen=function(){const r=_vs.apply(this,arguments);try{const m=document.querySelector('#app details.k-more');if(!m||m.querySelector('.var-row'))return r;
+  const v=lvVariant();m.insertAdjacentHTML('beforeend',`<div class="k-srow var-row"><span>Варіант навчання<small class="k-sub2">порядок тем і слів після бази; у кожного свій</small></span><span class="k-val">${v?v+' з '+VAR_N:'звичайний'}</span></div>`)}catch(e){console.error(e)}return r}}
 
 bootApp();bigLoad();
 </script>
