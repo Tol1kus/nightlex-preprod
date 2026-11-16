@@ -3091,6 +3091,61 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .r9-t>svg{flex:none;width:18px;height:18px;color:var(--mut);margin-left:auto}
 .r9-tx{display:flex;flex-direction:column;min-width:0;gap:1px}.r9-tx b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .r9-tx small{font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.r9-tx em{font-style:normal;font-size:11.5px;color:var(--lime-t)}
+
+/* ---------- «Розмова» — покращення (90_talk_plus.js, 16.11.2026) ---------- */
+.tk-next.t9-hero{padding:16px 16px 14px;border-radius:24px;overflow:hidden}
+.t9-hero .nf-step-top{display:grid!important;grid-template-columns:56px 1fr;column-gap:12px;row-gap:2px;align-items:center;margin-bottom:12px}
+.t9-hero .nf-step-top>.t9-pic{grid-column:1;grid-row:1 / span 2;width:56px;height:56px}
+.t9-hero .nf-step-top>small{grid-column:2;align-self:end}
+.t9-hero .nf-step-top>.nf-step-t{grid-column:2;align-self:start;font-size:clamp(22px,6.6vw,27px);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t9-hero .nf-step-top>p{grid-column:1 / -1;margin:10px 0 0;font-size:14px;line-height:1.4;-webkit-line-clamp:2!important}
+.t9-hero .nf-cta{min-height:48px;font-size:16px}
+.tk-lvs .gref-lvc .gp-bar{margin-top:4px}
+.t9-next{margin-top:2px}.t9-next .bk-sec{margin-top:6px}
+.t9-next+.sp-cards{margin-top:2px}
+.sp-card.sp-main .sp-t{min-width:0;flex:1}.sp-card.sp-main .gp-bar{margin-top:6px}
+.t9-sec{margin-top:14px}
+.t9-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.sp-card.t9-tile{flex-direction:column;align-items:flex-start;gap:8px;min-height:0;padding:12px 12px 14px;border-radius:18px}
+.sp-card.t9-tile>svg:last-child{display:none}
+.sp-card.t9-tile .sp-ic{width:38px;height:38px;border-radius:12px}.sp-card.t9-tile .sp-ic svg{width:19px;height:19px}
+.sp-card.t9-tile .sp-t b{font-size:14.5px;line-height:1.2}
+.sp-card.t9-tile .sp-t small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px;line-height:1.3}
+.t9-grid+.sk-note{margin-top:0}
+.t9-grid>.t9-tile:last-child:nth-child(odd){grid-column:1 / -1;flex-direction:row;align-items:center;gap:12px}
+.r9-pic:has(>svg.ic){background:color-mix(in srgb,var(--lime) 20%,var(--s2));color:var(--lime-t)}
+
+/* ---------- «Словник» і «Я» — покращення (91_dict_me_plus.js, 16.11.2026) ---------- */
+.d9-sum{display:flex;align-items:center;gap:6px;margin:10px 0 0;padding:10px 10px 10px 14px;border-radius:20px;background:linear-gradient(180deg,color-mix(in srgb,var(--lime) 9%,var(--s1)),var(--s1));border:1px solid color-mix(in srgb,var(--lime) 30%,var(--line))}
+.d9-n{flex:1;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.d9-n b{font:800 20px/1.1 var(--display);color:var(--ink)}.d9-n small{font-size:11.5px;color:var(--mut);margin-top:2px}
+.d9-go{flex:none;width:auto!important;min-height:40px;padding:0 14px;font-size:14px;border-radius:14px;display:inline-flex;align-items:center;gap:6px}.d9-go svg{width:16px;height:16px}
+.d9-ok{flex:none;display:flex;flex-direction:column;align-items:center;color:var(--ok);min-width:72px}.d9-ok svg{width:20px;height:20px}.d9-ok small{font-size:11px;color:var(--mut)}
+.d9-empty{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:12px 14px;border-radius:18px;border:1px dashed color-mix(in srgb,var(--mut) 45%,transparent);text-align:left}
+.d9-ei{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--lime) 18%,var(--s2));color:var(--lime-t)}.d9-ei svg{width:20px;height:20px}
+.d9-empty b{display:block;font-size:14.5px}.d9-empty small{display:block;font-size:12.5px;color:var(--mut);line-height:1.35;margin-top:2px}
+.nf-me.m9{margin-bottom:10px}
+.nf-me.m9 .nf-ring{zoom:.74;margin:0 auto}
+.m9-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 8px}
+.m9-t{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:18px;background:var(--s1);border:1px solid var(--line)}
+.m9-t svg{width:18px;height:18px}.m9-t.am svg{color:var(--amber,#E8B04B)}.m9-t.ok svg{color:var(--ok)}.m9-t.sk svg{color:var(--sky,var(--mut))}
+.m9-t b{font:800 20px/1.1 var(--display);color:var(--ink)}.m9-t b em{font-style:normal;font-size:13px;color:var(--mut);font-weight:700}
+.m9-t small{font-size:11px;color:var(--mut);line-height:1.2}
+.m9-wk{padding:10px 12px;border-radius:18px;background:var(--s1);border:1px solid var(--line);text-align:left}
+.m9-wk-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}.m9-wk-h b{font-size:14px}.m9-wk-h small{font-size:12px;color:var(--mut)}
+.m9-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.m9-d{display:flex;flex-direction:column;align-items:center;gap:3px}
+.m9-d i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1.5px solid color-mix(in srgb,var(--mut) 40%,transparent);color:#fff}
+.m9-d i svg{width:14px;height:14px}.m9-d small{font-size:10.5px;color:var(--mut)}
+.m9-d.on i{background:var(--lime);border-color:var(--lime);color:var(--on-lime,#111)}
+.m9-d.now i{box-shadow:0 0 0 2px color-mix(in srgb,var(--lime) 45%,transparent)}.m9-d.now small{color:var(--ink);font-weight:700}
+.m9-d.fut i{opacity:.45}
+.nf-pcs.m9{gap:0;background:var(--s1);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.nf-pcs.m9 .nf-pc{border:0;border-radius:0;background:transparent;padding:10px 14px;gap:12px}
+.nf-pcs.m9 .nf-pc+.nf-pc{border-top:1px solid var(--line)}
+.nf-pcs.m9 .nf-pc-i{width:40px;height:40px;border-radius:13px}.nf-pcs.m9 .nf-pc-i svg{width:20px;height:20px}
+.nf-pcs.m9 .nf-pc b{font-size:15.5px}.nf-pcs.m9 .nf-pc small{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--mut)}
+.nf-pcs.m9 .nf-pc>svg{width:18px;height:18px}
 </style>
 </head>
 <body>
@@ -7862,7 +7917,7 @@ launchScreen=function(){
   // 15.11.2026: заставка з новим логотипом (N + лавандова зірочка): плитка вистрибує, N піднімається, зірочка прилітає по дузі й спалахує
   sp.classList.add('nl-sp');
   const tw=[[12,16,4],[84,10,3],[90,52,5],[7,64,3],[24,86,4],[74,82,3],[48,6,3],[60,30,2]].map(([x,y,s],i)=>`<svg class="nl-tw" style="left:${x}%;top:${y}%;width:${s*5}px;height:${s*5}px;animation-delay:${(.2+i*.19).toFixed(2)}s" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg>`).join('');
-  sp.innerHTML=`${tw}<div class="nl-glow"></div><div class="nl-tile"><span class="nl-n">N</span><svg class="nl-star" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg><i class="nl-burst"></i></div><b class="nl-word">Nightlex</b><small class="nl-sub">англійська · данська</small>`;
+  sp.innerHTML=`${tw}<div class="nl-glow"></div><div class="nl-tile"><span class="nl-n">N</span><svg class="nl-star" viewBox="-10 -10 20 20"><path d="${nfSpark(0,0,9)}"/></svg><i class="nl-burst"></i></div><b class="nl-word">Nightlex</b>`;
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
   sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,2700);
 };
@@ -10826,17 +10881,18 @@ rdPop=function(el){const had=!!el.querySelector(':scope > .rp-gl');rdPopClose();
    у картках груп — смужка й «Далі: …»; під групами — «Почни з цих»: 3 наступні непрочитані тексти рівня ---------- */
 const R9_SKIP=/^(the|and|with|from|for|that|how|its|our|who|what|one|two|three|four|five|six|seven|eight|nine|ten|red|blue|green|yellow|brown|black|white|grey|gray|pink|orange|purple|big|small|famous)$/i;
 function r9Forms(x){const f=[x];if(/ies$/i.test(x))f.push(x.slice(0,-3)+'y');if(/(s|x|ch|sh)es$/i.test(x))f.push(x.slice(0,-2));if(/s$/i.test(x))f.push(x.slice(0,-1));return f}
+function r9EmojiPic(str){try{const em=[...String(str||'')].filter(c=>/\p{Extended_Pictographic}/u.test(c)).map(c=>c.replace(/\uFE0F/g,''));
+  for(const e of em){const w=WORDS.find(x=>x.img&&x.pic&&x.pic.replace(/\uFE0F/g,'')===e&&typeof PICS!=='undefined'&&PICS[x.img]);if(w)return picHTML(w)}}catch(e){}return ''}
 function r9Pic(t){try{const ok=x=>x&&x.length>2&&!R9_SKIP.test(x);
   const ws=String(t.title||'').replace(/[^A-Za-z' ]/g,' ').split(/\s+/).filter(ok).reverse().flatMap(r9Forms);
   let p=rdPicFor(ws);if(p)return p;
   // емодзі тексту (t.pic) → слово з тим самим емодзі й малюнком
-  const em=[...String(t.pic||'')].filter(c=>/\p{Extended_Pictographic}/u.test(c)).map(c=>c.replace(/\uFE0F/g,''));
-  for(const e of em){const w=WORDS.find(x=>x.img&&x.pic&&x.pic.replace(/\uFE0F/g,'')===e&&typeof PICS!=='undefined'&&PICS[x.img]);if(w)return picHTML(w)}
+  p=r9EmojiPic(t.pic);if(p)return p;
   return rdPicFor(rdNw(t).map(x=>x[0]).filter(ok).flatMap(r9Forms))||''}catch(e){return ''}}
 function r9Meta(t){let nw=0;try{nw=rdNw(t).length}catch(e){}const m=typeof tpReadMin==='function'?tpReadMin(t):rdMins(t);
   return `≈ ${m} хв${nw?` · ${nw} ${pluralUk(nw,['нове слово','нові слова','нових слів'])}`:''}`}
 function r9Lock(){return `<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>`}
-function r9Enhance(){try{const a=document.getElementById('app');if(!a||a.dataset.r9)return;const ts=textsFor(true);if(!a.querySelector('.gref-lvs'))return;a.dataset.r9='1';
+function r9Enhance(){try{const a=document.getElementById('app');const lvs=a&&a.querySelector('.gref-lvs');if(!lvs||lvs.dataset.r9)return;lvs.dataset.r9='1';const ts=textsFor(true);
   const lv=typeof rdLv==='function'?rdLv(ts):'A1';
   // текст дня
   const td=a.querySelector('.tp-tod');if(td){const m=(td.getAttribute('onclick')||'').match(/openText\((\d+)\)/),t=m&&ts.find(x=>x.idx===+m[1]);
@@ -10856,6 +10912,93 @@ function r9Enhance(){try{const a=document.getElementById('app');if(!a||a.dataset
     const anchor=a.querySelector('.bk-list')||list;if(anchor)anchor.insertAdjacentHTML('afterend',html)}
  }catch(e){console.error(e)}}
 {const _r9=readTab;readTab=function(){const r=_r9.apply(this,arguments);r9Enhance();return r}}
+
+/* ---------- «Розмова» (вкладка) — покращення без зміни вмісту (16.11.2026, прохання автора: «покращ, оптимізуй і удоскональ»):
+   головна картка діалогу компактніша й з картинкою; чипи рівнів — смужка прогресу, закриті — замок (як у «Читанні»);
+   «Далі на рівні» — 2 наступні діалоги; «Діалоги з життя» — смужка замість «0/60»; вимова й фрази — плитками у дві колонки ---------- */
+const T9_SHORT={'Повтори за мною':'послухай і скажи вголос','Звуки й вимова':'th, w / v, ship / sheep, r','Фрази дня':'готові фрази для життя','Вимова вголос':'скажи слова дня — мікрофон перевірить'};
+function t9Pic(s){return (typeof r9EmojiPic==='function'&&r9EmojiPic(s&&s.icon))||icn('chat')}
+function t9Steps(s){const n=((s.langs[S.lang]||{}).steps||[]).length;return `${n} ${pluralUk(n,['крок','кроки','кроків'])}`}
+function t9Enhance(){try{const a=document.getElementById('app');const sc=a&&a.querySelector('.sp-cards');if(!sc||sc.dataset.t9)return;sc.dataset.t9='1';
+  const ds=dialogsFor(),D=((S.dlg||{})[S.lang])||{},hi=typeof tpNextDialog==='function'?tpNextDialog():-1;
+  // 1) головна картка: картинка ліворуч, назва менша, опис — 2 рядки
+  const hero=a.querySelector('.tk-next.nf-step');
+  if(hero&&hi>=0){const top=hero.querySelector('.nf-step-top');if(top)top.insertAdjacentHTML('afterbegin',`<span class="r9-pic t9-pic">${t9Pic(ds[hi])}</span>`);hero.classList.add('t9-hero')}
+  // 2) чипи рівнів: замок / смужка прогресу
+  a.querySelectorAll('.tk-lvs .gref-lvc').forEach(c=>{const s=c.querySelector('small');if(!s)return;
+    if(c.classList.contains('lk')){if(typeof r9Lock==='function')s.innerHTML=r9Lock();return}
+    const m=s.textContent.match(/^(\d+)\/(\d+)/);if(m&&typeof gpBar==='function'&&!c.querySelector('.gp-bar'))c.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))});
+  const cards=a.querySelector('.sp-cards');
+  // 3) «Діалоги з життя»: смужка прогресу замість «0/60»
+  const main=cards.querySelector('.sp-main');
+  if(main){const dn=ds.filter(s=>D[s.id]!=null).length,em=main.querySelector(':scope > em'),t=main.querySelector('.sp-t');if(em)em.remove();
+    const b=main.querySelector('.sp-t b');if(b)b.textContent='Усі діалоги';
+    const sm=main.querySelector('.sp-t small');if(sm)sm.textContent=`${dn} з ${ds.length} пройдено`;
+    if(t&&typeof gpBar==='function')t.insertAdjacentHTML('beforeend',gpBar(dn,ds.length))}
+  // 4) «Далі на рівні»: 2 наступні діалоги (без того, що в головній картці)
+  const lv=hi>=0?(ds[hi].lv||'A1'):(typeof maxLv==='function'?maxLv():'A1');
+  const nx=ds.map((s,i)=>({s,i})).filter(o=>o.i!==hi&&D[o.s.id]==null&&(o.s.lv||'A1')===lv&&(typeof lvOK!=='function'||lvOK(lv))).slice(0,2);
+  if(nx.length)cards.insertAdjacentHTML('beforebegin',`<div class="t9-next"><div class="bk-sec">Далі на ${esc(lv)}</div>${nx.map(o=>`<button class="r9-t" onclick="dialogPlay(${o.i})"><span class="r9-pic">${t9Pic(o.s)}</span><span class="r9-tx"><b>${esc(dlgTitle(o.s))}</b><small>${esc(String(dlgIntro(o.s)||''))}</small><em>${esc(o.s.lv||'A1')} · ${t9Steps(o.s)}</em></span>${icn('chev')}</button>`).join('')}</div>`);
+  // 5) вимова й фрази — плитками у дві колонки
+  const rest=[...cards.querySelectorAll(':scope > .sp-card:not(.sp-main)')];
+  if(rest.length>=2){const g=document.createElement('div');g.className='t9-grid';rest.forEach(c=>{c.classList.add('t9-tile');const b=c.querySelector('.sp-t b'),sm=c.querySelector('.sp-t small'),k=b&&T9_SHORT[b.textContent.trim()];if(k&&sm)sm.textContent=k;g.appendChild(c)});
+    cards.insertAdjacentHTML('afterend','<div class="bk-sec t9-sec">Вимова й фрази</div>');cards.nextElementSibling.after(g)}
+ }catch(e){console.error(e)}}
+{const _t9=talkTab;talkTab=function(){const r=_t9.apply(this,arguments);t9Enhance();return r}}
+
+/* ---------- «Словник» і «Я» — покращення без зміни вмісту (16.11.2026, прохання автора: «оптимізуй, удоскональ»)
+   Словник: зведення «Вчу · Знаю · Повторити» з кнопкою повтору; порожні «Мої» — підказка й «Нещодавно вивчені» з уроків.
+   Я: менше кільце, три цифри плитками, «Цей тиждень» (7 днів), рядки однією згрупованою карткою з короткими підписами — усе на один екран ---------- */
+function d9Counts(){const ws=WORDS.filter(w=>w[S.lang]);let learn=0,know=0;
+  ws.forEach(w=>{const x=st(w);if(!x)return;if(learned(w))know++;else if(x.lr)learn++});
+  let due=0;try{due=dueWords().filter(w=>w[S.lang]).length}catch(e){}return {learn,know,due}}
+function d9Review(){const due=dueWords().filter(w=>w[S.lang]);if(!due.length)return toast('Повторювати поки нічого');
+  if(typeof reviewDone==='function'&&!reviewDone()&&typeof startBlock==='function')return startBlock('review');
+  runSession(due.slice(0,15).map(w=>({kind:reviewKind(w),w,toUk:dirToUk(),phase:'Повторення'})),{title:'Повторено!',back:myDict,backLabel:'До словника'})}
+function d9SumHTML(){const c=d9Counts(),n=(v,t)=>`<span class="d9-n"><b>${v}</b><small>${t}</small></span>`;
+  return `<section class="d9-sum">${n(c.learn,'вчу')}${n(c.know,'знаю')}${n(c.due,'повторити')}
+    ${c.due?`<button class="btn d9-go" onclick="d9Review()">${icn('refresh')} Повторити</button>`:`<span class="d9-ok">${icn('check')}<small>${c.learn+c.know?'на сьогодні все':'почни урок'}</small></span>`}</section>`}
+function d9Recent(){return WORDS.filter(w=>w[S.lang]&&st(w)&&st(w).lr).sort((a,b)=>String(st(b).lr).localeCompare(String(st(a).lr))).slice(0,10)
+  .map(w=>({id:w.id,fg:w[S.lang],uk:w.uk,img:w.img||'',w,ref:true}))}
+{const _d9=myDict;myDict=function(){const r=_d9.apply(this,arguments);try{const hd=document.querySelector('#app .dv-hd');
+  if(hd&&!document.querySelector('#app .d9-sum'))hd.insertAdjacentHTML('afterend',d9SumHTML())}catch(e){console.error(e)}return r}}
+{const _d9l=dvRenderList;dvRenderList=function(){const r=_d9l.apply(this,arguments);try{const box_=document.getElementById('dvList');
+  if(!box_||DV.tab!=='my'||(DV.q||'').trim()||!box_.querySelector('.dv-empty'))return r;
+  const rc=d9Recent();
+  box_.innerHTML=`<div class="d9-empty"><span class="d9-ei">${icn('bookopen')}</span><div><b>Тут — твої власні слова</b><small>Торкнись слова в тексті або напиши його вгорі — і воно з'явиться тут</small></div></div>
+    ${rc.length?`<div class="bk-sec">Нещодавно вивчені</div><ul class="dv-list">${rc.map(dvRow).join('')}</ul>`:''}`}catch(e){console.error(e)}return r}}
+
+const M9_SUB={'Прогрес':'звіт за тиждень і досягнення','Тест рівня':'заново або наступний рівень','Налаштування':'час, звук, тема й колір'};
+function m9Week(){const t=new Date(today()+'T12:00:00'),dow=(t.getDay()+6)%7,act=S.act||{},L=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
+  const f=d=>{const x=new Date(t);x.setDate(t.getDate()+d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+  let n=0;const days=L.map((l,i)=>{const k=f(i-dow),a=act[k],on=!!(a&&((a.sec|0)>=60||(a.a|0)>0)),fut=i>dow;if(on)n++;
+    return `<span class="m9-d${on?' on':''}${i===dow?' now':''}${fut?' fut':''}"><i>${on?icn('check'):''}</i><small>${l}</small></span>`}).join('');
+  return `<div class="m9-wk"><div class="m9-wk-h"><b>Цей тиждень</b><small>${n} ${pluralUk(n,["день","дні","днів"])} з 7</small></div><div class="m9-days">${days}</div></div>`}
+function m9Enhance(){try{const a=document.getElementById('app'),me=a&&a.querySelector('.nf-me');if(!me||me.dataset.m9)return;me.dataset.m9='1';me.classList.add('m9');const pcs=a.querySelector('.nf-pcs');if(pcs)pcs.classList.add('m9');
+  const m=S.minutes||30,sec=((S.act||{})[today()]||{}).sec||0,known=WORDS.filter(w=>w[S.lang]&&learned(w)).length;
+  const ch=me.querySelector('.nf-chips');const tile=(cls,ic,v,t)=>`<span class="m9-t ${cls}">${icn(ic)}<b>${v}</b><small>${t}</small></span>`;
+  const html=`<div class="m9-stats">${tile('am','flame',S.streak|0,pluralUk(S.streak|0,['день поспіль','дні поспіль','днів поспіль']))}${tile('ok','check',known,pluralUk(known,['слово знаєш','слова знаєш','слів знаєш']))}${tile('sk','clock',`${Math.floor(sec/60)}<em>/${m}</em>`,'хв сьогодні')}</div>${m9Week()}`;
+  if(ch)ch.outerHTML=html;else me.insertAdjacentHTML('beforeend',html);
+  a.querySelectorAll('.nf-pcs .nf-pc').forEach(p=>{const b=p.querySelector('b'),sm=p.querySelector('small');if(!b||!sm)return;const k=b.textContent.trim();
+    if(M9_SUB[k])sm.textContent=M9_SUB[k];if(/^Мова:/.test(k))sm.textContent='змінити · прогрес кожної мови окремий';
+    if(k==='Тест рівня'){const i=p.querySelector('.nf-pc-i');if(i)i.innerHTML=icn('target')}
+    if(k==='Налаштування'){const i=p.querySelector('.nf-pc-i');if(i&&IC.gear)i.innerHTML=icn('gear')}})
+ }catch(e){console.error(e)}}
+{const _m9=meScreen;meScreen=function(){const r=_m9.apply(this,arguments);m9Enhance();return r}}
+
+/* ---------- Перший запуск: «Троянда» і нічна тема (16.11.2026, рішення автора)
+   Новий користувач у день першого запуску завжди бачить колір «Троянда» і нічну тему.
+   З наступного дня — як і раніше: колір щодня новий (S.pal='auto'), а в «Налаштуваннях» людина сама обирає колір і тему.
+   S.firstRun — дата першого запуску; ставиться лише новим (без онбордингу, без днів занять), наявних користувачів не чіпає. ---------- */
+try{if(!S.firstRun&&!S.onb&&!S.lastDay&&!Object.keys(S.act||{}).length){S.firstRun=today();if(!S.theme)S.theme='dark'}}catch(e){}
+function frIsFirstDay(){return !!(S.firstRun&&S.firstRun===today())}
+{const _frPal=palToday;palToday=function(){if(frIsFirstDay()&&(!S.pal||S.pal==='auto')){const r=PALS.find(p=>p[0]==='rose');if(r)return r}return _frPal.apply(this,arguments)}}
+/* Голос за замовчуванням (16.11.2026, рішення автора): англійська — Samantha (голос Apple en-US: iPhone, iPad, Mac).
+   Samantha не говорить данською, тож для данської — Sara (голос Apple da-DK). Якщо такого голосу на пристрої немає
+   (Android, Windows) — найкращий наявний, як і раніше. Обраний у «Налаштуваннях» голос (S.voice) завжди важливіший. */
+const FR_VOICE={'en-US':/\bsamantha\b/i,'da-DK':/\bsara\b/i};
+{const _frVs=voiceScore;voiceScore=function(v,loc){const s=_frVs(v,loc);const re=FR_VOICE[loc];
+  return s>=0&&re&&re.test(v.name||'')&&String(v.lang||'').replace('_','-').toLowerCase()===loc.toLowerCase()?s+100:s}}
 
 bootApp();bigLoad();
 </script>
