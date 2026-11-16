@@ -2950,6 +2950,21 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .nf-splash.nl-sp,:root[data-theme="light"] .nf-splash.nl-sp{background:transparent!important}
 .nf-splash.nl-sp{display:flex;flex-direction:column;align-items:center;justify-content:center}
 .nl-glow{left:50%;top:50%;margin:0;transform:translate(-50%,calc(-50% - 52px))}
+/* ===== «Сьогодні»: покращення (84_home_plus.js, 16.11.2026) ===== */
+.nf-wt-p.hp-l{background:linear-gradient(150deg,color-mix(in srgb,var(--lime) 30%,var(--s1)),color-mix(in srgb,var(--lime) 10%,var(--s1)))!important;border-color:color-mix(in srgb,var(--lime) 35%,transparent)!important}
+.hp-ltr{font:700 30px/1 Literata,Georgia,serif;color:var(--lime);text-shadow:0 0 14px color-mix(in srgb,var(--lime) 45%,transparent)}
+:root[data-theme="light"] .hp-ltr{color:var(--lime-t);text-shadow:none}
+.nf-wt.more{align-self:flex-start}
+.nf-step{position:relative;overflow:hidden}
+.nf-step::before{content:"";position:absolute;right:-60px;top:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--lime) 22%,transparent) 0%,transparent 70%);pointer-events:none}
+.hp-tw{position:absolute;fill:var(--lime);opacity:0;animation:nlTw 2.6s ease-in-out infinite;pointer-events:none}
+:root[data-theme="light"] .hp-tw{fill:var(--lime-t)}
+.wg-dots span.today i{box-shadow:0 0 0 0 color-mix(in srgb,var(--lime) 55%,transparent);animation:hpPulse 2.2s ease-in-out infinite}
+.wg-dots span.on i{box-shadow:0 0 12px color-mix(in srgb,var(--lime) 55%,transparent)}
+@keyframes hpPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--lime) 50%,transparent)}50%{box-shadow:0 0 0 7px transparent}}
+@media (prefers-reduced-motion:reduce){.hp-tw,.wg-dots span.today i{animation:none}}
+/* нижнє меню на вузьких екранах: усі 6 вкладок уміщаються */
+@media (max-width:360px){#tabbar button{font-size:10.5px;min-width:0;padding-left:0;padding-right:0}#tabbar button small,#tabbar button span{font-size:10.5px}#tabbar{padding-left:4px!important;padding-right:4px!important}}
 </style>
 </head>
 <body>
@@ -10553,6 +10568,20 @@ function lpCssHex(css){try{const d=document.createElement('i');d.style.cssText='
   return '#'+[1,2,3].map(i=>Math.round(Math.max(0,Math.min(255,+m[i]*(255/k)))).toString(16).padStart(2,'0')).join('')}catch(e){return ''}}
 {const _lpAt=applyTheme;applyTheme=function(){const r=_lpAt.apply(this,arguments);try{const m=document.querySelector('meta[name=theme-color]');if(!m||!document.body)return r;
   const top=lpCssHex(isDark()?'color-mix(in srgb,var(--bg) 70%,#000)':'color-mix(in srgb,var(--lime) 34%,var(--bg))');if(top)m.content=top}catch(e){}return r}}
+
+/* ---------- «Сьогодні» — покращення без зміни вмісту (16.11.2026, рішення автора: «покращити та удосконалити»):
+   слова без малюнка — плитка з першою літерою (шрифт логотипа) замість порожнього значка; зірочки на картці кроку;
+   «+N» вирівняно з плитками; сьогоднішній день у «Цілі тижня» світиться; нижнє меню вміщається на вузьких екранах ---------- */
+function hpLetterTiles(root){root.querySelectorAll('.nf-wt').forEach(t=>{const p=t.querySelector('.nf-wt-p');if(!p||!p.querySelector('.pic-scene'))return;
+  const w=(t.querySelector('small')||{}).textContent||'',L=(w.replace(/^(to|a|an|the|at|en|et)\s+/i,'').trim()[0]||'').toUpperCase();
+  if(!L)return;p.innerHTML=`<span class="hp-ltr" aria-hidden="true">${esc(L)}</span>`;p.classList.add('hp-l')})}
+function hpHome(){try{const app=document.getElementById('app');if(!app)return;
+  hpLetterTiles(app);
+  const st=app.querySelector('.nf-step');if(st&&!st.querySelector('.hp-tw'))st.insertAdjacentHTML('afterbegin',[[86,10,4],[93,28,2.5],[78,20,2]].map(([x,y,s],i)=>
+    `<svg class="hp-tw" style="left:${x}%;top:${y}%;width:${s*5}px;height:${s*5}px;animation-delay:${(i*.6).toFixed(1)}s" viewBox="-10 -10 20 20" aria-hidden="true"><path d="${nfSpark(0,0,9)}"/></svg>`).join(''))
+ }catch(e){console.error(e)}}
+on('home:after',hpHome);
+{const _hpHome=home;home=function(){const r=_hpHome.apply(this,arguments);hpHome();return r}}
 
 bootApp();bigLoad();
 </script>
