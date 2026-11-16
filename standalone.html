@@ -3159,6 +3159,20 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .pt-new b{display:block;font-size:15px}.pt-new small{display:block;font-size:12.5px;color:var(--mut)}
 .pt-new:focus-visible{outline:2px solid var(--lime);outline-offset:2px}.pt-new:active{transform:scale(.98)}
 @media (max-height:700px){.pt-bars{width:36px;height:36px;padding-bottom:9px}.pt-new{padding:8px 14px}}
+
+/* ---------- мова інтерфейсу: кнопка в кутку старту (93_ui_lang.js, 16.11.2026) ---------- */
+#app>.nf-launch{position:relative}
+.ul-btn{all:unset;box-sizing:border-box;cursor:pointer;position:absolute;top:6px;right:0;z-index:5;display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 11px 0 9px;border-radius:999px;background:color-mix(in srgb,var(--s1) 85%,transparent);border:1px solid var(--line);color:var(--ink);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ul-btn svg{width:16px;height:16px;color:var(--lime-t)}.ul-btn b{font:800 12.5px/1 var(--body,inherit);letter-spacing:.04em}
+.ul-btn:focus-visible{outline:2px solid var(--lime);outline-offset:2px}.ul-btn:active{transform:scale(.96)}
+.bk-pic.ul-pic{flex:none;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--lime) 18%,var(--s2));color:var(--lime-t)}.ul-pic svg{width:22px;height:22px}
+.ul-o{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:var(--s1);margin-bottom:8px}
+.ul-o.on{border-color:color-mix(in srgb,var(--lime) 55%,transparent);background:color-mix(in srgb,var(--lime) 10%,var(--s1))}
+.ul-code{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font:800 13px/1 var(--body,inherit);background:var(--s2);color:var(--mut)}
+.ul-o.on .ul-code{background:var(--lime);color:var(--on-lime,#111)}
+.ul-t{flex:1;min-width:0;display:flex;flex-direction:column}.ul-t b{font-size:15.5px}.ul-t small{font-size:12px;color:var(--mut)}
+.ul-o>svg{flex:none;width:20px;height:20px;color:var(--lime-t)}
+.ul-o:not(.on){opacity:.75}
 </style>
 </head>
 <body>
@@ -22779,6 +22793,19 @@ function frIsFirstDay(){return !!(S.firstRun&&S.firstRun===today())}
 const FR_VOICE={'en-US':/\bsamantha\b/i,'da-DK':/\bsara\b/i};
 {const _frVs=voiceScore;voiceScore=function(v,loc){const s=_frVs(v,loc);const re=FR_VOICE[loc];
   return s>=0&&re&&re.test(v.name||'')&&String(v.lang||'').replace('_','-').toLowerCase()===loc.toLowerCase()?s+100:s}}
+
+/* ---------- Мова інтерфейсу — перемикач у кутку старту (16.11.2026, рішення автора: «перемикач зараз, переклад потім»)
+   Зараз діє лише українська; English і Dansk позначені «скоро» — переклад інтерфейсу буде після тестувальників
+   (план — пам'ять multilang-plan: рядки в словники → англійський інтерфейс → данський). ---------- */
+const UI_LANGS=[['uk','UA','Українська','',true],['en','EN','English','coming soon',false],['da','DA','Dansk','kommer snart',false]];
+function ulBtnHTML(){return `<button class="ul-btn" onclick="ulSheet()" aria-label="Мова інтерфейсу: українська">${icn('globe')}<b>UA</b></button>`}
+function ulSheet(){if(typeof bkSheet!=='function')return;
+  bkSheet(`<span class="bk-pic ul-pic">${icn('globe')}</span>`,'Мова інтерфейсу','Interface language · Sprog',
+    UI_LANGS.map(([k,code,name,soon,on])=>`<li><button class="ul-o${on?' on':''}" onclick="ulPick('${k}')" ${on?'aria-current="true"':''}><span class="ul-code">${code}</span><span class="ul-t"><b>${name}</b>${soon?`<small>${soon}</small>`:''}</span>${on?icn('check'):''}</button></li>`).join(''))}
+function ulPick(k){const o=UI_LANGS.find(x=>x[0]===k);if(!o)return;if(o[4]){if(typeof bkClose==='function')bkClose();return}
+  toast(k==='en'?'English interface — coming soon':'Dansk brugerflade — kommer snart')}
+{const _ul=launchScreen;launchScreen=function(){const r=_ul.apply(this,arguments);try{const root=document.querySelector('#app .nf-launch');
+  if(root&&!root.querySelector('.ul-btn'))root.insertAdjacentHTML('afterbegin',ulBtnHTML())}catch(e){console.error(e)}return r}}
 
 bootApp();bigLoad();
 </script>
