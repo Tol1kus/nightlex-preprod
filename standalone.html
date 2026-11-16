@@ -3195,6 +3195,9 @@ body:has(#app>.ds-goalscr){padding-bottom:0!important}
 .nf-launch-in .ul-btn{opacity:0;animation:nfLaunchIn .5s ease 2.9s forwards}
 .nf-launch-in.nf-quick .ul-btn{animation-delay:.35s}
 @media (prefers-reduced-motion:reduce){.nf-launch-in .ul-btn{opacity:1;animation:none}}
+/* кільце рівня у світлій темі: доріжки сегментів і внутрішнє коло контрастніші (були кольору картки й зливались із фоном); 16.11.2026 */
+:root[data-theme="light"] .nf-ring svg path[stroke="var(--s2)"],:root[data-theme="light"] .nf-ring svg circle[stroke="var(--s2)"]{stroke:color-mix(in srgb,var(--ink) 13%,var(--bg))}
+:root[data-theme="light"] .nf-ring svg path[stroke^="color-mix"]{stroke:color-mix(in srgb,var(--lime) 45%,color-mix(in srgb,var(--ink) 13%,var(--bg)))}
 </style>
 </head>
 <body>
