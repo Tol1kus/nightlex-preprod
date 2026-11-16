@@ -2940,8 +2940,8 @@ body:has(#app>.nf-launch){height:100%;overflow:hidden;overscroll-behavior:none;t
 :root[data-theme="light"] .nf-launch .lp-bar>i,:root[data-theme="light"] .nf-launch .nf-lang.on .lp-bar>i{background:var(--lime-t)}
 /* ===== смуги Safari на iPhone (16.11.2026): зона під панеллю адреси — колір низу градієнта сторінки, а не темне тло
    (раніше html{background:var(--bg)!important} — тому тут теж !important і вища специфічність) ===== */
-html:root{background:color-mix(in srgb,var(--lime) 16%,var(--s1))!important}
-html:root[data-theme="light"]{background:color-mix(in srgb,var(--lime) 6%,#fff)!important}
+html:root{background:color-mix(in srgb,var(--bg) 70%,#000)!important}  /* 16.11.2026: колір ВЕРХУ градієнта — зона під годинником у застосунку на робочому столі (як у старій версії) */
+html:root[data-theme="light"]{background:color-mix(in srgb,var(--lime) 34%,var(--bg))!important}
 /* фон більший за екран (16.11.2026, рішення автора): градієнт і заставка виходять за краї — під годинник і під «смужку» iPhone,
    тож у застосунку на робочому столі внизу й угорі немає темних смуг */
 body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc(-160px - env(safe-area-inset-bottom,0px))!important;left:0;right:0}
