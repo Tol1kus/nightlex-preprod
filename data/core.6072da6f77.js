@@ -22,7 +22,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 приємний|nice|rar|simpatico|😊|||cur_a1_02.nice
 радий|glad|glad|contento|😀|||cur_a1_02.glad
 знайомити|to introduce|at præsentere|presentare|🤝|||cur_a1_02.to_introduce
-вітати|to greet|at hilse|salutare|🙋|||cur_a1_02.to_greet
+вітати|to greet|at hilse|salutare|🙋|hello||cur_a1_02.to_greet
 любий|dear|kære|caro|💌|||cur_a1_02.dear
 зустрічатися|to meet|at mødes|incontrarsi|🤝|meet_,_to|spotykać się|a2x01_verbs.to_meet
 #cur_a1_03|Знайомство · 2: про себе|🗣️|A1
@@ -35,7 +35,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 мова|language|et sprog|la lingua|🗣️|||cur_a1_03.language
 особистий|personal|personlig|personale|🔒|||cur_a1_03.personal
 електронний лист|email|en e-mail|l'email|📧|email||cur_a1_03.email
-мобільний телефон|cell phone|en mobiltelefon|il cellulare|📱|||cur_a1_03.cell_phone
+мобільний телефон|cell phone|en mobiltelefon|il cellulare|📱|mobile_phone||cur_a1_03.cell_phone
 адреса|address|en adresse|l'indirizzo|🏠||adres|a2x01_post_bank.address
 прізвище|surname|et efternavn|il cognome|📛||nazwisko|a1x02_meet.surname
 #cur_a1_04|Люди навколо|🤝|A1
@@ -61,13 +61,13 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 дитина|child|et barn|il bambino|🧒|young|dziecko|family.child
 сім'я|family|en familie|la famiglia|👪|family|rodzina|a1x02_family.family
 немовля|baby|en baby|il neonato|👶|baby|niemowlę|a1x02_family.baby
-мама|mom|en mor|la mamma|👩|||cur_a1_05.mom
-тато|dad|en far|il papà|👨|||cur_a1_05.dad
+мама|mom|en mor|la mamma|👩|mum_parent||cur_a1_05.mom
+тато|dad|en far|il papà|👨|dad_parent||cur_a1_05.dad
 батьки|parents|forældre|i genitori|👪|parents|rodzice|b1x02_family.parents
 #cur_a1_06|Сім'я · 2|👴|A1
 старий|old|gammel|vecchio|👴|old_person_1|stary|adj.old
-дядько|uncle|en onkel|lo zio|👨||wujek|a1x02_family.uncle
-тітка|aunt|en tante|la zia|👩||ciocia|a1x02_family.aunt
+дядько|uncle|en onkel|lo zio|👨|uncle_maternal|wujek|a1x02_family.uncle
+тітка|aunt|en tante|la zia|👩|aunt_maternal|ciocia|a1x02_family.aunt
 двоюрідний брат|cousin|en fætter|il cugino|🧑||kuzyn|a1x02_family.cousin
 чоловік (у шлюбі)|husband|en mand|il marito|🤵|husband|mąż|a1x02_family.husband
 дружина|wife|en kone|la moglie|👰|wife|żona|a1x02_family.wife
@@ -86,9 +86,9 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 сам|alone|alene|da solo|🧍|||cur_a1_07.alone
 обидва|both|begge|entrambi|✌️|both||cur_a1_07.both
 власний|own|egen|proprio|🏠|||cur_a1_07.own
-група|group|en gruppe|il gruppo|👥|||cur_a1_07.group
+група|group|en gruppe|il gruppo|👥|group_work||cur_a1_07.group
 клуб|club|en klub|il club|🏓|||cur_a1_07.club
-бійка|fight|et slagsmål|la rissa|🥊|||cur_a1_07.fight
+бійка|fight|et slagsmål|la rissa|🥊|fight_,_to||cur_a1_07.fight
 проблема|problem|et problem|il problema|❗|||cur_a1_07.problem
 разом|together|sammen|insieme|🤝||razem|a2x01_connectors.together
 сумувати (за кимось)|to miss|at savne|sentire la mancanza di|🥺||tęsknić|b1x02_relationships.to_miss
@@ -106,7 +106,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 їсти|to eat|at spise|mangiare|🍽️|eat_,_to|jeść|verbs.to_eat
 пити|to drink|at drikke|bere|🥤|drink_,_to|pić|verbs.to_drink
 їжа|food|mad|il cibo|🍲|food||cur_a1_08.food
-сік|juice|en juice|il succo|🧃|||cur_a1_08.juice
+сік|juice|en juice|il succo|🧃|orange_juice||cur_a1_08.juice
 напій|drink|en drik|la bevanda|🥤|drink||cur_a1_08.drink
 #cur_a1_09|Фрукти й овочі|🍎|A1
 яблуко|apple|et æble|la mela|🍎|apple|jabłko|food.apple
@@ -118,7 +118,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 помідор|tomato|en tomat|il pomodoro|🍅|tomato|pomidor|a1m_fruitveg.tomato
 рис|rice|ris|il riso|🍚|rice|ryż|a1x01_kitchen.rice
 квасоля|bean|en bønne|il fagiolo|🫘|||cur_a1_09.bean
-кукурудза|corn|majs|il mais|🌽|||cur_a1_09.corn
+кукурудза|corn|majs|il mais|🌽|sweetcorn||cur_a1_09.corn
 салат|salad|en salat|l'insalata|🥬|salad|sałatka|a2x01_restaurant.salad
 #cur_a1_10|Сніданок, обід, вечеря|🥞|A1
 сніданок|breakfast|morgenmad|la colazione|🥞|breakfast_1|śniadanie|a1x01_kitchen.breakfast
@@ -137,11 +137,11 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 те, що кладуть на хліб (сир, ковбаса)||pålæg|||||da_a1_new.da_paalaeg
 бутерброд по-данськи||smørrebrød|||||da_a1_new.da_smoerrebroed
 #cur_a1_11|Солодощі|😋|A1
-смачний|delicious|lækker|delizioso|😋||pyszny|a1x01_kitchen.delicious
+смачний|delicious|lækker|delizioso|😋|delicious_food|pyszny|a1x01_kitchen.delicious
 морозиво|ice cream|en is|il gelato|🍦|ice_cream|lody|a1x02_cafe.ice_cream
-цукерка|candy|slik|la caramella|🍬|||cur_a1_11.candy
+цукерка|candy|slik|la caramella|🍬|sweet||cur_a1_11.candy
 шоколад|chocolate|chokolade|il cioccolato|🍫|chocolate||cur_a1_11.chocolate
-печиво|cookie|en småkage|il biscotto|🍪|||cur_a1_11.cookie
+печиво|cookie|en småkage|il biscotto|🍪|biscuits||cur_a1_11.cookie
 лід|ice|is|il ghiaccio|🧊|||cur_a1_11.ice
 йогурт|yogurt|en yoghurt|lo yogurt|🥛|yogurt||cur_a1_11.yogurt
 солодкий|sweet|sød|dolce|🍭|sweet||cur_a1_11.sweet
@@ -153,9 +153,9 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 чашка|cup|en kop|la tazza|☕|mug_2|kubek|a1m_things.cup
 ніж|knife|en kniv|il coltello|🔪|knife|nóż|a1m_things.knife
 пляшка|bottle|en flaske|la bottiglia|🍾||butelka|a1m_things.bottle
-склянка|glass|et glas|il bicchiere|🥛||szklanka|a1x01_kitchen.glass
-різати|to cut|at skære|tagliare|🔪||kroić|a1x01_kitchen.to_cut
-наповнювати|to fill|at fylde|riempire|🫗|||cur_a1_12.to_fill
+склянка|glass|et glas|il bicchiere|🥛|glass_,_drinking|szklanka|a1x01_kitchen.glass
+різати|to cut|at skære|tagliare|🔪|cut_,_to|kroić|a1x01_kitchen.to_cut
+наповнювати|to fill|at fylde|riempire|🫗|fill_2_,_to||cur_a1_12.to_fill
 робити|to make|at lave|fare|🛠️|make_,_to||cur_a1_12.to_make
 готувати (їжу)|to cook|at lave mad|cucinare|🍳|cook_,_to|gotować|a2_daily.to_cook
 страва|dish|en ret|il piatto|🍛||danie|a2x01_restaurant.dish
@@ -168,7 +168,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 бар|bar|en bar|il bar|🍸|||cur_a1_13.bar
 замовлення|order|en bestilling|l'ordinazione|🧾|||cur_a1_13.order
 сидіти|to sit|at sidde|sedere|🪑|sit_,_to||cur_a1_13.to_sit
-куріння|smoking|rygning|il fumo|🚭|||cur_a1_13.smoking
+куріння|smoking|rygning|il fumo|🚭|smoke_,_to||cur_a1_13.smoking
 гамбургер|hamburger|en burger|l'hamburger|🍔|hamburger||cur_a1_13.hamburger
 офіціант|waiter|en tjener|il cameriere|🍽️||kelner|a2m_jobs.waiter
 офіціантка|waitress|en servitrice|la cameriera|💁‍♀️||kelnerka|a2x01_restaurant.waitress
@@ -191,7 +191,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 п'ятий|fifth|femte|quinto|🔢|||a1x02_prices.fifth
 шостий|sixth|sjette|sesto|🔢|||a1x02_prices.sixth
 #cur_a1_15|Десятки й порядок|⏲️|A1
-секунда|second|et sekund|il secondo|⏲️||sekunda|a1x01_time.second
+секунда|second|et sekund|il secondo|⏲️|second|sekunda|a1x01_time.second
 тридцять|thirty|tredive|trenta|📅|thirty|trzydzieści|a1x02_prices.thirty
 сорок|forty|fyrre|quaranta|🔢|forty||a1x02_prices.forty
 п'ятдесят|fifty|halvtreds|cinquanta|🔢|fifty|pięćdziesiąt|a1x02_prices.fifty
@@ -205,7 +205,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 сума|sum|en sum|la somma|➕|sum||cur_a1_15.sum
 #cur_a1_16|Гроші|💶|A1
 гроші|money|penge|i soldi|💶|money|pieniądze|city.money
-кредитна картка|credit card|et kreditkort|la carta di credito|💳||karta kredytowa|a1x01_shop.credit_card
+кредитна картка|credit card|et kreditkort|la carta di credito|💳|bank_card|karta kredytowa|a1x01_shop.credit_card
 решта (гроші)|change|byttepenge|il resto|🪙||reszta|a1x01_shop.change
 безкоштовний|free|gratis|gratuito|🆓||bezpłatny|a1x01_shop.free
 долар|dollar|en dollar|il dollaro|💵|||cur_a1_16.dollar
@@ -220,14 +220,14 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 дешевий|cheap|billig|economico|🪙||tani|a2_shopping.cheap
 #cur_a1_17|Котра година|🕰️|A1
 годинник|clock|et ur|l'orologio|🕰️|clock|zegar|a1m_things.clock
-час|time|tid|il tempo|⏳|||cur_a1_17.time
+час|time|tid|il tempo|⏳|clock||cur_a1_17.time
 мить|moment|et øjeblik|il momento|⏱️|||cur_a1_17.moment
-година|o'clock|klokken|in punto|🕖|||cur_a1_17.o_clock
+година|o'clock|klokken|in punto|🕖|clock||cur_a1_17.o_clock
 ранку|a.m.|om morgenen|di mattina|🌅|||cur_a1_17.a_m
 після полудня|p.m.|om eftermiddagen|del pomeriggio|🌇|||cur_a1_17.p_m
 половина|half|en halvdel|la metà|🌗|half||cur_a1_17.half
 чверть|quarter|et kvarter|il quarto|🕒|quarter||cur_a1_17.quarter
-наручний годинник|watch|et armbåndsur|l'orologio da polso|⌚|||cur_a1_17.watch
+наручний годинник|watch|et armbåndsur|l'orologio da polso|⌚|watch||cur_a1_17.watch
 пів (halv tre = 2:30)||halv|||||da_a1_new.da_halv
 чверть по||kvart over|||||da_a1_new.da_kvart_over
 за чверть||kvart i|||||da_a1_new.da_kvart_i
@@ -238,8 +238,8 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 спати|to sleep|at sove|dormire|😴|sleep_male_,_to|spać|verbs.to_sleep
 друга половина дня|afternoon|en eftermiddag|il pomeriggio|🌇|afternoon|popołudnie|a1x01_time.afternoon
 отримувати|to get|at få|ricevere|📦|get_,_to||cur_a1_18.to_get
-мити|to wash|at vaske|lavare|🧼|||cur_a1_18.to_wash
-щітка|brush|en børste|la spazzola|🪮|||cur_a1_18.brush
+мити|to wash|at vaske|lavare|🧼|wash_hands_,_to||cur_a1_18.to_wash
+щітка|brush|en børste|la spazzola|🪮|scrubbing_brush||cur_a1_18.brush
 чистити щіткою|to brush|at børste|spazzolare|🪥|||cur_a1_18.to_brush
 будити|to wake|at vække|svegliare|⏰|||cur_a1_18.to_wake
 #cur_a1_19|Як часто|🚶|A1
@@ -248,7 +248,7 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 зайнятий|busy|travl|impegnato|📅|busy|zajęty|a1x01_feelings.busy
 потім|then|så|poi|➡️|||cur_a1_19.then
 раніше|before|før|prima|⏮️|before||cur_a1_19.before
-дім|home|et hjem|la casa|🏡|||cur_a1_19.home
+дім|home|et hjem|la casa|🏡|house||cur_a1_19.home
 зазвичай|usually|normalt|di solito|🔁||zazwyczaj|a2_daily.usually
 часто|often|ofte|spesso|🔂||często|a2_daily.often
 ніколи|never|aldrig|mai|🚫||nigdy|a2_daily.never
@@ -261,10 +261,10 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 будинок|house|et hus|la casa|🏠|house|dom|home.house
 кімната|room|et værelse|la stanza|🛋️|room|pokój|home.room
 кухня|kitchen|et køkken|la cucina|🍳|cooker|kuchnia|home.kitchen
-сад|garden|en have|il giardino|🌷||ogród|a1x02_house.garden
+сад|garden|en have|il giardino|🌷|back_garden|ogród|a1x02_house.garden
 їдальня (кімната)|dining room|en spisestue|la sala da pranzo|🍽️||jadalnia|a1x02_house.dining_room
-подвір'я|yard|en gård|il cortile|🏡|||cur_a1_20.yard
-будівля|building|en bygning|l'edificio|🏢|||cur_a1_20.building
+подвір'я|yard|en gård|il cortile|🏡|back_garden||cur_a1_20.yard
+будівля|building|en bygning|l'edificio|🏢|office_block||cur_a1_20.building
 квартира|flat|en lejlighed|l'appartamento|🏢||mieszkanie|a2x01_flat.flat
 спальня|bedroom|et soveværelse|la camera da letto|🛏️||sypialnia|a2x01_flat.bedroom
 ванна кімната|bathroom|et badeværelse|il bagno|🛁||łazienka|a2x01_flat.bathroom
@@ -277,10 +277,10 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 ліжко|bed|en seng|il letto|🛏️|single_bed|łóżko|home.bed
 ванна|bath|et badekar|la vasca da bagno|🛁|bath|wanna|a1x02_house.bath
 туалет|toilet|et toilet|il gabinetto|🚽|toilet||cur_a1_21.toilet
-диван|sofa|en sofa|il divano|🛋️||kanapa|a2x02_home.sofa
+диван|sofa|en sofa|il divano|🛋️|settee_1|kanapa|a2x02_home.sofa
 письмовий стіл|desk|et skrivebord|la scrivania|🖥️|desk|biurko|a2x02_home.desk
 стіна|wall|en væg|la parete|🧱|wall|ściana|a2x02_home.wall
-душ|shower|en bruser|la doccia|🚿||prysznic|a2x02_home.shower
+душ|shower|en bruser|la doccia|🚿|shower|prysznic|a2x02_home.shower
 #cur_a1_22|Речі вдома|🔑|A1
 ключ|key|en nøgle|la chiave|🔑|key_1|klucz|home.key
 окуляри|glasses|briller|gli occhiali|👓|glasses|okulary|a1m_things.glasses
@@ -289,15 +289,15 @@ MobilePay (оплата телефоном)||MobilePay|||||da_a1_new.da_mobilepa
 ваза|vase|en vase|il vaso|🏺|vase||cur_a1_22.vase
 відро|bucket|en spand|il secchio|🪣|bucket||cur_a1_22.bucket
 обкладинка|cover|et omslag|la copertina|📕|||cur_a1_22.cover
-сміття|garbage|skrald|la spazzatura|🗑️|||cur_a1_22.garbage
-ганчірка|cloth|en klud|il panno|🧽|||cur_a1_22.cloth
+сміття|garbage|skrald|la spazzatura|🗑️|bin_bag||cur_a1_22.garbage
+ганчірка|cloth|en klud|il panno|🧽|dish_cloth||cur_a1_22.cloth
 дзвоник|bell|en klokke|il campanello|🔔|bell||cur_a1_22.bell
 #cur_a1_23|Техніка вдома|📱|A1
 телефон|phone|en telefon|il telefono|📱|mobile_phone|telefon|a1m_things.phone
 комп'ютер|computer|en computer|il computer|💻|computer_1|komputer|a1m_things.computer
 телевізор|television|et fjernsyn|la televisione|📺|flatscreen_tv|telewizor|a1m_things.television
 компакт-диск|CD|en cd|il cd|💿|||cur_a1_23.cd
-програвач компакт-дисків|CD player|en cd-afspiller|il lettore cd|🎶|||cur_a1_23.cd_player
+програвач компакт-дисків|CD player|en cd-afspiller|il lettore cd|🎶|CD_player_personal||cur_a1_23.cd_player
 DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 радіо|radio|en radio|la radio|📻|||cur_a1_23.radio
 фотоапарат|camera|et kamera|la macchina fotografica|📷|camera||cur_a1_23.camera
@@ -312,7 +312,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 прибирати|to clean|at gøre rent|pulire|🧹|clean_room|sprzątać|a2_daily.to_clean
 класти|to put|at lægge|mettere|📥|put_,_to|kłaść|a2x01_verbs.to_put
 залишати собі|to keep|at beholde|tenere|📦|keep_,_to|zatrzymywać|a2x01_verbs.to_keep
-чистий|clean|ren|pulito|✨||czysty|a2x01_adjectives.clean
+чистий|clean|ren|pulito|✨|clean_hands|czysty|a2x01_adjectives.clean
 брудний|dirty|beskidt|sporco|🪣|dirty|brudny|a2x01_adjectives.dirty
 полиця|shelf|en hylde|la mensola|📚||półka|a2x02_home.shelf
 #cur_a1_25|Магазини|🏪|A1
@@ -337,7 +337,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 завтра|tomorrow|i morgen|domani|➡️📅|tomorrow|jutro|time.tomorrow
 вчора|yesterday|i går|ieri|⬅️📅|yesterday|wczoraj|time.yesterday
 #cur_a1_29|Свята|🎂|A1
-день народження|birthday|en fødselsdag|il compleanno|🎂||urodziny|a1x01_time.birthday
+день народження|birthday|en fødselsdag|il compleanno|🎂|celebrate_birthday|urodziny|a1x01_time.birthday
 народження|birth|en fødsel|la nascita|👶|||cur_a1_29.birth
 святкування|celebration|en fejring|il festeggiamento|🎊|celebration||cur_a1_29.celebration
 веселий|merry|munter|allegro|🎄|||cur_a1_29.merry
@@ -346,10 +346,10 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 сюрприз|surprise|en overraskelse|la sorpresa|🎁|||cur_a1_29.surprise
 бажання|wish|et ønske|il desiderio|🌠|||cur_a1_29.wish
 Святвечір (24 грудня)||juleaften|||||da_a1_new.da_juleaften
-вечірка|party|en fest|la festa|🎉||impreza|a2x01_celebrations.party
-подарунок|present|en gave|il regalo|🎁||prezent|a2x01_celebrations.present
+вечірка|party|en fest|la festa|🎉|party_celebration|impreza|a2x01_celebrations.party
+подарунок|present|en gave|il regalo|🎁|present|prezent|a2x01_celebrations.present
 святкувати|to celebrate|at fejre|festeggiare|🥳|celebrate_1_,_to|świętować|a2x01_celebrations.to_celebrate
-гість|guest|en gæst|l'ospite|🧑||gość|a2x01_celebrations.guest
+гість|guest|en gæst|l'ospite|🧑|visitor_1a|gość|a2x01_celebrations.guest
 фестиваль|festival|en festival|il festival|🎪||festiwal|b2x02_media.festival
 Різдво|Christmas|jul|il Natale|🎄|Christmas|Boże Narodzenie|a2x01_celebrations.christmas
 #cur_a1_30|Тепер, потім, уже|▶️|A1
@@ -372,7 +372,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 вулиця|street|en gade|la strada|🛣️|road|ulica|city.street
 готель|hotel|et hotel|l'albergo|🏨||hotel|city.hotel
 лікарня|hospital|et hospital|l'ospedale|🏥|doctor_1a|szpital|city.hospital
-банк|bank|en bank|la banca|🏦||bank|a1x01_town.bank
+банк|bank|en bank|la banca|🏦|bank|bank|a1x01_town.bank
 парк|park|en park|il parco|🌳||park|a1x01_town.park
 кінотеатр|cinema|en biograf|il cinema|🎬||kino|a1x01_town.cinema
 церква|church|en kirke|la chiesa|⛪|church|kościół|a1x01_town.church
@@ -403,11 +403,11 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 міст|bridge|en bro|il ponte|🌉||most|a1x01_transport.bridge
 ріг (вулиці)|corner|et hjørne|l'angolo|📐||róg|a1x01_town.corner
 шлях|way|en vej|la strada|🗺️|||cur_a1_33.way
-ліворуч|left|til venstre|a sinistra|⬅️|||cur_a1_33.left
-праворуч|right|til højre|a destra|➡️|||cur_a1_33.right
+ліворуч|left|til venstre|a sinistra|⬅️|left||cur_a1_33.left
+праворуч|right|til højre|a destra|➡️|right||cur_a1_33.right
 прямо|straight|ligeud|dritto|⬆️|straight||cur_a1_33.straight
 поворот|turn|et sving|la svolta|↪️|||cur_a1_33.turn
-повертати|to turn|at dreje|girare|🔄|||cur_a1_33.to_turn
+повертати|to turn|at dreje|girare|🔄|turn_,_to||cur_a1_33.to_turn
 уздовж|along|langs|lungo|🛤️|||cur_a1_33.along
 знак|sign|et skilt|il cartello|🪧|||cur_a1_33.sign
 #cur_a1_34|Транспорт|🚆|A1
@@ -417,10 +417,10 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 велосипед|bicycle|en cykel|la bicicletta|🚲|bicycle|rower|a1x01_transport.bicycle
 літак|plane|et fly|l'aereo|✈️|plane|samolot|a1x01_transport.plane
 човен|boat|en båd|la barca|⛵|boat|łódź|a1x01_transport.boat
-корабель|ship|et skib|la nave|🚢||statek|a1x01_transport.ship
+корабель|ship|et skib|la nave|🚢|cruiser|statek|a1x01_transport.ship
 таксі|taxi|en taxa|il taxi|🚕|taxi|taksówka|a1x01_transport.taxi
-реактивний літак|jet|et jetfly|il jet|✈️|||cur_a1_34.jet
-вантажівка|truck|en lastbil|il camion|🚚|||cur_a1_34.truck
+реактивний літак|jet|et jetfly|il jet|✈️|jet_plane||cur_a1_34.jet
+вантажівка|truck|en lastbil|il camion|🚚|lorry||cur_a1_34.truck
 колесо|wheel|et hjul|la ruota|🛞|||cur_a1_34.wheel
 міська електричка (Копенгаген)||S-tog|||||da_a1_new.da_s_tog
 дорога|road|en vej|la strada|🛣️|road|droga|a1x01_transport.road
@@ -432,7 +432,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 літати|to fly|at flyve|volare|🛫||latać|a1x01_transport.to_fly
 автопрогулянка|drive|en køretur|il giro in macchina|🚗|||cur_a1_35.drive
 поїздка|ride|en tur|la corsa|🚌|||cur_a1_35.ride
-їздити верхи|to ride|at ride|cavalcare|🏇|||cur_a1_35.to_ride
+їздити верхи|to ride|at ride|cavalcare|🏇|ride_horse_,_to||cur_a1_35.to_ride
 покидати|to leave|at forlade|lasciare|🚶|||cur_a1_35.to_leave
 зупинка|stop|et stop|la fermata|🚏|||cur_a1_35.stop
 зупинятися|to stop|at stoppe|fermarsi|🛑|||cur_a1_35.to_stop
@@ -440,13 +440,13 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 місце (сидіння)|seat|en plads|il posto|💺||miejsce|a2x01_transport.seat
 #cur_a1_36|Подорожі|🗒️|A1
 план|plan|en plan|il piano|🗒️|||cur_a1_36.plan
-візит|visit|et besøg|la visita|🤝|||cur_a1_36.visit
+візит|visit|et besøg|la visita|🤝|visit_,_to||cur_a1_36.visit
 відвідувати|to visit|at besøge|visitare|🏛️|visit_,_to||cur_a1_36.to_visit
 залишатися|to stay|at blive|restare|🏨|||cur_a1_36.to_stay
 пам'ятка|sight|en seværdighed|l'attrazione|📸|||cur_a1_36.sight
 палац|palace|et palads|il palazzo|🏰|||cur_a1_36.palace
 вежа|tower|et tårn|la torre|🗼|||cur_a1_36.tower
-прапор|flag|et flag|la bandiera|🚩|||cur_a1_36.flag
+прапор|flag|et flag|la bandiera|🚩|flag_blank||cur_a1_36.flag
 світ|world|en verden|il mondo|🌍|world||cur_a1_36.world
 подорож|trip|en rejse|il viaggio|🗺️|suitcase_2|podróż|a2_travel.trip
 відпустка|holiday|en ferie|la vacanza|🏝️|sun_lounger|urlop|a2_travel.holiday
@@ -473,16 +473,16 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 серце|heart|et hjerte|il cuore|🫀|heart|serce|a1m_body.heart
 мозок|brain|en hjerne|il cervello|🧠|brain||cur_a1_38.brain
 чути|to hear|at høre|sentire|👂|hear_,_to||cur_a1_38.to_hear
-дотик|touch|en berøring|il tocco|🤚|||cur_a1_38.touch
+дотик|touch|en berøring|il tocco|🤚|touch_,_to||cur_a1_38.touch
 почуватися|to feel|at føle sig|sentirsi|😊|||cur_a1_38.to_feel
-погляд|look|et kig|l'occhiata|👀|||cur_a1_38.look
+погляд|look|et kig|l'occhiata|👀|look_,_to||cur_a1_38.look
 дивитися|to look|at kigge|guardare|👁️|look_,_to||cur_a1_38.to_look
 кістка|bone|en knogle|l'osso|🦴|bone|kość|a2x02_body.bone
 коліно|knee|et knæ|il ginocchio|🦵|knee|kolano|a2x02_body.knee
-спина|back|en ryg|la schiena|🧍||plecy|a2x02_body.back
+спина|back|en ryg|la schiena|🧍|back|plecy|a2x02_body.back
 #cur_a1_39|Здоров'я|❤️|A1
-здоров'я|health|et helbred|la salute|❤️|||cur_a1_39.health
-турбота|care|omsorg|la cura|🤲|||cur_a1_39.care
+здоров'я|health|et helbred|la salute|❤️|healthy||cur_a1_39.health
+турбота|care|omsorg|la cura|🤲|take_care_of_,_to||cur_a1_39.care
 дихати|to breathe|at trække vejret|respirare|🌬️|||cur_a1_39.to_breathe
 добре|well|godt|bene|👍|||cur_a1_39.well
 лікар|doctor|en læge|il medico|🧑‍⚕️|doctor_1a|lekarz|a2_health.doctor
@@ -493,7 +493,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 здоровий|healthy|sund|sano|🍏|healthy|zdrowy|b1_health.healthy
 надсилати|to send|at sende|spedire|📤||wysyłać|a2x01_post_bank.to_send
 #cur_a1_40|Одяг · 1|👕|A1
-одяг|clothes|tøj|i vestiti|👕|||cur_a1_40.clothes
+одяг|clothes|tøj|i vestiti|👕|clothes_generic||cur_a1_40.clothes
 джинси|jeans|jeans|i jeans|👖|jeans||cur_a1_40.jeans
 кепка|cap|en kasket|il cappellino|🧢|cap||cur_a1_40.cap
 сорочка|shirt|en skjorte|la camicia|👔|shirt|koszula|a2m_clothes.shirt
@@ -508,10 +508,10 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 носити (одяг)|to wear|at have på|indossare|👕||nosić|a2x02_shopclothes.to_wear
 чоботи|boots|støvler|gli stivali|👢|boots|kozaki|a2x02_clothes.boots
 #cur_a1_41|Одяг · 2: аксесуари|💍|A1
-прикраси|jewelry|smykker|i gioielli|💍|||cur_a1_41.jewelry
+прикраси|jewelry|smykker|i gioielli|💍|jewellery||cur_a1_41.jewelry
 стрічка|ribbon|et bånd|il nastro|🎀|ribbon||cur_a1_41.ribbon
 фартух|apron|et forklæde|il grembiule|🧑‍🍳|apron||cur_a1_41.apron
-золото|gold|guld|l'oro|🥇|||cur_a1_41.gold
+золото|gold|guld|l'oro|🥇|gold_bar||cur_a1_41.gold
 спроба|try|et forsøg|il tentativo|🎯|||cur_a1_41.try
 пара|pair|et par|il paio|🧦|||cur_a1_41.pair
 гарний|pretty|pæn|carino|🌸|pretty||cur_a1_41.pretty
@@ -522,11 +522,11 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 ґудзик|button|en knap|il bottone|🔘|button|guzik|a2x02_clothes.button
 #cur_a1_42|Погода|☁️|A1
 хмарний|cloudy|overskyet|nuvoloso|☁️|cloudy|pochmurny|a1x01_weather.cloudy
-дощовий|rainy|regnfuld|piovoso|🌧️||deszczowy|a1x01_weather.rainy
+дощовий|rainy|regnfuld|piovoso|🌧️|rain|deszczowy|a1x01_weather.rainy
 іти (про дощ)|to rain|at regne|piovere|☔|rain|padać|a1x01_weather.to_rain
 погода|weather|et vejr|il tempo|🌦️|||cur_a1_42.weather
-сонячне світло|sunshine|solskin|il sole|🌞|||cur_a1_42.sunshine
-сніжний|snowy|snerig|nevoso|🌨️|||cur_a1_42.snowy
+сонячне світло|sunshine|solskin|il sole|🌞|sun||cur_a1_42.sunshine
+сніжний|snowy|snerig|nevoso|🌨️|snow||cur_a1_42.snowy
 дути|to blow|at blæse|soffiare|💨|blow_,_to||cur_a1_42.to_blow
 вітряно||det blæser|||||da_a1_new.da_det_blaeser
 дощ|rain|en regn|la pioggia|🌧️|rain|deszcz|a2_weather.rain
@@ -539,13 +539,13 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a1_43|Пори року|🔥|A1
 гарячий|hot|varm|caldo|🔥|hot|gorący|adj.hot
 холодний|cold|kold|freddo|🥶|drink_cold|zimny|adj.cold
-весна|spring|et forår|la primavera|🌸||wiosna|a1x01_weather.spring
+весна|spring|et forår|la primavera|🌸|spring|wiosna|a1x01_weather.spring
 літо|summer|en sommer|l'estate|☀️|summer|lato|a1x01_weather.summer
 осінь|autumn|et efterår|l'autunno|🍂|autumn|jesień|a1x01_weather.autumn
 зима|winter|en vinter|l'inverno|❄️|winter|zima|a1x01_weather.winter
 небо|sky|en himmel|il cielo|🌌||niebo|a1x01_weather.sky
 прохолодний|cool|kølig|fresco|🌬️||chłodny|a1x01_weather.cool
-зірка|star|en stjerne|la stella|⭐||gwiazda|a1x01_weather.star
+зірка|star|en stjerne|la stella|⭐|star|gwiazda|a1x01_weather.star
 місяць (на небі)|moon|en måne|la luna|🌙|Moon|księżyc|a1x01_weather.moon
 сухий|dry|tør|asciutto|🏜️|dry|suchy|a1x02_opposites.dry
 теплий|warm|varm|caldo|🌡️||ciepły|a1x02_opposites.warm
@@ -605,17 +605,17 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 вивчати (предмет)|to study|at studere|studiare|📖|study_,_to|studiować|b1m_education.to_study
 клас (кімната)|classroom|et klasseværelse|l'aula|🏫|class_room|sala lekcyjna|b1m_education.classroom
 оцінка (бал)|grade|en karakter|il voto|💯||ocena|b2m_education.grade
-іспит|exam|en eksamen|l'esame|📋||egzamin|a1x01_school.exam
+іспит|exam|en eksamen|l'esame|📋|test|egzamin|a1x01_school.exam
 університет|university|et universitet|l'università|🏛️||uniwersytet|b1m_education.university
 #cur_a1_48|Шкільне приладдя|📕|A1
 книга|book|en bog|il libro|📕|read_book_,_to|książka|home.book
 сторінка|page|en side|la pagina|📄||strona|a1x01_school.page
 лінійка|ruler|en lineal|il righello|📏||linijka|a1x01_school.ruler
-папір|paper|et papir|la carta|📄|||cur_a1_48.paper
+папір|paper|et papir|la carta|📄|paper||cur_a1_48.paper
 копія|copy|en kopi|la copia|📑|copy||cur_a1_48.copy
 файл|file|en fil|il file|🗂️|||cur_a1_48.file
-записка|note|en seddel|il biglietto|🗒️|||cur_a1_48.note
-записувати|to note|at notere|annotare|✍️|||cur_a1_48.to_note
+записка|note|en seddel|il biglietto|🗒️|post-it||cur_a1_48.note
+записувати|to note|at notere|annotare|✍️|write_,_to||cur_a1_48.to_note
 зошит|notebook|et hæfte|il quaderno|📓|notebook|zeszyt|a2m_school.notebook
 ручка (для письма)|pen|en kuglepen|la penna|🖊️||długopis|a2m_school.pen
 олівець|pencil|en blyant|la matita|✏️|pencil|ołówek|a2m_school.pencil
@@ -644,7 +644,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 приклад|example|et eksempel|l'esempio|💡|||cur_a1_50.example
 чистий|blank|tom|bianco|⬜|||cur_a1_50.blank
 коло|circle|en cirkel|il cerchio|⭕|circle||cur_a1_50.circle
-лінія|line|en linje|la linea|📏|||cur_a1_50.line
+лінія|line|en linje|la linea|📏|line_horizontal||cur_a1_50.line
 правильний|correct|korrekt|corretto|✅|correct||cur_a1_50.correct
 питання|question|et spørgsmål|la domanda|❓||pytanie|a2m_school.question
 відповідь|answer|et svar|la risposta|💡|answer|odpowiedź|a2m_school.answer
@@ -653,8 +653,8 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a1_51|Слова вчителя|📖|A1
 читати|to read|at læse|leggere|📖|read_,_to|czytać|verbs.to_read
 писати|to write|at skrive|scrivere|✍️|write_,_to|pisać|verbs.to_write
-слухати|to listen|at lytte|ascoltare|👂||słuchać|a1x01_verbs.to_listen
-казати|to say|at sige|dire|💬||mówić|a1x01_verbs.to_say
+слухати|to listen|at lytte|ascoltare|👂|hear_,_to|słuchać|a1x01_verbs.to_listen
+казати|to say|at sige|dire|💬|talk_1_,_to|mówić|a1x01_verbs.to_say
 питати|to ask|at spørge|chiedere|🙋|ask_,_to|pytać|a1x01_verbs.to_ask
 означати|to mean|at betyde|significare|❓|||cur_a1_51.to_mean
 розмовляти|to talk|at snakke|parlare|🗣️|talk_1_,_to||cur_a1_51.to_talk
@@ -667,9 +667,9 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a1_52|Робота|💼|A1
 працювати|to work|at arbejde|lavorare|💼|work_,_to|pracować|verbs.to_work
 робота|job|et job|il lavoro|💼|||cur_a1_52.job
-праця|work|et arbejde|il lavoro|🛠️|||cur_a1_52.work
+праця|work|et arbejde|il lavoro|🛠️|work_,_to||cur_a1_52.work
 робітник|worker|en arbejder|l'operaio|👷|||cur_a1_52.worker
-офіс|office|et kontor|l'ufficio|🏢|||cur_a1_52.office
+офіс|office|et kontor|l'ufficio|🏢|office_block||cur_a1_52.office
 бізнес|business|en virksomhed|l'azienda|📈|||cur_a1_52.business
 фабрика|factory|en fabrik|la fabbrica|🏭|||cur_a1_52.factory
 водій|driver|en chauffør|l'autista|🚗|taxi_driver_1a|kierowca|a2m_jobs.driver
@@ -692,7 +692,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a1_54|Хобі|🏊|A1
 заняття|activity|en aktivitet|l'attività|🏊|||cur_a1_54.activity
 веселий|fun|sjov|divertente|🎉|||cur_a1_54.fun
-іграшка|toy|legetøj|il giocattolo|🧸|||cur_a1_54.toy
+іграшка|toy|legetøj|il giocattolo|🧸|toys||cur_a1_54.toy
 лялька|doll|en dukke|la bambola|🪆|doll||cur_a1_54.doll
 повітряний змій|kite|en drage|l'aquilone|🪁|kite||cur_a1_54.kite
 насолоджуватися|to enjoy|at nyde|godersi|😌|||cur_a1_54.to_enjoy
@@ -709,7 +709,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 гурт|band|et band|la band|🎸|||cur_a1_55.band
 концерт|concert|en koncert|il concerto|🎶|||cur_a1_55.concert
 поп-музика|pop|pop|il pop|🎧|||cur_a1_55.pop
-танець|dance|en dans|il ballo|💃|||cur_a1_55.dance
+танець|dance|en dans|il ballo|💃|dance_,_to||cur_a1_55.dance
 танцювати|to dance|at danse|ballare|💃|dance_,_to|tańczyć|a2m_hobbies.to_dance
 співати|to sing|at synge|cantare|🎤|sing_,_to|śpiewać|a2m_hobbies.to_sing
 гітара|guitar|en guitar|la chitarra|🎸|guitar|gitara|a2m_hobbies.guitar
@@ -720,10 +720,10 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 фарба|paint|maling|la vernice|🪣|paint||cur_a1_56.paint
 малювати фарбами|to paint|at male|dipingere|🖌️|paint_,_to||cur_a1_56.to_paint
 картина|picture|et billede|il quadro|🖼️|picture||cur_a1_56.picture
-фото|photo|et foto|la foto|📷|||cur_a1_56.photo
+фото|photo|et foto|la foto|📷|photographs||cur_a1_56.photo
 плакат|poster|en plakat|il poster|🪧|||cur_a1_56.poster
-колір|color|en farve|il colore|🌈|||cur_a1_56.color
-розфарбовувати|to color|at farvelægge|colorare|🖍️|||cur_a1_56.to_color
+колір|color|en farve|il colore|🌈|colour||cur_a1_56.color
+розфарбовувати|to color|at farvelægge|colorare|🖍️|colouring_book||cur_a1_56.to_color
 дизайн|design|et design|il design|📐|||cur_a1_56.design
 культура|culture|en kultur|la cultura|🏛️|||cur_a1_56.culture
 альбом|album|et album|l'album|💿|||cur_a1_56.album
@@ -733,7 +733,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 театр|theatre|et teater|il teatro|🎭||teatr|a1x01_town.theatre
 мультфільм|cartoon|en tegnefilm|il cartone animato|🐭|||cur_a1_57.cartoon
 програма|program|et program|il programma|📺|||cur_a1_57.program
-дивитися|to watch|at se|guardare|👀|||cur_a1_57.to_watch
+дивитися|to watch|at se|guardare|👀|watch_,_to||cur_a1_57.to_watch
 драма|drama|et drama|il dramma|🎭|drama||cur_a1_57.drama
 актор|actor|en skuespiller|l'attore|🎬|||cur_a1_57.actor
 роль|role|en rolle|il ruolo|🃏|||cur_a1_57.role
@@ -744,13 +744,13 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 відомий|famous|berømt|famoso|🌟||znany|b1m_media.famous
 #cur_a1_58|Читання й новини|📖|A1
 історія|story|en historie|la storia|📖|||cur_a1_58.story
-читання|reading|læsning|la lettura|📚|||cur_a1_58.reading
+читання|reading|læsning|la lettura|📚|read_book_,_to||cur_a1_58.reading
 читач|reader|en læser|il lettore|🤓|||cur_a1_58.reader
 новини|news|nyheder|le notizie|📰|||cur_a1_58.news
 промова|speech|en tale|il discorso|📜|||cur_a1_58.speech
 інформація|information|information|l'informazione|ℹ️|||cur_a1_58.information
 опитування|survey|en undersøgelse|il sondaggio|📋|||cur_a1_58.survey
-голосування|vote|en afstemning|la votazione|🗳️|||cur_a1_58.vote
+голосування|vote|en afstemning|la votazione|🗳️|vote_,_to||cur_a1_58.vote
 товариський|social|social|socievole|🤝|||cur_a1_58.social
 газета|newspaper|en avis|il giornale|📰|newspaper|gazeta|b1m_media.newspaper
 журнал|magazine|et blad|la rivista|📔||czasopismo|b1m_media.magazine
@@ -761,7 +761,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 принц|prince|en prins|il principe|🤴|||cur_a1_59.prince
 принцеса|princess|en prinsesse|la principessa|👸|||cur_a1_59.princess
 привид|ghost|et spøgelse|il fantasma|👻|ghost||cur_a1_59.ghost
-мрія|dream|en drøm|il sogno|🌠|||cur_a1_59.dream
+мрія|dream|en drøm|il sogno|🌠|daydream_,_to||cur_a1_59.dream
 війна|war|en krig|la guerra|⚔️|||cur_a1_59.war
 мир|peace|fred|la pace|🕊️|||cur_a1_59.peace
 вбивати|to kill|at dræbe|uccidere|🗡️|kill_,_to||cur_a1_59.to_kill
@@ -772,11 +772,11 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 дивний|strange|mærkelig|strano|🤨||dziwny|a2x01_adjectives.strange
 #cur_a1_60|Зв'язок та інтернет|🌐|A1
 інтернет|internet|internettet|internet|🌐|internet||cur_a1_60.internet
-пошта|mail|post|la posta|📬|||cur_a1_60.mail
+пошта|mail|post|la posta|📬|letter||cur_a1_60.mail
 дзвеніти|to ring|at ringe|squillare|🔔|||cur_a1_60.to_ring
 технологія|technology|teknologi|la tecnologia|💻|technology||cur_a1_60.technology
 код|code|en kode|il codice|🔢|||cur_a1_60.code
-лист|letter|et brev|la lettera|✉️||list|a2x01_post_bank.letter
+лист|letter|et brev|la lettera|✉️|letter|list|a2x01_post_bank.letter
 зберігати (файл)|to save|at gemme|salvare|💾|save|zapisywać|b1m_tech.to_save
 повідомлення|message|en besked|il messaggio|💬|mobile_phone_text_message|wiadomość|b1m_tech.message
 розмова|conversation|en samtale|la conversazione|🗨️||rozmowa|b1x03_phone.conversation
@@ -790,8 +790,8 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 команда|team|et hold|la squadra|👥||drużyna|a1x01_sport.team
 матч|match|en kamp|la partita|🏟️||mecz|a1x01_sport.match
 гол|goal|et mål|il gol|🥅|goal|gol|a1x01_sport.goal
-бейсбол|baseball|baseball|il baseball|⚾|||cur_a1_61.baseball
-бита|bat|et bat|la mazza|🏏|||cur_a1_61.bat
+бейсбол|baseball|baseball|il baseball|⚾|baseball_game||cur_a1_61.baseball
+бита|bat|et bat|la mazza|🏏|baseball_bat||cur_a1_61.bat
 м'яч|ball|en bold|la palla|⚽|ball|piłka|a2m_hobbies.ball
 уболівальник|fan|en fan|il tifoso|📣||kibic|b1m_sport.fan
 гравець|player|en spiller|il giocatore|🏃||zawodnik|b1m_sport.player
@@ -801,60 +801,60 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a1_62|Спорт · 2|🤸|A1
 стрибати|to jump|at hoppe|saltare|🤸|jump_,_to|skakać|a1x01_sport.to_jump
 конкурс|contest|en konkurrence|il concorso|🏆|||cur_a1_62.contest
-плавання|swimming|svømning|il nuoto|🏊|||cur_a1_62.swimming
-пробіжка|run|en løbetur|la corsa|🏃|||cur_a1_62.run
-удар ногою|kick|et spark|il calcio|⚽|||cur_a1_62.kick
-бити ногою|to kick|at sparke|calciare|🦵|||cur_a1_62.to_kick
+плавання|swimming|svømning|il nuoto|🏊|swim_,_to||cur_a1_62.swimming
+пробіжка|run|en løbetur|la corsa|🏃|jog_,_to||cur_a1_62.run
+удар ногою|kick|et spark|il calcio|⚽|kick_ball_,_to||cur_a1_62.kick
+бити ногою|to kick|at sparke|calciare|🦵|kick_ball_,_to||cur_a1_62.to_kick
 кидок|throw|et kast|il lancio|🤾|||cur_a1_62.throw
 плавати|to swim|at svømme|nuotare|🏊|swim_,_to|pływać|a2m_hobbies.to_swim
 бігати|to run|at løbe|correre|🏃|run_,_to|biegać|a2m_hobbies.to_run
 вигравати|to win|at vinde|vincere|🏅|winner|wygrywać|b1m_sport.to_win
 #cur_a1_63|Активний відпочинок|🏊|A1
 басейн|swimming pool|en svømmehal|la piscina|🏊||basen|a1x01_sport.swimming_pool
-табір|camp|en lejr|il campo|⛺|||cur_a1_63.camp
+табір|camp|en lejr|il campo|⛺|camp_,_to||cur_a1_63.camp
 пікнік|picnic|en picnic|il picnic|🧺|picnic||cur_a1_63.picnic
-риболовля|fishing|lystfiskeri|la pesca|🎣|||cur_a1_63.fishing
-прогулянка|walk|en gåtur|la passeggiata|🚶|||cur_a1_63.walk
-ходити пішки|to walk|at gå|camminare|🚶‍♂️|||cur_a1_63.to_walk
+риболовля|fishing|lystfiskeri|la pesca|🎣|fish_,_to||cur_a1_63.fishing
+прогулянка|walk|en gåtur|la passeggiata|🚶|walk_,_to||cur_a1_63.walk
+ходити пішки|to walk|at gå|camminare|🚶‍♂️|walk_,_to||cur_a1_63.to_walk
 займатися спортом|to exercise|at motionere|allenarsi|🏋️|exercise_,_to||cur_a1_63.to_exercise
 вогонь|fire|en ild|il fuoco|🔥|fire||cur_a1_63.fire
 земля|ground|en jord|il terreno|🟫|||cur_a1_63.ground
 дірка|hole|et hul|il buco|🕳️|||cur_a1_63.hole
-лазити|to climb|at klatre|arrampicarsi|🧗|||cur_a1_63.to_climb
+лазити|to climb|at klatre|arrampicarsi|🧗|climb_up_,_to||cur_a1_63.to_climb
 займатися серфінгом|to surf|at surfe|fare surf|🏄|||cur_a1_63.to_surf
 #cur_a1_64|Зовнішність|💪|A1
 сильний|strong|stærk|forte|💪|strong|silny|a1x01_feelings.strong
 короткий|short|kort|corto|✂️|short|krótki|a1x02_opposites.short
 високий (про людину)|tall|høj|alto|🦒|tall|wysoki|a1x02_opposites.tall
-красивий|beautiful|smuk|bello|🌸||piękny|a1x02_opposites.beautiful
+красивий|beautiful|smuk|bello|🌸|pretty|piękny|a1x02_opposites.beautiful
 потворний|ugly|grim|brutto|👹|ugly|brzydki|a1x02_opposites.ugly
 тонкий|thin|tynd|sottile|📄|thin|cienki|a1x02_opposites.thin
 товстий|fat|tyk|grasso|🐈|fat||cur_a1_64.fat
 вродливий|handsome|flot|bello|🤵|handsome||cur_a1_64.handsome
 прекрасний|lovely|dejlig|incantevole|🌸|||cur_a1_64.lovely
-усмішка|smile|et smil|il sorriso|😊|||cur_a1_64.smile
+усмішка|smile|et smil|il sorriso|😊|smile_,_to||cur_a1_64.smile
 стрижка|haircut|en klipning|il taglio di capelli|💇|haircut||cur_a1_64.haircut
 #cur_a1_65|Характер|🧠|A1
 розумний|smart|klog|intelligente|🧠|||cur_a1_65.smart
 обережно|carefully|forsigtigt|con prudenza|⚠️|||cur_a1_65.carefully
 тихий|quiet|stille|tranquillo|🤫|quiet|cichy|a2x01_adjectives.quiet
-смішний|funny|sjov|divertente|😄||śmieszny|a2x01_adjectives.funny
+смішний|funny|sjov|divertente|😄|funny_laugh|śmieszny|a2x01_adjectives.funny
 неввічливий|rude|uhøflig|maleducato|😤||nieuprzejmy|a2x01_adjectives.rude
 обережний|careful|forsigtig|attento|🦺||ostrożny|a2x01_adjectives.careful
 лінивий|lazy|doven|pigro|🦥||leniwy|b1x02_adjectives.lazy
 звичка|habit|en vane|l'abitudine|🔁||nawyk|b2x02_psych.habit
 привітний|friendly|venlig|cordiale|😊||przyjazny|a2x01_adjectives.friendly
 #cur_a1_66|Почуття|😊|A1
-щасливий|happy|glad|felice|😊||szczęśliwy|a1x01_feelings.happy
-сумний|sad|trist|triste|😢||smutny|a1x01_feelings.sad
-сердитий|angry|vred|arrabbiato|😠||zły|a1x01_feelings.angry
-втомлений|tired|træt|stanco|😩||zmęczony|a1x01_feelings.tired
+щасливий|happy|glad|felice|😊|happy_man|szczęśliwy|a1x01_feelings.happy
+сумний|sad|trist|triste|😢|sad_man|smutny|a1x01_feelings.sad
+сердитий|angry|vred|arrabbiato|😠|angry_man|zły|a1x01_feelings.angry
+втомлений|tired|træt|stanco|😩|yawn_,_to|zmęczony|a1x01_feelings.tired
 цікавий|interesting|interessant|interessante|🤩||ciekawy|a1x01_feelings.interesting
 нудний|boring|kedelig|noioso|🥱||nudny|a1x01_feelings.boring
-сміятися|to laugh|at grine|ridere|😂||śmiać się|a1x01_feelings.to_laugh
+сміятися|to laugh|at grine|ridere|😂|laughing_man|śmiać się|a1x01_feelings.to_laugh
 зацікавлений|interested|interesseret|interessato|🤔|||cur_a1_66.interested
 захопливий|exciting|spændende|emozionante|🎢|||cur_a1_66.exciting
-хвилювання|worry|en bekymring|la preoccupazione|😟|||cur_a1_66.worry
+хвилювання|worry|en bekymring|la preoccupazione|😟|worried_man||cur_a1_66.worry
 відчуття|feeling|en følelse|la sensazione|💗|||cur_a1_66.feeling
 схвильований (радісно)|excited|spændt|emozionato|🤩||podekscytowany|b1x02_opinions.excited
 усміхатися|to smile|at smile|sorridere|🙂|smile_,_to|uśmiechać się|a1x01_feelings.to_smile
@@ -882,7 +882,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 позичати (у когось)|to borrow|at låne|prendere in prestito|🤲||pożyczać od kogoś|a2x01_verbs.to_borrow
 нести|to carry|at bære|portare|🎒|carry_,_to|nieść|a2x01_verbs.to_carry
 розуміти|to understand|at forstå|capire|💡||rozumieć|a1x01_verbs.to_understand
-дзвонити (телефоном)|to call|at ringe|chiamare|📞||dzwonić|a1x01_verbs.to_call
+дзвонити (телефоном)|to call|at ringe|chiamare|📞|telephone_mobile_,_to|dzwonić|a1x01_verbs.to_call
 потребувати|to need|at have brug for|avere bisogno di|🙏||potrzebować|a2x01_verbs.to_need
 #cur_a1_69|Дієслова · думати й знати|🧠|A1
 знати|to know|at vide|sapere|🧠||wiedzieć|a1x01_verbs.to_know
@@ -908,7 +908,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 дія|action|en handling|l'azione|🎬|||cur_a1_70.action
 результат|result|et resultat|il risultato|📊|||cur_a1_70.result
 причина|reason|en grund|il motivo|❔|||cur_a1_70.reason
-розбивати|to break|at knuse|rompere|💔||tłuc|a2x01_verbs.to_break
+розбивати|to break|at knuse|rompere|💔|break_,_to|tłuc|a2x01_verbs.to_break
 траплятися|to happen|at ske|succedere|❗||zdarzać się|a2x01_verbs.to_happen
 #cur_a1_71|Питання й маленькі слова|📍|A1
 де|where|hvor|dove|📍|where|gdzie|a1x01_questions.where
@@ -940,7 +940,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 чудовий (відмінний)|excellent|fremragende|eccellente|🌟||znakomity|b1x02_adjectives.excellent
 #cur_a1_73|Протилежності|🆕|A1
 новий|new|ny|nuovo|🆕||nowy|adj.new
-швидкий|fast|hurtig|veloce|🏎️||szybki|a1x02_opposites.fast
+швидкий|fast|hurtig|veloce|🏎️|fast_2|szybki|a1x02_opposites.fast
 повільний|slow|langsom|lento|🐢||powolny|a1x02_opposites.slow
 багатий|rich|rig|ricco|🤑||bogaty|a1x02_opposites.rich
 бідний|poor|fattig|povero|🪙||biedny|a1x02_opposites.poor
@@ -958,7 +958,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 правило|rule|en regel|la regola|📜|||cur_a1_74.rule
 життя|life|et liv|la vita|🌿|||cur_a1_74.life
 надія|hope|et håb|la speranza|🙏|||cur_a1_74.hope
-удача|luck|et held|la fortuna|🍀|||cur_a1_74.luck
+удача|luck|et held|la fortuna|🍀|lucky||cur_a1_74.luck
 везучий|lucky|heldig|fortunato|🌈|lucky||cur_a1_74.lucky
 задоволення|pleasure|en fornøjelse|il piacere|😌|||cur_a1_74.pleasure
 впевнений|sure|sikker|sicuro|👌|||cur_a1_74.sure
@@ -974,16 +974,16 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 мати (щось)|to have|at have|avere|🤲||mieć|verbs.to_have
 Що означає це слово?|What does this word mean?|Hvad betyder det her ord?|Che cosa significa questa parola?|❓||Co znaczy to słowo?|a1x01_school.what_does_this_word_mean
 автобусна зупинка|bus stop|et busstoppested|la fermata dell'autobus|🚏||przystanek autobusowy|a1x01_transport.bus_stop
-їхати автобусом|to take the bus|at tage bussen|prendere l'autobus|🚍||jechać autobusem|a1x01_transport.to_take_the_bus
+їхати автобусом|to take the bus|at tage bussen|prendere l'autobus|🚍|bus|jechać autobusem|a1x01_transport.to_take_the_bus
 кілограм|kilo|et kilo|il chilo|⚖️||kilogram|a1x01_shop.kilo
 Яка погода?|What's the weather like?|Hvordan er vejret?|Che tempo fa?|🌦️||Jaka jest pogoda?|a1x01_weather.what_s_the_weather_like
 Пограймо!|Let's play!|Lad os spille!|Giochiamo!|🎮||Zagrajmy!|a1x01_sport.let_s_play
 пошта|post office|et posthus|l'ufficio postale|🏤||poczta|a1x01_town.post_office
-боятися|to be afraid|at være bange|avere paura|😨||bać się|a1x01_feelings.to_be_afraid
+боятися|to be afraid|at være bange|avere paura|😨|afraid_man|bać się|a1x01_feelings.to_be_afraid
 Мені нудно|I'm bored|Jeg keder mig|Mi annoio|😑||Nudzę się.|a1x01_feelings.i_m_bored
 Я живу в квартирі.|I live in a flat.|Jeg bor i en lejlighed.|Abito in un appartamento.|🏢||Mieszkam w mieszkaniu.|a1x02_house.i_live_in_a_flat
 дякувати|to thank|at takke|ringraziare|🙏|||cur_a1_01.to_thank
-муха|fly|en flue|la mosca|🪰|||cur_a1_35.fly
+муха|fly|en flue|la mosca|🪰|fly||cur_a1_35.fly
 трохи|a little|lidt|un po'|🤏|||cur_a1_67.a_little
 хід|move|et træk|la mossa|♟️|||cur_a1_68.move
 прокидатися|to wake up|at vågne|svegliarsi|⏰|wake_up_,_to|budzić się|a2_daily.to_wake_up
@@ -995,7 +995,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 легкий (за вагою)|light|let|leggero|🪶||lekki|a2x01_adjectives.light
 сьогодні вранці|this morning|i morges|stamattina|🌅||dziś rano|a2x02_time.this_morning
 учора ввечері|last night|i går aftes|ieri sera|🌙||wczoraj wieczorem|a2x02_time.last_night
-номер телефону|phone number|et telefonnummer|il numero di telefono|🔢||numer telefonu|a2x01_phone.phone_number
+номер телефону|phone number|et telefonnummer|il numero di telefono|🔢|mobile_phone_number|numer telefonu|a2x01_phone.phone_number
 залізничний вокзал|train station|en togstation|la stazione ferroviaria|🚉||dworzec kolejowy|a2x02_hotel.train_station
 Звісно!|Of course!|Selvfølgelig!|Certo!|✔️||Oczywiście!|b1_phrases.of_course
 поверх|floor|en etage|il piano|🏢||piętro|b1m_housing.floor
@@ -1044,9 +1044,9 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 виделка|fork|en gaffel|la forchetta|🍴|fork|widelec|a1m_things.fork
 чайові|tip|drikkepenge|la mancia|💶||napiwek|a2x01_restaurant.tip
 замовляти|to order|at bestille|ordinare|📝||zamawiać|a2x01_restaurant.to_order
-серветка|napkin|en serviet|il tovagliolo|🧻||serwetka|a2x01_restaurant.napkin
-кухоль|mug|et krus|la tazza|☕|||cur_a2_01.mug
-газований напій|soda|en sodavand|la bibita gassata|🥤|||cur_a2_01.soda
+серветка|napkin|en serviet|il tovagliolo|🧻|serviette|serwetka|a2x01_restaurant.napkin
+кухоль|mug|et krus|la tazza|☕|mug_2||cur_a2_01.mug
+газований напій|soda|en sodavand|la bibita gassata|🥤|orange_fizzy_drink||cur_a2_01.soda
 безалкогольний напій|soft drink|en læskedrik|la bibita analcolica|🧃|||cur_a2_01.soft_drink
 кола|cola|en cola|la cola|🥤|||cur_a2_01.cola
 лимонад|lemonade|en limonade|la limonata|🍋|lemonade||cur_a2_01.lemonade
@@ -1070,13 +1070,13 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 закуска (перша страва)|starter|en forret|l'antipasto|🥗||przystawka|a2x01_restaurant.starter
 вегетаріанський|vegetarian|vegetarisk|vegetariano|🥦||wegetariański|a2x01_restaurant.vegetarian
 #cur_a2_03|Фаст-фуд і обід|🍔|A2
-фастфуд|fast food|fastfood|il fast food|🍔|||cur_a2_03.fast_food
-обідній час|lunchtime|frokosttid|l'ora di pranzo|🕛|||cur_a2_03.lunchtime
-ковбаса|sausage|en pølse|la salsiccia|🌭|||cur_a2_03.sausage
+фастфуд|fast food|fastfood|il fast food|🍔|takeaway_burger_and_chips||cur_a2_03.fast_food
+обідній час|lunchtime|frokosttid|l'ora di pranzo|🕛|lunch_time||cur_a2_03.lunchtime
+ковбаса|sausage|en pølse|la salsiccia|🌭|sausages||cur_a2_03.sausage
 шинка|ham|skinke|il prosciutto|🍖|ham||cur_a2_03.ham
-перець чилі|chili|en chili|il peperoncino|🌶️|||cur_a2_03.chili
+перець чилі|chili|en chili|il peperoncino|🌶️|chilli_pepper||cur_a2_03.chili
 карі|curry|en karry|il curry|🍛|curry||cur_a2_03.curry
-омлет|omelet|en omelet|la frittata|🍳|||cur_a2_03.omelet
+омлет|omelet|en omelet|la frittata|🍳|omelette||cur_a2_03.omelet
 дієта|diet|en diæt|la dieta|🥗|||cur_a2_03.diet
 смажений|fried|stegt|fritto|🍟|||cur_a2_03.fried
 смажений на грилі|grilled|grillet|grigliato|🍢|||cur_a2_03.grilled
@@ -1086,9 +1086,9 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 #cur_a2_04|Супермаркет|🧺|A2
 кошик|basket|en kurv|il cestino|🧺|basket|koszyk|a1x01_shop.basket
 монета|coin|en mønt|la moneta|🪙||moneta|a1x01_shop.coin
-готівка|cash|kontanter|i contanti|💶||gotówka|a1x01_shop.cash
+готівка|cash|kontanter|i contanti|💶|money|gotówka|a1x01_shop.cash
 продуктовий магазин|grocery store|en dagligvarebutik|il negozio di alimentari|🏪|||cur_a2_04.grocery_store
-бляшанка|can|en dåse|la lattina|🥫|||cur_a2_04.can
+бляшанка|can|en dåse|la lattina|🥫|tin_can||cur_a2_04.can
 пачка|pack|en pakke|il pacchetto|📦|||cur_a2_04.pack
 недорогий|inexpensive|prisbillig|economico|🏷️|||cur_a2_04.inexpensive
 цент|cent|en cent|il centesimo|🪙|||cur_a2_04.cent
@@ -1110,7 +1110,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 перець|pepper|en peberfrugt|il peperone|🫑|pepper||cur_a2_05.pepper
 диня|melon|en melon|il melone|🍈|melon||cur_a2_05.melon
 мед|honey|honning|il miele|🍯|honey||cur_a2_05.honey
-варення|jam|syltetøj|la marmellata|🍓|||cur_a2_05.jam
+варення|jam|syltetøj|la marmellata|🍓|jam||cur_a2_05.jam
 желе|jelly|gele|la gelatina|🍇|jelly||cur_a2_05.jelly
 полуниця|strawberry|et jordbær|la fragola|🍓|strawberry|truskawka|a1m_fruitveg.strawberry
 виноград|grapes|vindruer|l'uva|🍇|grapes|winogrona|a1m_fruitveg.grapes
@@ -1121,9 +1121,9 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 щиколотка|ankle|en ankel|la caviglia|🦶|ankle|kostka|a2x02_body.ankle
 підборіддя|chin|en hage|il mento|🧔|chin|podbródek|a2x02_body.chin
 щока|cheek|en kind|la guancia|😊|cheek|policzek|a2x02_body.cheek
-губа|lip|en læbe|il labbro|👄||warga|a2x02_body.lip
+губа|lip|en læbe|il labbro|👄|lips_1|warga|a2x02_body.lip
 палець ноги|toe|en tå|il dito del piede|🦶||palec u nogi|a2x02_body.toe
-груди|chest|et bryst|il petto|🫁|||cur_a2_06.chest
+груди|chest|et bryst|il petto|🫁|chest_male||cur_a2_06.chest
 живіт|belly|en mave|la pancia|🤰|||cur_a2_06.belly
 ковтати|to swallow|at sluge|inghiottire|😮|||cur_a2_06.to_swallow
 пітніти|to sweat|at svede|sudare|💦|||cur_a2_06.to_sweat
@@ -1168,7 +1168,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 затримка|delay|en forsinkelse|il ritardo|⏰||opóźnienie|a2x01_transport.delay
 пасажир|passenger|en passager|il passeggero|🧳||pasażer|a2x01_transport.passenger
 вартість проїзду|fare|en billetpris|il prezzo del biglietto|💶||cena biletu|a2x01_transport.fare
-подорож (поїздка)|journey|en rejse|il viaggio|🗺️||przejazd|a2x01_transport.journey
+подорож (поїздка)|journey|en rejse|il viaggio|🗺️|travel|przejazd|a2x01_transport.journey
 автовокзал|bus station|en busstation|la stazione degli autobus|🚏|||cur_a2_09.bus_station
 натовп|crowd|en menneskemængde|la folla|👥|||cur_a2_09.crowd
 поспіх|rush|travlhed|la fretta|🏃|||cur_a2_09.rush
@@ -1176,17 +1176,17 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 розклад|timetable|et skema|l'orario|🗓️||plan zajęć|b1m_education.timetable
 центр міста|town centre|en bymidte|il centro città|🏙️||centrum miasta|b1x03_city.town_centre
 переповнений|crowded|overfyldt|affollato|👥||zatłoczony|b2m_housing.crowded
-метро|underground|en metro|la metropolitana|🚇||metro|a1x01_transport.underground
-мотоцикл|motorbike|en motorcykel|la moto|🏍️||motocykl|a1x01_transport.motorbike
+метро|underground|en metro|la metropolitana|🚇|underground_train|metro|a1x01_transport.underground
+мотоцикл|motorbike|en motorcykel|la moto|🏍️|motorcycle|motocykl|a1x01_transport.motorbike
 #cur_a2_10|За кермом|🚦|A2
-світлофор|traffic light|en lyskurv|il semaforo|🚦||sygnalizacja świetlna|a1x01_town.traffic_light
+світлофор|traffic light|en lyskurv|il semaforo|🚦|traffic_lights|sygnalizacja świetlna|a1x01_town.traffic_light
 смуга|lane|en vognbane|la corsia|🛣️|||cur_a2_10.lane
 автостоянка|parking lot|en parkeringsplads|il parcheggio|🅿️|||cur_a2_10.parking_lot
 дорожній рух|traffic|trafik|il traffico|🚦|||cur_a2_10.traffic
 бензин|gas|benzin|la benzina|⛽|||cur_a2_10.gas
-олія|oil|olie|l'olio|🫒|||cur_a2_10.oil
+олія|oil|olie|l'olio|🫒|cooking_oil||cur_a2_10.oil
 гальмо|brake|en bremse|il freno|🛑|||cur_a2_10.brake
-паркувати|to park|at parkere|parcheggiare|🅿️|||cur_a2_10.to_park
+паркувати|to park|at parkere|parcheggiare|🅿️|park_,_to||cur_a2_10.to_park
 швидкість|speed|en hastighed|la velocità|🏎️|||cur_a2_10.speed
 велосипедний ліхтар||en cykellygte|||||da_a2_new.da_en_cykellygte
 велошолом||en cykelhjelm|||||da_a2_new.da_en_cykelhjelm
@@ -1203,8 +1203,8 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 навколо|around|rundt|intorno|🔄|around||cur_a2_11.around
 вперед|forward|fremad|avanti|⏩|forward||cur_a2_11.forward
 протилежний|opposite|modsat|opposto|↔️|opposite||cur_a2_11.opposite
-лівий|left-hand|venstre|sinistro|⬅️|||cur_a2_11.left_hand
-правий|right-hand|højre|destro|➡️|||cur_a2_11.right_hand
+лівий|left-hand|venstre|sinistro|⬅️|left_hand||cur_a2_11.left_hand
+правий|right-hand|højre|destro|➡️|right_hand||cur_a2_11.right_hand
 вхід|entrance|en indgang|l'ingresso|🚪|||cur_a2_11.entrance
 ворота|gate|en port|il cancello|⛩️|||cur_a2_11.gate
 статуя|statue|en statue|la statua|🗽|||cur_a2_11.statue
@@ -1216,7 +1216,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 захід|west|vest|l'ovest|⬅️|west||cur_a2_12.west
 #cur_a2_13|Місця в місті|🚓|A2
 поліцейська дільниця|police station|en politistation|il commissariato|🚓||komisariat policji|a1x01_town.police_station
-дитячий майданчик|playground|en legeplads|il parco giochi|🛝||plac zabaw|a1x01_town.playground
+дитячий майданчик|playground|en legeplads|il parco giochi|🛝|play_area|plac zabaw|a1x01_town.playground
 універмаг|department store|et stormagasin|il grande magazzino|🏬|||cur_a2_13.department_store
 чоловічий перукар|barber|en barber|il barbiere|💈|||cur_a2_13.barber
 спортивний центр|sports center|et idrætscenter|il centro sportivo|🏟️|||cur_a2_13.sports_center
@@ -1245,41 +1245,41 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 шахи|chess|skak|gli scacchi|♟️||szachy|a1x01_sport.chess
 настільна гра|board game|et brætspil|il gioco da tavolo|🎲||gra planszowa|a1x01_sport.board_game
 фотографія (хобі)|photography|fotografering|la fotografia|📷||fotografia|a2x02_sport.photography
-відеогра|video game|et computerspil|il videogioco|🎮|||cur_a2_15.video_game
+відеогра|video game|et computerspil|il videogioco|🎮|computer_game||cur_a2_15.video_game
 малюнок|drawing|en tegning|il disegno|🖍️|||cur_a2_15.drawing
 шити|to sew|at sy|cucire|🧵|sew_,_to||cur_a2_15.to_sew
 комікс|comic|en tegneserie|il fumetto|💬|||cur_a2_15.comic
 магія|magic|magi|la magia|🪄|||cur_a2_15.magic
-спів|singing|sang|il canto|🎤|||cur_a2_15.singing
+спів|singing|sang|il canto|🎤|sing_,_to||cur_a2_15.singing
 кататися на лижах|to ski|at stå på ski|sciare|⛷️|ski_,_to|jeździć na nartach|a1x01_sport.to_ski
 #cur_a2_16|Активний відпочинок|🚴|A2
-велоспорт|cycling|cykling|il ciclismo|🚴||kolarstwo|a2x02_sport.cycling
-відпочинок із наметом|camping|camping|il campeggio|🏕️|||cur_a2_16.camping
+велоспорт|cycling|cykling|il ciclismo|🚴|cycle_,_to|kolarstwo|a2x02_sport.cycling
+відпочинок із наметом|camping|camping|il campeggio|🏕️|camp_,_to||cur_a2_16.camping
 ночувати в наметі|to camp|at campere|campeggiare|⛺|camp_,_to||cur_a2_16.to_camp
-піший туризм|hiking|vandring|l'escursionismo|🥾|||cur_a2_16.hiking
-похід|hike|en vandretur|l'escursione|🥾|||cur_a2_16.hike
-скелелазіння|climbing|klatring|l'arrampicata|🧗|||cur_a2_16.climbing
+піший туризм|hiking|vandring|l'escursionismo|🥾|hike_,_to||cur_a2_16.hiking
+похід|hike|en vandretur|l'escursione|🥾|hike_,_to||cur_a2_16.hike
+скелелазіння|climbing|klatring|l'arrampicata|🧗|climbing_rock||cur_a2_16.climbing
 вітрильний спорт|sailing|sejlads|la vela|⛵|||cur_a2_16.sailing
 серфінг|surfing|surfing|il surf|🏄|||cur_a2_16.surfing
-ходьба|walking|gang|la camminata|🚶|||cur_a2_16.walking
-біг|running|løb|la corsa|🏃|||cur_a2_16.running
-барбекю|barbecue|en grillfest|il barbecue|🍖|||cur_a2_16.barbecue
+ходьба|walking|gang|la camminata|🚶|walk_,_to||cur_a2_16.walking
+біг|running|løb|la corsa|🏃|run_,_to||cur_a2_16.running
+барбекю|barbecue|en grillfest|il barbecue|🍖|barbeque||cur_a2_16.barbecue
 пригода|adventure|et eventyr|l'avventura|🗺️|||cur_a2_16.adventure
 #cur_a2_17|Зимові й ігрові види спорту|⛷️|A2
-катання на лижах|skiing|skiløb|lo sci|⛷️||jazda na nartach|a2x02_sport.skiing
+катання на лижах|skiing|skiløb|lo sci|⛷️|ski_,_to|jazda na nartach|a2x02_sport.skiing
 гольф|golf|golf|il golf|⛳|golf|golf|a2x02_sport.golf
-ракетка|racket|en ketsjer|la racchetta|🎾||rakieta|a2x02_sport.racket
-лижа|ski|en ski|lo sci|🎿|||cur_a2_17.ski
+ракетка|racket|en ketsjer|la racchetta|🎾|badminton_racket|rakieta|a2x02_sport.racket
+лижа|ski|en ski|lo sci|🎿|skis||cur_a2_17.ski
 ковзан|skate|en skøjte|il pattino|⛸️|||cur_a2_17.skate
-катання на скейтборді|skateboarding|skateboarding|lo skateboard|🛹|||cur_a2_17.skateboarding
+катання на скейтборді|skateboarding|skateboarding|lo skateboard|🛹|skateboard||cur_a2_17.skateboarding
 сноубординг|snowboarding|snowboarding|lo snowboard|🏂|||cur_a2_17.snowboarding
 хокей|hockey|ishockey|l'hockey|🏒|||cur_a2_17.hockey
-регбі|rugby|rugby|il rugby|🏉|||cur_a2_17.rugby
+регбі|rugby|rugby|il rugby|🏉|rugby_ball||cur_a2_17.rugby
 крикет|cricket|cricket|il cricket|🏏|cricket||cur_a2_17.cricket
 бадмінтон|badminton|badminton|il badminton|🏸|badminton||cur_a2_17.badminton
 настільний теніс|table tennis|bordtennis|il ping-pong|🏓|||cur_a2_17.table_tennis
 йога|yoga|yoga|lo yoga|🧘||joga|a2x02_sport.yoga
-перегони (змагання)|race|et løb|la gara|🏁||wyścig|a2x02_sport.race
+перегони (змагання)|race|et løb|la gara|🏁|race_athletics|wyścig|a2x02_sport.race
 #cur_a2_18|Змагання|🏆|A2
 переможець|winner|en vinder|il vincitore|🏆|winner|zwycięzca|a1x01_sport.winner
 кидати|to throw|at kaste|lanciare|🤾||rzucać|a1x01_sport.to_throw
@@ -1289,11 +1289,11 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 спортсмен|athlete|en atlet|l'atleta|🏃|||cur_a2_18.athlete
 бігун|runner|en løber|il corridore|🏃‍♂️|||cur_a2_18.runner
 боєць|fighter|en kæmper|il combattente|🥊|||cur_a2_18.fighter
-олімпійський|Olympic|olympisk|olimpico|🏟️|||cur_a2_18.olympic
+олімпійський|Olympic|olympisk|olimpico|🏟️|olympic_rings||cur_a2_18.olympic
 програвати|to lose|at tabe|perdere|👎||przegrywać|b1m_sport.to_lose
 тренуватися|to train|at træne|allenarsi|🏋️||trenować|b1m_sport.to_train
 #cur_a2_19|Музика|🎸|A2
-музичний інструмент|instrument|et instrument|lo strumento|🎸|||cur_a2_19.instrument
+музичний інструмент|instrument|et instrument|lo strumento|🎸|musical_instruments||cur_a2_19.instrument
 скрипка|violin|en violin|il violino|🎻|||cur_a2_19.violin
 симфонія|symphony|en symfoni|la sinfonia|🎼|||cur_a2_19.symphony
 класична музика|classical music|klassisk musik|la musica classica|🎶|||cur_a2_19.classical_music
@@ -1324,7 +1324,7 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 художня література|fiction|skønlitteratur|la narrativa|📚|||cur_a2_21.fiction
 назва|title|en titel|il titolo|🏷️|||cur_a2_21.title
 уривок|passage|et uddrag|il brano|📄|||cur_a2_21.passage
-нагорода|award|en pris|il premio|🏆|||cur_a2_21.award
+нагорода|award|en pris|il premio|🏆|medal||cur_a2_21.award
 краса|beauty|skønhed|la bellezza|🌸|||cur_a2_21.beauty
 фотограф|photographer|en fotograf|il fotografo|📷|||cur_a2_21.photographer
 виставка|exhibition|en udstilling|la mostra|🖼️||wystawa|b1m_media.exhibition
@@ -1351,10 +1351,10 @@ DVD-диск|DVD|en dvd|il dvd|📀|||cur_a1_23.dvd
 пілот|pilot|en pilot|il pilota|🧑‍✈️|pilot_1a|pilot|a2m_jobs.pilot
 рейс (авіа)|flight|en flyrejse|il volo|✈️||lot|a2x02_hotel.flight
 за кордоном|abroad|i udlandet|all'estero|🌍||za granicą|a2x02_hotel.abroad
-пакувати (валізу)|to pack|at pakke|fare la valigia|🎒||pakować|a2x02_hotel.to_pack
+пакувати (валізу)|to pack|at pakke|fare la valigia|🎒|pack_suitcase_,_to|pakować|a2x02_hotel.to_pack
 прохід|aisle|en midtergang|il corridoio|🚶|||cur_a2_23.aisle
 капітан|captain|en kaptajn|il capitano|👨‍✈️|||cur_a2_23.captain
-приземлятися|to land|at lande|atterrare|🛬|||cur_a2_23.to_land
+приземлятися|to land|at lande|atterrare|🛬|plane_landing||cur_a2_23.to_land
 ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 міжнародний|international|international|internazionale|🌍|||cur_a2_23.international
 перевіряти|to check|at tjekke|controllare|✅|||cur_a2_23.to_check
@@ -1362,7 +1362,7 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 аеропорт Копенгагена (Kastrup)||Københavns Lufthavn|||||da_a2_new.da_koebenhavns_lufthavn
 валіза|suitcase|en kuffert|la valigia|🧳|suitcase_1|walizka|a2_travel.suitcase
 рецепція|reception|en reception|la reception|🛎️||recepcja|a2x02_hotel.reception
-кемпінг|campsite|en campingplads|il campeggio|⛺||kemping|a2x02_hotel.campsite
+кемпінг|campsite|en campingplads|il campeggio|⛺|camp_,_to|kemping|a2x02_hotel.campsite
 #cur_a2_24|Подорож|📖|A2
 путівник|guidebook|en rejseguide|la guida turistica|📖||przewodnik|a2x02_hotel.guidebook
 екскурсія|tour|en rundtur|il tour|🗺️|||cur_a2_24.tour
@@ -1426,12 +1426,12 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 коханець|lover|en elsker|l'amante|❤️|||cur_a2_28.lover
 річниця|anniversary|en årsdag|l'anniversario|🎉|||cur_a2_28.anniversary
 любовна історія|romance|en romance|la storia d'amore|💞|||cur_a2_28.romance
-каблучка|ring|en ring|l'anello|💍|||cur_a2_28.ring
+каблучка|ring|en ring|l'anello|💍|ring||cur_a2_28.ring
 діамант|diamond|en diamant|il diamante|💎|diamond||cur_a2_28.diamond
 господар|host|en vært|il padrone di casa|🏠|||cur_a2_28.host
 обіймати|to hug|at kramme|abbracciare|🤗|hug_,_to|przytulać|b1x02_relationships.to_hug
-свічка|candle|et lys|la candela|🕯️||świeczka|a2x01_celebrations.candle
-Великдень|Easter|påske|la Pasqua|🐣||Wielkanoc|a2x01_celebrations.easter
+свічка|candle|et lys|la candela|🕯️|candle_2|świeczka|a2x01_celebrations.candle
+Великдень|Easter|påske|la Pasqua|🐣|Easter_egg|Wielkanoc|a2x01_celebrations.easter
 запрошення|invitation|en invitation|l'invito|💌||zaproszenie|a2x01_celebrations.invitation
 #cur_a2_29|Можливо, колись|🤔|A2
 мабуть|probably|sandsynligvis|probabilmente|🤔||prawdopodobnie|a2x01_connectors.probably
@@ -1461,8 +1461,8 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 дорослий|adult|en voksen|l'adulto|🧑|||cur_a2_31.adult
 підліток|teenager|en teenager|l'adolescente|🧑‍🎤|||cur_a2_31.teenager
 підлітковий|teenage|halvvoksen|adolescente|🛹|||cur_a2_31.teenage
-літня людина|senior|en senior|l'anziano|👴|||cur_a2_31.senior
-літній|elderly|ældre|anziano|👵|||cur_a2_31.elderly
+літня людина|senior|en senior|l'anziano|👴|old_person_1||cur_a2_31.senior
+літній|elderly|ældre|anziano|👵|old_person_1||cur_a2_31.elderly
 дитинство|childhood|en barndom|l'infanzia|🧸|||cur_a2_31.childhood
 молодість|youth|en ungdom|la gioventù|🌱|||cur_a2_31.youth
 предок|ancestor|en forfader|l'antenato|🌳|||cur_a2_31.ancestor
@@ -1476,14 +1476,14 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 шарф|scarf|et halstørklæde|la sciarpa|🧣|scarf|szalik|a2m_clothes.scarf
 рукавичка|glove|en handske|il guanto|🧤|gloves|rękawiczka|a2m_clothes.glove
 шкарпетка|sock|en sok|il calzino|🧦|socks|skarpetka|a2m_clothes.sock
-светр|jumper|en sweater|il maglione|🧶||sweter|a2x02_clothes.jumper
-костюм (діловий)|suit|et jakkesæt|il completo|🤵||garnitur|a2x02_clothes.suit
-краватка|tie|et slips|la cravatta|👔||krawat|a2x02_clothes.tie
+светр|jumper|en sweater|il maglione|🧶|jumper|sweter|a2x02_clothes.jumper
+костюм (діловий)|suit|et jakkesæt|il completo|🤵|suit_-_mans|garnitur|a2x02_clothes.suit
+краватка|tie|et slips|la cravatta|👔|tie|krawat|a2x02_clothes.tie
 рукавички|gloves|handsker|i guanti|🧤|gloves|rękawiczki|a2x02_clothes.gloves
 шкарпетки|socks|sokker|i calzini|🧦|socks|skarpetki|a2x02_clothes.socks
 колготки|tights|strømpebukser|i collant|🦵|tights|rajstopy|a2x02_clothes.tights
 ремінь (пасок)|belt|et bælte|la cintura|🪢|belt|pasek|a2x02_clothes.belt
-купальник|swimsuit|en badedragt|il costume da bagno|👙||strój kąpielowy|a2x02_clothes.swimsuit
+купальник|swimsuit|en badedragt|il costume da bagno|👙|swimming_costume|strój kąpielowy|a2x02_clothes.swimsuit
 дощовик|raincoat|en regnfrakke|l'impermeabile|🧥|raincoat|płaszcz przeciwdeszczowy|a2x02_clothes.raincoat
 личити (про одяг)|to suit|at klæde|stare bene|😍||pasować|a2x02_shopclothes.to_suit
 бюстгальтер|bra|en bh|il reggiseno|👙|bra||cur_a2_32.bra
@@ -1494,12 +1494,12 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 шкіра (матеріал)|leather|læder|la pelle|👜||skóra|a2x02_shopclothes.leather
 мода|fashion|en mode|la moda|👗|||cur_a2_33.fashion
 стиль|style|en stil|lo stile|🕶️|||cur_a2_33.style
-сережка|earring|en ørering|l'orecchino|💎|||cur_a2_33.earring
-сумочка|handbag|en håndtaske|la borsetta|👜|||cur_a2_33.handbag
+сережка|earring|en ørering|l'orecchino|💎|earrings||cur_a2_33.earring
+сумочка|handbag|en håndtaske|la borsetta|👜|hand_bag||cur_a2_33.handbag
 сонцезахисні окуляри|sunglasses|solbriller|gli occhiali da sole|😎|sunglasses||cur_a2_33.sunglasses
 вільний|loose|løstsiddende|largo|👖|||cur_a2_33.loose
 одягнений|dressed|påklædt|vestito|🧥|||cur_a2_33.dressed
-одягати|to dress|at klæde på|vestire|👶|||cur_a2_33.to_dress
+одягати|to dress|at klæde på|vestire|👶|get_dressed_,_to||cur_a2_33.to_dress
 експозиція|display|en udstilling|l'esposizione|🪟|||cur_a2_33.display
 бренд|brand|et mærke|il marchio|🏷️||marka|b2x03_media.brand
 каса (у магазині)|till|en kasse|la cassa|💳||kasa|a2x02_shopclothes.till
@@ -1513,7 +1513,7 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 золотий|golden|gylden|dorato|✨|||cur_a2_34.golden
 деревина|wood|et træ|il legno|🪓|wood||cur_a2_34.wood
 мотузка|rope|et reb|la corda|🪢|||cur_a2_34.rope
-скотч|tape|en tape|il nastro adesivo|📦|||cur_a2_34.tape
+скотч|tape|en tape|il nastro adesivo|📦|masking_tape||cur_a2_34.tape
 ланцюг|chain|en kæde|la catena|⛓️|||cur_a2_34.chain
 мотузочка|string|en snor|lo spago|🧶|string||cur_a2_34.string
 #cur_a2_35|Квартира в оренду|🚗|A2
@@ -1534,32 +1534,32 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 #cur_a2_36|Меблі й техніка|💡|A2
 лампа|lamp|en lampe|la lampada|💡|lamp|lampa|a1m_things.lamp
 холодильник|fridge|et køleskab|il frigorifero|🧊|fridge|lodówka|a1x01_kitchen.fridge
-крісло|armchair|en lænestol|la poltrona|🪑||fotel|a2x02_home.armchair
+крісло|armchair|en lænestol|la poltrona|🪑|arm_chair|fotel|a2x02_home.armchair
 книжкова шафа|bookcase|en reol|la libreria|📖|bookcase|regał|a2x02_home.bookcase
 шухляда|drawer|en skuffe|il cassetto|🗄️|drawer|szuflada|a2x02_home.drawer
-кран (водопровідний)|tap|en vandhane|il rubinetto|🚰||kran|a2x02_home.tap
-книжкова полиця|bookshelf|en boghylde|la libreria|📚|||cur_a2_36.bookshelf
+кран (водопровідний)|tap|en vandhane|il rubinetto|🚰|tap|kran|a2x02_home.tap
+книжкова полиця|bookshelf|en boghylde|la libreria|📚|book_shelf||cur_a2_36.bookshelf
 шафка|cupboard|et skab|l'armadietto|🗄️|cupboard||cur_a2_36.cupboard
-раковина|sink|en vask|il lavandino|🚰|||cur_a2_36.sink
+раковина|sink|en vask|il lavandino|🚰|sink||cur_a2_36.sink
 сумка-холодильник|cooler|en køletaske|la borsa frigo|🧊|||cur_a2_36.cooler
 пральна машина|washing machine|en vaskemaskine|la lavatrice|🧺|washing_machine|pralka|b1m_housing.washing_machine
-штора|curtain|et gardin|la tenda|🪟||zasłona|a2x02_home.curtain
-килим|carpet|et gulvtæppe|il tappeto|🟫||dywan|a2x02_home.carpet
+штора|curtain|et gardin|la tenda|🪟|curtains|zasłona|a2x02_home.curtain
+килим|carpet|et gulvtæppe|il tappeto|🟫|rug|dywan|a2x02_home.carpet
 подушка (для сну)|pillow|en hovedpude|il cuscino|🛏️||poduszka|a2x02_home.pillow
 стеля|ceiling|et loft|il soffitto|⬆️|ceiling|sufit|a2x02_home.ceiling
 #cur_a2_37|Кухня й готування|🔥|A2
-духовка|oven|en ovn|il forno|🔥||piekarnik|a1x01_kitchen.oven
+духовка|oven|en ovn|il forno|🔥|cooker|piekarnik|a1x01_kitchen.oven
 кип'ятити|to boil|at koge|bollire|♨️||gotować|a1x01_kitchen.to_boil
-перемішувати|to mix|at blande|mescolare|🥄||mieszać|a1x01_kitchen.to_mix
+перемішувати|to mix|at blande|mescolare|🥄|stir_mix_,_to|mieszać|a1x01_kitchen.to_mix
 свіжий|fresh|frisk|fresco|🥖||świeży|a2x01_adjectives.fresh
 пекти|to bake|at bage|cuocere al forno|🥧|bake_,_to|piec|a2x02_kitchen.to_bake
 наливати|to pour|at hælde|versare|🫗|pour_,_to|nalewać|a2x02_kitchen.to_pour
 запікати|to roast|at stege|arrostire|🍗|||cur_a2_37.to_roast
-готування|cooking|en madlavning|la cucina|👩‍🍳|||cur_a2_37.cooking
+готування|cooking|en madlavning|la cucina|👩‍🍳|cook_,_to||cur_a2_37.cooking
 столова ложка|tablespoon|en spiseske|il cucchiaio|🥄|||cur_a2_37.tablespoon
-борошно|flour|et mel|la farina|🌾|||cur_a2_37.flour
+борошно|flour|et mel|la farina|🌾|flour_plain||cur_a2_37.flour
 оливкова олія|olive oil|en olivenolie|l'olio d'oliva|🫒|olive_oil||cur_a2_37.olive_oil
-плита|stove|et komfur|il fornello|🔥|||cur_a2_37.stove
+плита|stove|et komfur|il fornello|🔥|cooker||cur_a2_37.stove
 крапля|drop|en dråbe|la goccia|💧|||cur_a2_37.drop
 смажити|to fry|at stege|friggere|🍳|fry_,_to|smażyć|a1x01_kitchen.to_fry
 смажити на грилі|to grill|at grille|grigliare|🍖|grill_,_to|grillować|a2x02_kitchen.to_grill
@@ -1567,7 +1567,7 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 пил|dust|et støv|la polvere|🌫️|||cur_a2_38.dust
 мотлох|junk|et skrammel|le cianfrusaglie|🗑️|||cur_a2_38.junk
 прибиральник|cleaner|en rengøringsassistent|l'addetto alle pulizie|🧽|cleaner_1a||cur_a2_38.cleaner
-ремонт|repair|en reparation|la riparazione|🔧|||cur_a2_38.repair
+ремонт|repair|en reparation|la riparazione|🔧|mend||cur_a2_38.repair
 ручка|handle|et håndtag|la maniglia|🚪|||cur_a2_38.handle
 гвинт|screw|en skrue|la vite|🔩|screw||cur_a2_38.screw
 набір|kit|et sæt|il kit|🧰|||cur_a2_38.kit
@@ -1584,15 +1584,15 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 секретар|secretary|en sekretær|il segretario|🗂️|secretary_1a||cur_a2_39.secretary
 клерк|clerk|en kontorassistent|l'impiegato|🖇️|||cur_a2_39.clerk
 охоронець|guard|en vagt|la guardia|💂|||cur_a2_39.guard
-шеф-кухар|chef|en køkkenchef|lo chef|👨‍🍳|||cur_a2_39.chef
+шеф-кухар|chef|en køkkenchef|lo chef|👨‍🍳|cook_chef_1a||cur_a2_39.chef
 редактор|editor|en redaktør|il redattore|✏️||redaktor|b1x02_news.editor
 начальник|boss|en chef|il capo|👔||szef|b1_work.boss
 адвокат|lawyer|en advokat|l'avvocato|💼||adwokat|b2x01_law.lawyer
 подкаст|podcast|en podcast|il podcast|🎧||podcast|b1x02_news.podcast
 #cur_a2_40|Професії · 2|👩‍🚀|A2
 астронавт|astronaut|en astronaut|l'astronauta|👩‍🚀|||cur_a2_40.astronaut
-рибалка|fisherman|en fisker|il pescatore|🎣|||cur_a2_40.fisherman
-мисливець|hunter|en jæger|il cacciatore|🏹|||cur_a2_40.hunter
+рибалка|fisherman|en fisker|il pescatore|🎣|fish_,_to||cur_a2_40.fisherman
+мисливець|hunter|en jæger|il cacciatore|🏹|hunt_,_to||cur_a2_40.hunter
 доповідач|speaker|en taler|il relatore|🎤|||cur_a2_40.speaker
 виробник|maker|en producent|il produttore|🛠️|||cur_a2_40.maker
 агент|agent|en agent|l'agente|🕵️|||cur_a2_40.agent
@@ -1629,14 +1629,14 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 подавати заявку|to apply|at søge|candidarsi|📨||składać podanie|b2m_education.to_apply
 #cur_a2_43|Школа|✂️|A2
 ножиці|scissors|en saks|le forbici|✂️|scissors|nożyczki|a1x01_school.scissors
-перерва (у школі)|break|et frikvarter|la ricreazione|🔔||przerwa|a1x01_school.break
+перерва (у школі)|break|et frikvarter|la ricreazione|🔔|break_time_1|przerwa|a1x01_school.break
 оцінка|mark|en karakter|il voto|💯||ocena|a2x02_school.mark
 підручник|textbook|en lærebog|il libro di testo|📘||podręcznik|a2x02_school.textbook
 шкільні завдання|schoolwork|et skolearbejde|il lavoro scolastico|✏️|||cur_a2_43.schoolwork
 кампус|campus|en campus|il campus|🌳|||cur_a2_43.campus
 позначати|to mark|at markere|segnare|✔️|||cur_a2_43.to_mark
 закінчувати навчання|to graduate|at blive færdiguddannet|laurearsi|🎓|||cur_a2_43.to_graduate
-папка|folder|en mappe|la cartella|📁|||cur_a2_43.folder
+папка|folder|en mappe|la cartella|📁|ring_binder||cur_a2_43.folder
 щоденник|diary|en dagbog|il diario|📔|||cur_a2_43.diary
 загальноосвітня школа (0–9 клас)||folkeskole|||||da_a2_new.da_folkeskole
 гімназія (старші класи)||gymnasiet|||||da_a2_new.da_gymnasiet
@@ -1681,7 +1681,7 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 питання|issue|et spørgsmål|la questione|❓|||cur_a2_46.issue
 стратегія|strategy|en strategi|la strategia|♟️|||cur_a2_46.strategy
 короткий зміст|summary|et resumé|il riassunto|📄|||cur_a2_46.summary
-письмо|writing|en skrivning|la scrittura|✍️|||cur_a2_46.writing
+письмо|writing|en skrivning|la scrittura|✍️|write_,_to||cur_a2_46.writing
 контекст|context|en sammenhæng|il contesto|🔍|||cur_a2_46.context
 вираз|expression|et udtryk|l'espressione|🗨️|||cur_a2_46.expression
 значення|meaning|en betydning|il significato|📖|||cur_a2_46.meaning
@@ -1719,7 +1719,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 поштова марка|stamp|et frimærke|il francobollo|📮||znaczek pocztowy|a2x01_post_bank.stamp
 конверт|envelope|en kuvert|la busta|✉️|envelope|koperta|a2x01_post_bank.envelope
 отримувати|to receive|at modtage|ricevere|📥|receive_,_to|otrzymywać|a2x01_post_bank.to_receive
-кидати (лист у скриньку)|to post|at poste|imbucare|📮||wrzucać do skrzynki|a2x01_post_bank.to_post
+кидати (лист у скриньку)|to post|at poste|imbucare|📮|post_letter_,_to|wrzucać do skrzynki|a2x01_post_bank.to_post
 прохання|request|en anmodning|la richiesta|🙋|||cur_a2_49.request
 дозвіл|permission|en tilladelse|il permesso|🛂|||cur_a2_49.permission
 офіційний|official|officiel|ufficiale|🏛️|||cur_a2_49.official
@@ -1733,9 +1733,9 @@ NemKonto — рахунок для виплат від держави||en NemKon
 листівка|postcard|et postkort|la cartolina|🏞️||pocztówka|a2x01_post_bank.postcard
 #cur_a2_50|Погода|💨|A2
 вітряний|windy|blæsende|ventoso|💨||wietrzny|a1x01_weather.windy
-буря|storm|en storm|la tempesta|⛈️||burza|a1x01_weather.storm
+буря|storm|en storm|la tempesta|⛈️|thunder_storm|burza|a1x01_weather.storm
 туман|fog|tåge|la nebbia|🌫️||mgła|a1x01_weather.fog
-гроза|thunderstorm|et tordenvejr|il temporale|⛈️|||cur_a2_50.thunderstorm
+гроза|thunderstorm|et tordenvejr|il temporale|⛈️|thunder_storm||cur_a2_50.thunderstorm
 спека|heat|en varme|il caldo|🥵|||cur_a2_50.heat
 денне світло|daylight|dagslys|la luce del giorno|🌅|||cur_a2_50.daylight
 тінь|shade|en skygge|l'ombra|🌳|||cur_a2_50.shade
@@ -1764,9 +1764,9 @@ NemKonto — рахунок для виплат від держави||en NemKon
 Північне море (біля Ютландії)||Vesterhavet|||||da_a2_new.da_vesterhavet
 пустеля|desert|en ørken|il deserto|🏜️|cactus|pustynia|b1_environment.desert
 #cur_a2_52|Рослини й природа|🪴|A2
-рослина|plant|en plante|la pianta|🪴|||cur_a2_52.plant
-насінина|seed|et frø|il seme|🌱|||cur_a2_52.seed
-корінь|root|en rod|la radice|🌳|||cur_a2_52.root
+рослина|plant|en plante|la pianta|🪴|plant||cur_a2_52.plant
+насінина|seed|et frø|il seme|🌱|seeds||cur_a2_52.seed
+корінь|root|en rod|la radice|🌳|roots||cur_a2_52.root
 урожай|harvest|en høst|il raccolto|🌾|harvest||cur_a2_52.harvest
 соняшник|sunflower|en solsikke|il girasole|🌻|||cur_a2_52.sunflower
 дуб|oak|et egetræ|la quercia|🌳|||cur_a2_52.oak
@@ -1776,7 +1776,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 дикий|wild|vild|selvatico|🐺|||cur_a2_52.wild
 комаха|insect|et insekt|l'insetto|🐞|||cur_a2_52.insect
 пір'їна|feather|en fjer|la piuma|🪶|feather||cur_a2_52.feather
-мушля|shell|en muslingeskal|la conchiglia|🐚|||cur_a2_52.shell
+мушля|shell|en muslingeskal|la conchiglia|🐚|shells||cur_a2_52.shell
 #cur_a2_53|Тварини й довкілля|🐘|A2
 слон|elephant|en elefant|l'elefante|🐘|elephant|słoń|a1m_wild.elephant
 качка|duck|en and|l'anatra|🦆|duck|kaczka|a2m_animals.duck
@@ -1807,10 +1807,10 @@ NemKonto — рахунок для виплат від держави||en NemKon
 традиційний|traditional|traditionel|tradizionale|🏮|||cur_a2_54.traditional
 громадянин|citizen|en borger|il cittadino|🪪||obywatel|b2_society.citizen
 #cur_a2_55|Почуття · -ed чи -ing|😕|A2
-розгублений|confused|forvirret|confuso|😕|||cur_a2_55.confused
+розгублений|confused|forvirret|confuso|😕|confused_man||cur_a2_55.confused
 що розчаровує|disappointing|skuffende|deludente|😞|||cur_a2_55.disappointing
 соромний|embarrassing|pinlig|imbarazzante|😳|||cur_a2_55.embarrassing
-страшний|frightening|skræmmende|spaventoso|😱|||cur_a2_55.frightening
+страшний|frightening|skræmmende|spaventoso|😱|scary||cur_a2_55.frightening
 несподіваний|surprising|overraskende|sorprendente|😮|||cur_a2_55.surprising
 потішений|amused|moret|divertito|😏|||cur_a2_55.amused
 набридливий|annoying|irriterende|fastidioso|😤|||cur_a2_55.annoying
@@ -1821,11 +1821,11 @@ NemKonto — рахунок для виплат від держави||en NemKon
 здивований|surprised|overrasket|sorpreso|😲|surprised_lady|zdziwiony|b1_feelings.surprised
 #cur_a2_56|Емоції|😬|A2
 знервований|nervous|nervøs|nervoso|😬||zdenerwowany|a1x01_feelings.nervous
-стривожений|anxious|ængstelig|ansioso|😰|||cur_a2_56.anxious
+стривожений|anxious|ængstelig|ansioso|😰|worried_man||cur_a2_56.anxious
 нетерплячий|impatient|utålmodig|impaziente|⏳|||cur_a2_56.impatient
 задоволений|pleased|tilfreds|contento|😊|||cur_a2_56.pleased
-нещасний|unhappy|ulykkelig|infelice|☹️|||cur_a2_56.unhappy
-стурбований|worried|bekymret|preoccupato|😟|||cur_a2_56.worried
+нещасний|unhappy|ulykkelig|infelice|☹️|sad_man||cur_a2_56.unhappy
+стурбований|worried|bekymret|preoccupato|😟|worried_man||cur_a2_56.worried
 радість|joy|en glæde|la gioia|😄|||cur_a2_56.joy
 щастя|happiness|lykke|la felicità|🥰|||cur_a2_56.happiness
 страх|fear|en frygt|la paura|😨|||cur_a2_56.fear
@@ -1835,13 +1835,13 @@ NemKonto — рахунок для виплат від держави||en NemKon
 #cur_a2_57|Коли щось дратує|😭|A2
 плакати|to cry|at græde|piangere|😭||płakać|a1x01_feelings.to_cry
 дратувати|to annoy|at irritere|infastidire|😤|||cur_a2_57.to_annoy
-лякати|to frighten|at skræmme|spaventare|👻|||cur_a2_57.to_frighten
+лякати|to frighten|at skræmme|spaventare|👻|scary||cur_a2_57.to_frighten
 наводити жах|to terrify|at skræmme livet af|terrorizzare|😱|||cur_a2_57.to_terrify
 заплутувати|to confuse|at forvirre|confondere|🌀|||cur_a2_57.to_confuse
 заважати|to disturb|at forstyrre|disturbare|🔕|||cur_a2_57.to_disturb
 турбувати|to bother|at genere|dare fastidio|😒|||cur_a2_57.to_bother
 крик|scream|et skrig|l'urlo|😱|||cur_a2_57.scream
-вигук|shout|et råb|il grido|📢|||cur_a2_57.shout
+вигук|shout|et råb|il grido|📢|shout_,_to||cur_a2_57.shout
 сльоза|tear|en tåre|la lacrima|😢|||cur_a2_57.tear
 шок|shock|et chok|lo shock|😲|||cur_a2_57.shock
 настрій|mood|et humør|l'umore|🎭||nastrój|b1_feelings.mood
@@ -1886,14 +1886,14 @@ NemKonto — рахунок для виплат від держави||en NemKon
 зубна щітка|toothbrush|en tandbørste|lo spazzolino|🪥|toothbrush||cur_a2_60.toothbrush
 стрункий|slim|slank|snello|🧍||szczupły|b1x03_appearance.slim
 гарний на вигляд|good-looking|flot|di bell'aspetto|😎||przystojny|b1x03_appearance.good_looking
-макіяж|makeup|sminke|il trucco|💄|||cur_a2_60.makeup
+макіяж|makeup|sminke|il trucco|💄|make_up||cur_a2_60.makeup
 борода|beard|et skæg|la barba|🧔||broda|b1x03_appearance.beard
 #cur_a2_61|Комп'ютер та інтернет|💾|A2
 програмне забезпечення|software|en software|il software|💾|||cur_a2_61.software
-друкувати|to print|at printe|stampare|🖨️|||cur_a2_61.to_print
-вебсторінка|web page|en webside|la pagina web|📄|||cur_a2_61.web_page
+друкувати|to print|at printe|stampare|🖨️|print||cur_a2_61.to_print
+вебсторінка|web page|en webside|la pagina web|📄|homepage||cur_a2_61.web_page
 онлайн|online|online|online|🌐|||cur_a2_61.online
-клацати|to click|at klikke|cliccare|🖱️|||cur_a2_61.to_click
+клацати|to click|at klikke|cliccare|🖱️|left_click||cur_a2_61.to_click
 пошук|search|en søgning|la ricerca|🔍|||cur_a2_61.search
 копіювати|to copy|at kopiere|copiare|📋|copy_,_to||cur_a2_61.to_copy
 принтер|printer|en printer|la stampante|🖨️|printer|drukarka|b1m_tech.printer
@@ -1906,19 +1906,19 @@ NemKonto — рахунок для виплат від держави||en NemKon
 контакт (у телефоні)|contact|en kontakt|il contatto|👤||kontakt|a2x01_phone.contact
 зв'язуватися|to contact|at kontakte|contattare|📇|||cur_a2_62.to_contact
 звуковий сигнал|tone|en tone|il segnale acustico|🔔|||cur_a2_62.tone
-надсилати імейл|to email|at e-maile|mandare un'email|📧|||cur_a2_62.to_email
+надсилати імейл|to email|at e-maile|mandare un'email|📧|email_send_,_to||cur_a2_62.to_email
 записувати|to record|at optage|registrare|🎙️|||cur_a2_62.to_record
 есемеска|text message|en sms|il messaggino|📱||SMS|b1x03_phone.text_message
 писати повідомлення|to text|at sms'e|mandare un messaggio|✉️||esemesować|b1x03_phone.to_text
 голос|voice|en stemme|la voce|🎙️||głos|b1x03_phone.voice
-смартфон|smartphone|en smartphone|lo smartphone|📱||smartfon|a2x01_phone.smartphone
+смартфон|smartphone|en smartphone|lo smartphone|📱|iPhone|smartfon|a2x01_phone.smartphone
 чат|chat|en chat|la chat|💬||czat|a2x01_phone.chat
 смайлик|emoji|en emoji|l'emoji|😀||emotka|a2x01_phone.emoji
 #cur_a2_63|Техніка|🤖|A2
 автоматичний|automatic|automatisk|automatico|🤖|||cur_a2_63.automatic
 автоматично|automatically|automatisk|automaticamente|⚙️|||cur_a2_63.automatically
 електричний|electric|elektrisk|elettrico|⚡|||cur_a2_63.electric
-цифровий фотоапарат|digital camera|et digitalkamera|la fotocamera digitale|📷|||cur_a2_63.digital_camera
+цифровий фотоапарат|digital camera|et digitalkamera|la fotocamera digitale|📷|camera_compact||cur_a2_63.digital_camera
 навушники|headphones|høretelefoner|le cuffie|🎧|headphones||cur_a2_63.headphones
 звук|audio|lyd|l'audio|🔊|||cur_a2_63.audio
 миттєвий|instant|øjeblikkelig|istantaneo|⚡|||cur_a2_63.instant
@@ -1932,11 +1932,11 @@ NemKonto — рахунок для виплат від держави||en NemKon
 пароль|password|en adgangskode|la password|🔑||hasło|b2m_gadgets.password
 #cur_a2_64|Наука й відкриття|⚛️|A2
 атом|atom|et atom|l'atomo|⚛️|atom||cur_a2_64.atom
-діаграма|chart|et diagram|il grafico|📊|||cur_a2_64.chart
+діаграма|chart|et diagram|il grafico|📊|pie_chart||cur_a2_64.chart
 дослідження|research|forskning|la ricerca scientifica|🔬|||cur_a2_64.research
 хімічний|chemical|kemisk|chimico|🧪|||cur_a2_64.chemical
 штучний|artificial|kunstig|artificiale|🦾|||cur_a2_64.artificial
-планета|planet|en planet|il pianeta|🪐|||cur_a2_64.planet
+планета|planet|en planet|il pianeta|🪐|planets||cur_a2_64.planet
 космос|space|rummet|lo spazio|🌌|||cur_a2_64.space
 космічний корабель|spaceship|et rumskib|l'astronave|🚀|spaceship||cur_a2_64.spaceship
 винахід|invention|en opfindelse|l'invenzione|⚙️||wynalazek|b2x02_science.invention
@@ -1965,7 +1965,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 солдат|soldier|en soldat|il soldato|🪖|soldier_1a||cur_a2_66.soldier
 військовий|military|militær|militare|🎖️|||cur_a2_66.military
 напад|attack|et angreb|l'attacco|⚔️|||cur_a2_66.attack
-втеча|escape|en flugt|la fuga|🏃|||cur_a2_66.escape
+втеча|escape|en flugt|la fuga|🏃|escape_,_to||cur_a2_66.escape
 пастка|trap|en fælde|la trappola|🪤|trap||cur_a2_66.trap
 нападати|to attack|at angribe|aggredire|💥||atakować|b1x03_crime.to_attack
 уряд|government|en regering|il governo|🏢|Houses_of_Parliament|rząd|b2_society.government
@@ -1988,7 +1988,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 століття|century|et århundrede|il secolo|🏰||wiek|a2x02_time.century
 спосіб життя|lifestyle|en livsstil|lo stile di vita|🧘|||cur_a2_68.lifestyle
 фон|background|en baggrund|lo sfondo|🖼️|||cur_a2_68.background
-спілкування|communication|en kommunikation|la comunicazione|💬|||cur_a2_68.communication
+спілкування|communication|en kommunikation|la comunicazione|💬|communicate_,_to||cur_a2_68.communication
 штат|state|en stat|lo stato|🗺️|||cur_a2_68.state
 покоління|generation|en generation|la generazione|👨‍👩‍👧|||cur_a2_68.generation
 сучасний|modern|moderne|moderno|🏙️|||cur_a2_68.modern
@@ -2051,13 +2051,13 @@ NemKonto — рахунок для виплат від держави||en NemKon
 зменшувати|to reduce|at reducere|ridurre|⬇️||zmniejszać|b1x01_verbs.to_reduce
 згадувати (у розмові)|to mention|at nævne|menzionare|💬||wspominać|b1x01_verbs.to_mention
 #cur_a2_73|Дієслова · рух|🍂|A2
-падати|to fall|at falde|cadere|🍂||upadać|a2x01_verbs.to_fall
+падати|to fall|at falde|cadere|🍂|fall_over_,_to|upadać|a2x01_verbs.to_fall
 входити|to enter|at gå ind|entrare|🚪|enter_,_to||cur_a2_73.to_enter
 іти слідом|to follow|at følge|seguire|👣|||cur_a2_73.to_follow
 дістатися|to reach|at nå|raggiungere|🏁|||cur_a2_73.to_reach
 тягнути|to pull|at trække|tirare|🪢|pull_,_to||cur_a2_73.to_pull
 бити|to hit|at slå|picchiare|🥊|hit_,_to||cur_a2_73.to_hit
-лежати|to lie|at ligge|sdraiarsi|🛌|||cur_a2_73.to_lie
+лежати|to lie|at ligge|sdraiarsi|🛌|lie_on_back_,_to||cur_a2_73.to_lie
 стояти|to stand|at stå|stare in piedi|🧍|stand_,_to||cur_a2_73.to_stand
 прямувати|to head|at begive sig|dirigersi|🧭|||cur_a2_73.to_head
 бризкати|to splash|at sprøjte|schizzare|💦|||cur_a2_73.to_splash
@@ -2071,9 +2071,9 @@ NemKonto — рахунок для виплат від держави||en NemKon
 закінчено|over|forbi|finito|🏁|over||cur_a2_74.over
 на частини|apart|fra hinanden|a pezzi|🧩|||cur_a2_74.apart
 цифра|figure|et ciffer|la cifra|🔢|||cur_a2_74.figure
-тримати|to hold|at holde|tenere|✊|||cur_a2_74.to_hold
-подавати|to hand|at række|passare|🤲|||cur_a2_74.to_hand
-вказувати|to point|at pege|indicare|👉|||cur_a2_74.to_point
+тримати|to hold|at holde|tenere|✊|hold_,_to||cur_a2_74.to_hold
+подавати|to hand|at række|passare|🤲|give_,_to||cur_a2_74.to_hand
+вказувати|to point|at pege|indicare|👉|point_,_to||cur_a2_74.to_point
 #cur_a2_75|Дієслова · робимо щось|🎨|A2
 створювати|to create|at skabe|creare|🎨|||cur_a2_75.to_create
 розвивати|to develop|at udvikle|sviluppare|📈|||cur_a2_75.to_develop
@@ -2084,7 +2084,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 вкривати|to cover|at dække|coprire|❄️|||cur_a2_75.to_cover
 керувати|to operate|at betjene|azionare|⚙️|||cur_a2_75.to_operate
 налаштовувати|to adjust|at justere|regolare|🔧|||cur_a2_75.to_adjust
-ділити|to divide|at dele|dividere|➗|||cur_a2_75.to_divide
+ділити|to divide|at dele|dividere|➗|divide||cur_a2_75.to_divide
 складатися|to consist|at bestå|consistere|🧱|||cur_a2_75.to_consist
 збільшувати|to increase|at øge|aumentare|⬆️||zwiększać|b1x01_verbs.to_increase
 замінювати|to replace|at erstatte|sostituire|🔁||wymieniać|b1x01_verbs.to_replace
@@ -2116,12 +2116,12 @@ NemKonto — рахунок для виплат від держави||en NemKon
 відпочивати|to relax|at slappe af|rilassarsi|🛋️|relax_,_to|odpoczywać|a1x02_routine.to_relax
 стверджувати|to claim|at påstå|affermare|📢||twierdzić|b2x02_argue.to_claim
 #cur_a2_78|Форма й розмір|🔷|A2
-форма|shape|en form|la forma|🔷|||cur_a2_78.shape
+форма|shape|en form|la forma|🔷|shapes||cur_a2_78.shape
 хрестик|cross|et kryds|la croce|❌|||cur_a2_78.cross
 величезний|enormous|enorm|enorme|🐘|||cur_a2_78.enormous
 глибокий|deep|dyb|profondo|🌊|deep||cur_a2_78.deep
 гладкий|smooth|glat|liscio|🪨|smooth||cur_a2_78.smooth
-рамка|frame|en ramme|la cornice|🖼️|||cur_a2_78.frame
+рамка|frame|en ramme|la cornice|🖼️|picture_frame||cur_a2_78.frame
 будова|structure|en struktur|la struttura|🏗️|||cur_a2_78.structure
 низький|low|lav|basso|🔻||niski|a1x02_opposites.low
 м'який|soft|blød|morbido|🧸|soft|miękki|a1x02_opposites.soft
@@ -2180,10 +2180,10 @@ NemKonto — рахунок для виплат від держави||en NemKon
 розвинений|developed|udviklet|sviluppato|🏙️|||cur_a2_82.developed
 несправедливий|unfair|uretfærdig|ingiusto|😠||niesprawiedliwy|b1x02_adjectives.unfair
 #cur_a2_83|Живе й зникле|😴|A2
-сонний|sleepy|søvnig|assonnato|😴||śpiący|a1x01_feelings.sleepy
+сонний|sleepy|søvnig|assonnato|😴|yawn_,_to|śpiący|a1x01_feelings.sleepy
 живий|alive|i live|vivo|💓|||cur_a2_83.alive
 мертвий|dead|død|morto|🥀|dead||cur_a2_83.dead
-сплячий|asleep|sovende|addormentato|😴|||cur_a2_83.asleep
+сплячий|asleep|sovende|addormentato|😴|sleep_male_,_to||cur_a2_83.asleep
 зниклий|missing|forsvundet|scomparso|❓|||cur_a2_83.missing
 загублений|lost|bortkommen|perso|🐕|lost||cur_a2_83.lost
 людський|human|menneskelig|umano|🧍|||cur_a2_83.human
@@ -2259,7 +2259,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 широко|widely|bredt|ampiamente|🌐|||cur_a2_88.widely
 глибоко|deeply|dybt|profondamente|🌊|||cur_a2_88.deeply
 #cur_a2_89|Думки й факти|💭|A2
-думка|thought|en tanke|il pensiero|💭|||cur_a2_89.thought
+думка|thought|en tanke|il pensiero|💭|think_,_to||cur_a2_89.thought
 факт|fact|et faktum|il fatto|📌|||cur_a2_89.fact
 правда|truth|en sandhed|la verità|🪞|||cur_a2_89.truth
 почуття|sense|en sans|il senso|😄|||cur_a2_89.sense
@@ -2291,12 +2291,12 @@ NemKonto — рахунок для виплат від держави||en NemKon
 підтримка|support|en støtte|il sostegno|🫶|||cur_a2_91.support
 крок|step|et skridt|il passo|👣|||cur_a2_91.step
 доріжка|track|en bane|la pista|🏟️|||cur_a2_91.track
-мішень|target|et mål|il bersaglio|🎯|||cur_a2_91.target
+мішень|target|et mål|il bersaglio|🎯|archery_target||cur_a2_91.target
 вантаж|load|et læs|il carico|🚚|||cur_a2_91.load
 гірка|slide|en rutsjebane|lo scivolo|🛝|slide||cur_a2_91.slide
 частка|share|en andel|la quota|🍕|||cur_a2_91.share
 удар|blow|et slag|la botta|👊|||cur_a2_91.blow
-стукіт|knock|et bank|il colpo|🚪|||cur_a2_91.knock
+стукіт|knock|et bank|il colpo|🚪|knock_,_to||cur_a2_91.knock
 #cur_a2_92|Плюси й мінуси|👍|A2
 перевага|advantage|en fordel|il vantaggio|👍|||cur_a2_92.advantage
 недолік|disadvantage|en ulempe|lo svantaggio|⚠️|||cur_a2_92.disadvantage
@@ -2310,12 +2310,12 @@ NemKonto — рахунок для виплат від держави||en NemKon
 #mix_A2_cur|Інші слова|🧩|A2
 черепаха|turtle|en skildpadde|la tartaruga|🐢|turtle|żółw|a1m_wild.turtle
 павук|spider|en edderkop|il ragno|🕷️|spider|pająk|a1m_wild.spider
-сідати (в автобус)|to get on|at stige på|salire|🚌||wsiadać|a1x01_transport.to_get_on
-виходити (з автобуса)|to get off|at stå af|scendere|🚶||wysiadać|a1x01_transport.to_get_off
+сідати (в автобус)|to get on|at stige på|salire|🚌|get_on_bus_,_to|wsiadać|a1x01_transport.to_get_on
+виходити (з автобуса)|to get off|at stå af|scendere|🚶|get_off_bus_,_to|wysiadać|a1x01_transport.to_get_off
 мити посуд|to wash up|at vaske op|lavare i piatti|🍽️|wash_up_,_to|zmywać naczynia|a1x01_kitchen.to_wash_up
 накривати на стіл|to set the table|at dække bord|apparecchiare la tavola|🍴|set_the_table_,_to|nakrywać do stołu|a1x01_kitchen.to_set_the_table
 гральні карти|playing cards|spillekort|le carte da gioco|🃏|playing_cards|karty do gry|a1x01_sport.playing_cards
-піти на пробіжку|to go for a run|at løbe en tur|andare a correre|🏃‍♀️||iść pobiegać|a1x01_sport.to_go_for_a_run
+піти на пробіжку|to go for a run|at løbe en tur|andare a correre|🏃‍♀️|jog_,_to|iść pobiegać|a1x01_sport.to_go_for_a_run
 Як дістатися до вокзалу?|How do I get to the station?|Hvordan kommer jeg til stationen?|Come arrivo alla stazione?|🧭||Jak dojść do dworca?|a1x01_town.how_do_i_get_to_the_station
 післязавтра|the day after tomorrow|i overmorgen|dopodomani|🗓️||pojutrze|a1x01_time.the_day_after_tomorrow
 позавчора|the day before yesterday|i forgårs|l'altro ieri|🔙||przedwczoraj|a1x01_time.the_day_before_yesterday
@@ -2333,18 +2333,18 @@ NemKonto — рахунок для виплат від держави||en NemKon
 тостер|toaster|en brødrister|il tostapane|🍞|toaster|toster|a2x02_kitchen.toaster
 посудомийна машина|dishwasher|en opvaskemaskine|la lavastoviglie|🧽|dishwasher|zmywarka|a2x02_kitchen.dishwasher
 блузка|blouse|en bluse|la camicetta|👚|blouse|bluzka|a2x02_clothes.blouse
-кросівки|trainers|sneakers|le scarpe da ginnastica|👟||buty sportowe|a2x02_clothes.trainers
+кросівки|trainers|sneakers|le scarpe da ginnastica|👟|trainers|buty sportowe|a2x02_clothes.trainers
 піжама|pyjamas|en pyjamas|il pigiama|😴|pyjamas|piżama|a2x02_clothes.pyjamas
-вдягати|to put on|at tage på|mettersi|🧥||zakładać|a2x02_shopclothes.to_put_on
-знімати (одяг)|to take off|at tage af|togliersi|👟||zdejmować|a2x02_shopclothes.to_take_off
+вдягати|to put on|at tage på|mettersi|🧥|put_on_coat_,_to|zakładać|a2x02_shopclothes.to_put_on
+знімати (одяг)|to take off|at tage af|togliersi|👟|undress_,_to|zdejmować|a2x02_shopclothes.to_take_off
 одягатися|to get dressed|at klæde sig på|vestirsi|👔|get_dressed_,_to|ubierać się|a2x02_shopclothes.to_get_dressed
 шкіра (тіла)|skin|hud|la pelle|🧴|skin|skóra|a2x02_body.skin
-таблетка|tablet|en pille|la compressa|💊||tabletka|a2x02_body.tablet
+таблетка|tablet|en pille|la compressa|💊|tablets|tabletka|a2x02_body.tablet
 пісок|sand|sand|la sabbia|🏖️||piasek|a2x02_nature.sand
 футболіст|soccer player|en fodboldspiller|il calciatore|⚽|||cur_a2_18.soccer_player
-лампочка|light bulb|en elpære|la lampadina|💡|||cur_a2_63.light_bulb
+лампочка|light bulb|en elpære|la lampadina|💡|lightbulb||cur_a2_63.light_bulb
 розвеселяти|to cheer up|at muntre op|rallegrare|😄|||cur_a2_74.to_cheer_up
-булочка|roll|et rundstykke|il panino|🥯|||cur_a2_91.roll
+булочка|roll|et rundstykke|il panino|🥯|bread_roll||cur_a2_91.roll
 замість|instead of|i stedet for|invece di|🔁||zamiast|b1_connectors.instead_of
 входити (в акаунт)|to log in|at logge ind|accedere|🔓||zalogować się|b1m_tech.to_log_in
 обліковий запис|account|en konto|l'account|👤||konto|b1m_tech.account
@@ -2505,7 +2505,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 плитка|tile|en flise|la piastrella|🔲|||cur_b1_010.tile
 труба|pipe|et rør|il tubo|🚰|||cur_b1_010.pipe
 штепсель|plug|et stik|la spina|🔌|||cur_b1_010.plug
-мінятися|to switch|at skifte|scambiare|🔄|||cur_b1_010.to_switch
 електрика|electricity|en elektricitet|l'elettricità|⚡|||cur_b1_010.electricity
 технічне обслуговування|maintenance|en vedligeholdelse|la manutenzione|🔧|||cur_b1_010.maintenance
 підвал|basement|en kælder|la cantina|🏚️||piwnica|a2x02_home.basement
@@ -2659,7 +2658,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 лоб|forehead|en pande|la fronte|🤕||czoło|a2x02_body.forehead
 язик (орган)|tongue|en tunge|la lingua|👅|tongue|język|a2x02_body.tongue
 великий палець (руки)|thumb|en tommelfinger|il pollice|👍|thumb|kciuk|a2x02_body.thumb
-біль у спині|backache|rygsmerter|il mal di schiena|😣||ból pleców|a2x02_body.backache
+біль у спині|backache|rygsmerter|il mal di schiena|😣|back_ache|ból pleców|a2x02_body.backache
 біль у вусі|earache|ørepine|il mal d'orecchi|👂||ból ucha|a2x02_body.earache
 стегно|hip|en hofte|l'anca|🦴|hip||cur_b1_022.hip
 п'ятка|heel|en hæl|il tallone|🦶|heel||cur_b1_022.heel
@@ -2689,7 +2688,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 дефіцит|deficiency|en mangel|la carenza|💊|||cur_b1_024.deficiency
 синдром|syndrome|et syndrom|la sindrome|🩺|||cur_b1_024.syndrome
 недужий|unwell|utilpas|indisposto|🤒|||cur_b1_024.unwell
-ледве відчутний|faint|svag|leggero|🌫️|||cur_b1_024.faint
 чхання|sneeze|et nys|lo starnuto|🤧|||cur_b1_024.sneeze
 давитися|to choke|at blive kvalt|strozzarsi|😵|choke_,_to||cur_b1_024.to_choke
 #cur_b1_025|Сон і звички|😴|B1
@@ -2765,7 +2763,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 турнір|tournament|en turnering|il torneo|🏆||turniej|b1m_sport.tournament
 перемога|victory|en sejr|la vittoria|🥇|winner|zwycięstwo|b1m_sport.victory
 суддя (у спорті)|referee|en dommer|l'arbitro|🟥||sędzia|b1m_sport.referee
-в'язання|knitting|strikning|il lavoro a maglia|🧶||robienie na drutach|a2x02_sport.knitting
+в'язання|knitting|strikning|il lavoro a maglia|🧶|knit_,_to|robienie na drutach|a2x02_sport.knitting
 #cur_b1_030|Види спорту|🥊|B1
 бокс|boxing|boksning|la boxe|🥊|||cur_b1_030.boxing
 гімнастика|gymnastics|gymnastik|la ginnastica|🤸|||cur_b1_030.gymnastics
@@ -2932,14 +2930,14 @@ NemKonto — рахунок для виплат від держави||en NemKon
 мережа|network|et netværk|la rete|🌐||sieć|b1m_tech.network
 набирати (номер)|to dial|at taste|comporre|☎️|dial_,_to|wybierać numer|b1x03_phone.to_dial
 заряд|charge|en opladning|la carica|🔋|charge||cur_b1_041.charge
-циферблат|dial|en urskive|il quadrante|🕰️|||cur_b1_041.dial
 той, хто телефонує|caller|en opkalder|il chiamante|📞|||cur_b1_041.caller
 гучномовець|loudspeaker|en højttaler|l'altoparlante|🔊|||cur_b1_041.loudspeaker
 пристрій|device|en enhed|il dispositivo|📱||urządzenie|b2m_gadgets.device
 оновлювати|to update|at opdatere|aggiornare|🔄||aktualizować|b2m_gadgets.to_update
-рингтон|ringtone|en ringetone|la suoneria|🎵||dzwonek|a2x01_phone.ringtone
+рингтон|ringtone|en ringetone|la suoneria|🎵|mobile_phone_ring_tone|dzwonek|a2x01_phone.ringtone
 оновлення|update|en opdatering|l'aggiornamento|🔄||aktualizacja|b1m_tech.update
 автовідповідач|voicemail|en telefonsvarer|la segreteria telefonica|📼||poczta głosowa|b1x03_phone.voicemail
+шепотіти|to whisper|at hviske|sussurrare|🤫|whisper_,_to|szeptać|b1x03_phone.to_whisper
 #cur_b1_042|Комп'ютер|💾|B1
 диск|disk|en disk|il disco|💾|||cur_b1_042.disk
 сервер|server|en server|il server|🖥️|||cur_b1_042.server
@@ -2964,7 +2962,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 блокувати|to block|at blokere|bloccare|🚫|||cur_b1_043.to_block
 деактивувати|to disable|at deaktivere|disattivare|🔕|||cur_b1_043.to_disable
 дивитися онлайн|to stream|at streame|guardare in streaming|📺|||cur_b1_043.to_stream
-шрифт|print|en skrift|il carattere|🔤|||cur_b1_043.print
 актуальний|up-to-date|opdateret|aggiornato|🆕|||cur_b1_043.up_to_date
 неактуальний|out-of-date|forældet|non aggiornato|📅|||cur_b1_043.out_of_date
 публічно|publicly|offentligt|pubblicamente|📢|||cur_b1_043.publicly
@@ -2994,7 +2991,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 відправляти|to ship|at afsende|spedire|🚢|||cur_b1_045.to_ship
 самообслуговування|self-service|selvbetjening|il self-service|🛒|||cur_b1_045.self_service
 каса|checkout|en kasse|la cassa|🧾||kasa|a1x01_shop.checkout
-кур'єр|courier|et bud|il corriere|🛵||kurier|a2x01_post_bank.courier
+кур'єр|courier|et bud|il corriere|🛵|delivery_person_1a|kurier|a2x01_post_bank.courier
 банкнота|banknote|en pengeseddel|la banconota|💶||banknot|a2x01_post_bank.banknote
 #cur_b1_046|Вигідна покупка|♻️|B1
 вживаний (не новий)|second-hand|brugt|usato|♻️||używany|a2x02_shopclothes.second_hand
@@ -3009,7 +3006,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 антикварна річ|antique|en antikvitet|il pezzo d'antiquariato|🏺|||cur_b1_046.antique
 тісний|tight|stram|stretto|🤏||ciasny|a2x02_shopclothes.tight
 смугастий|striped|stribet|a righe|🦓|striped|pasiasty|a2x02_shopclothes.striped
-картатий|checked|ternet|a quadri|🏁||kraciasty|a2x02_shopclothes.checked
+картатий|checked|ternet|a quadri|🏁|tartan|kraciasty|a2x02_shopclothes.checked
 #cur_b1_047|Подорож по США|🎒|B1
 бекпекер|backpacker|en backpacker|il backpacker|🎒|||cur_b1_047.backpacker
 подорож з рюкзаком|backpacking|en rygsækrejse|il viaggio zaino in spalla|🏕️|||cur_b1_047.backpacking
@@ -3035,8 +3032,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 сідати на борт|to board|at gå om bord|imbarcarsi|🎫|||cur_b1_048.to_board
 затримувати|to delay|at forsinke|ritardare|⏰|||cur_b1_048.to_delay
 на борту|aboard|om bord|a bordo|🛩️|||cur_b1_048.aboard
-#cur_b1_049|Бронювання|🦌|B1
-заповідник|reserve|et naturreservat|la riserva naturale|🦌|||cur_b1_049.reserve
+#cur_b1_049|Бронювання|✅|B1
 підтвердження|confirmation|en bekræftelse|la conferma|✅|||cur_b1_049.confirmation
 скасовувати|to cancel|at aflyse|annullare|❌|||cur_b1_049.to_cancel
 перебування|stay|et ophold|il soggiorno|🏨|||cur_b1_049.stay
@@ -3064,7 +3060,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 залізниця|railroad|en jernbane|la ferrovia|🛤️|||cur_b1_051.railroad
 рейка|rail|en skinne|la rotaia|🚃|||cur_b1_051.rail
 віз|wagon|en vogn|il carro|🐂|||cur_b1_051.wagon
-карета|carriage|en karet|la carrozza|🐎|||cur_b1_051.carriage
 судно|vessel|et fartøj|l'imbarcazione|⛴️|||cur_b1_051.vessel
 порт|port|en havn|il porto|⚓|||cur_b1_051.port
 морська подорож|voyage|en sørejse|il viaggio per mare|🌊|||cur_b1_051.voyage
@@ -3217,14 +3212,12 @@ NemKonto — рахунок для виплат від держави||en NemKon
 наголос|emphasis|en betoning|l'enfasi|❗|||cur_b1_062.emphasis
 підкреслювати|to emphasize|at understrege|sottolineare|🖍️|||cur_b1_062.to_emphasize
 зауважувати|to remark|at bemærke|osservare|💭|||cur_b1_062.to_remark
-доповідь|talk|et foredrag|il discorso|🎤|||cur_b1_062.talk
 переклад|translation|en oversættelse|la traduzione|🔤||tłumaczenie|a2x02_school.translation
 #cur_b1_063|Пояснюємо думку|💭|B1
 висловлювати|to express|at udtrykke|esprimere|💭|||cur_b1_063.to_express
 реагувати|to respond|at reagere|reagire|↩️|||cur_b1_063.to_respond
 переказувати|to retell|at genfortælle|raccontare di nuovo|🔁|||cur_b1_063.to_retell
 оповідати|to narrate|at berette|narrare|📖|||cur_b1_063.to_narrate
-ініціал|initial|et initial|l'iniziale|🔠|||cur_b1_063.initial
 повідомляти|to inform|at informere|informare|📢|||cur_b1_063.to_inform
 інформативний|informative|informativ|informativo|ℹ️|||cur_b1_063.informative
 наполягати|to insist|at insistere|insistere|✋|||cur_b1_063.to_insist
@@ -3232,8 +3225,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 взаємодіяти|to interact|at interagere|interagire|🔄|||cur_b1_063.to_interact
 взаємодія|interaction|en interaktion|l'interazione|🤝|||cur_b1_063.interaction
 передавати (думку)|to convey|at formidle|trasmettere|📨||przekazywać|c1x01_verbs.to_convey
-#cur_b1_064|Наукові дослідження|🛡️|B1
-захід|measure|en foranstaltning|la misura|🛡️|||cur_b1_064.measure
+#cur_b1_064|Наукові дослідження|📊|B1
 аналіз|analysis|en analyse|l'analisi|📊|||cur_b1_064.analysis
 аналізувати|to analyze|at analysere|analizzare|🔍|||cur_b1_064.to_analyze
 результат дослідження|finding|et forskningsresultat|il risultato della ricerca|📄|||cur_b1_064.finding
@@ -3248,6 +3240,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 ретельний|thorough|grundig|approfondito|🔎||gruntowny|c1_science.thorough
 дані|data|data|i dati|📊||dane|b2x02_science.data
 мікроскоп|microscope|et mikroskop|il microscopio|🔬|microscope|mikroskop|b2x02_science.microscope
+телескоп|telescope|et teleskop|il telescopio|🔭||teleskop|b2x02_science.telescope
 #cur_b1_065|Хімія й фізика|⚛️|B1
 електрон|electron|en elektron|l'elettrone|⚛️|||cur_b1_065.electron
 ядро|nucleus|en kerne|il nucleo|🔴|||cur_b1_065.nucleus
@@ -3672,7 +3665,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 братерство|brotherhood|et broderskab|la fratellanza|🤜|||cur_b1_093.brotherhood
 племінник|nephew|en nevø|il nipote|👦||siostrzeniec|a1x02_family.nephew
 племінниця|niece|en niece|la nipote|👧||bratanica|a1x02_family.niece
-черга|queue|en kø|la fila|🧍||kolejka|a1x01_shop.queue
+черга|queue|en kø|la fila|🧍|queue_,_to|kolejka|a1x01_shop.queue
 візок (у магазині)|trolley|en indkøbsvogn|il carrello|🛒||wózek sklepowy|a1x02_shopping.trolley
 тераса|terrace|en terrasse|la terrazza|🪴||taras|a1x02_house.terrace
 батарея (опалення)|radiator|en radiator|il termosifone|♨️||kaloryfer|a1x02_house.radiator
@@ -3708,7 +3701,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 чесність|honesty|en ærlighed|l'onestà|😇||uczciwość|b2_character.honesty
 терпіння|patience|en tålmodighed|la pazienza|⏳|wait_,_to|cierpliwość|b2_character.patience
 тривога (почуття)|anxiety|en angst|l'ansia|😰|worried_lady|niepokój|b2_character.anxiety
-спокійний|calm|rolig|calmo|😌||spokojny|a1x01_feelings.calm
+спокійний|calm|rolig|calmo|😌|serene_man|spokojny|a1x01_feelings.calm
 гордий|proud|stolt|orgoglioso|🦚||dumny|b1_feelings.proud
 чесний|honest|ærlig|onesto|😇||uczciwy|b1_feelings.honest
 сповнений ентузіазму|enthusiastic|entusiastisk|entusiasta|🤩||pełen entuzjazmu|b2x03_feelings.enthusiastic
@@ -4146,7 +4139,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 рекомендувати|to recommend|at anbefale|raccomandare|👍|||cur_b1_127.to_recommend
 просити|to request|at anmode om|richiedere|📝|||cur_b1_127.to_request
 вимагати|to require|at kræve|esigere|📋|||cur_b1_127.to_require
-сильне бажання|urge|en trang|la voglia|🔥|||cur_b1_127.urge
 відраджувати|to discourage|at fraråde|sconsigliare|✋|||cur_b1_127.to_discourage
 підбадьорення|encouragement|en opmuntring|l'incoraggiamento|👏|||cur_b1_127.encouragement
 обнадійливий|encouraging|opmuntrende|incoraggiante|🌟|||cur_b1_127.encouraging
@@ -4188,7 +4180,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 розкидати|to scatter|at sprede|spargere|🍂|||cur_b1_130.to_scatter
 приклеювати|to stick|at klistre|incollare|🩹|||cur_b1_130.to_stick
 зав'язувати|to tie|at binde|legare|🎀|||cur_b1_130.to_tie
-несподіваний поворот|twist|et twist|il colpo di scena|🎬|||cur_b1_130.twist
 викручувати|to twist|at vride|torcere|🌀|||cur_b1_130.to_twist
 #cur_b1_131|Керувати й володіти|🎛️|B1
 контролювати|to control|at kontrollere|controllare|🎛️|||cur_b1_131.to_control
@@ -4213,7 +4204,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 визначати|to determine|at fastslå|stabilire|📏|||cur_b1_132.to_determine
 мати намір|to intend|at have til hensigt|avere intenzione|🎯|||cur_b1_132.to_intend
 вагатися|to hesitate|at tøve|esitare|😕|||cur_b1_132.to_hesitate
-диво|wonder|et under|la meraviglia|✨|||cur_b1_132.wonder
 наважуватися|to dare|at turde|osare|🦁|||cur_b1_132.to_dare
 спокушати|to tempt|at friste|tentare|🍰|||cur_b1_132.to_tempt
 #cur_b1_133|Досягати мети|✅|B1
@@ -4441,7 +4431,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 втомлювати|to tire|at trætte|stancare|😩|||cur_b1_150.to_tire
 втомливий|tiring|trættende|faticoso|🥱|||cur_b1_150.tiring
 застряглий|stuck|fastlåst|bloccato|🚧|||cur_b1_150.stuck
-фарширований|stuffed|fyldt|ripieno|🫑|||cur_b1_150.stuffed
 липкий|sticky|klistret|appiccicoso|🍯|sticky||cur_b1_150.sticky
 нерухомий|motionless|ubevægelig|immobile|🗿|||cur_b1_150.motionless
 голий|naked|nøgen|nudo|🚿|||cur_b1_150.naked
@@ -4589,7 +4578,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 обробна дошка|chopping board|et skærebræt|il tagliere|🪵|chopping_board|deska do krojenia|a2x02_kitchen.chopping_board
 примірювальна|fitting room|et prøverum|il camerino|🚪||przymierzalnia|a2x02_shopclothes.fitting_room
 цінник|price tag|et prismærke|il cartellino del prezzo|💲||metka|a2x02_shopclothes.price_tag
-підтримувати форму|to keep fit|at holde sig i form|tenersi in forma|💪||utrzymywać formę|a2x02_sport.to_keep_fit
+підтримувати форму|to keep fit|at holde sig i form|tenersi in forma|💪|exercise_,_to|utrzymywać formę|a2x02_sport.to_keep_fit
 вчити напам'ять|to learn by heart|at lære udenad|imparare a memoria|🧠||uczyć się na pamięć|a2x02_school.to_learn_by_heart
 робити нотатки|to take notes|at tage noter|prendere appunti|🗒️||robić notatki|a2x02_school.to_take_notes
 майже ніколи|hardly ever|næsten aldrig|quasi mai|🚫||prawie nigdy|a2x02_time.hardly_ever
@@ -4613,10 +4602,26 @@ NemKonto — рахунок для виплат від держави||en NemKon
 йому за тридцять|in his thirties|i trediverne|sulla trentina|🎂||po trzydziestce|b1x03_appearance.in_his_thirties
 захоплюватися (чимось)|to be keen on|at være vild med|essere appassionato di|😍||pasjonować się|b1x03_culture.to_be_keen_on
 колекція|collection|en samling|la collezione|🗃️||kolekcja|b1x03_culture.collection
+зачекати (на лінії)|to hold on|at vente et øjeblik|restare in linea|⏳||nie rozłączać się|b1x03_phone.to_hold_on
+код країни|country code|en landekode|il prefisso internazionale|🌍||numer kierunkowy kraju|b1x03_phone.country_code
+бути зайнятим (про лінію)|to be engaged|at være optaget|essere occupato|🔴||być zajętym|b1x03_phone.to_be_engaged
 камера відеоспостереження|security camera|et overvågningskamera|la telecamera di sorveglianza|📹||kamera monitoringu|b1x03_crime.security_camera
+мінятися|to switch|at skifte|scambiare|🔄|||cur_b1_010.to_switch
 приліжкова тумбочка|bedside table|et natbord|il comodino|🛏️|||cur_b1_014.bedside_table
 фен|hair dryer|en hårtørrer|l'asciugacapelli|💨|||cur_b1_014.hair_dryer
+ледве відчутний|faint|svag|leggero|🌫️|||cur_b1_024.faint
+циферблат|dial|en urskive|il quadrante|🕰️|||cur_b1_041.dial
+шрифт|print|en skrift|il carattere|🔤|||cur_b1_043.print
+заповідник|reserve|et naturreservat|la riserva naturale|🦌|||cur_b1_049.reserve
+карета|carriage|en karet|la carrozza|🐎|||cur_b1_051.carriage
+доповідь|talk|et foredrag|il discorso|🎤|||cur_b1_062.talk
+ініціал|initial|et initial|l'iniziale|🔠|||cur_b1_063.initial
+захід|measure|en foranstaltning|la misura|🛡️|||cur_b1_064.measure
 кінематографіст|filmmaker|en filmskaber|il cineasta|🎬|||cur_b1_086.filmmaker
+сильне бажання|urge|en trang|la voglia|🔥|||cur_b1_127.urge
+несподіваний поворот|twist|et twist|il colpo di scena|🎬|||cur_b1_130.twist
+диво|wonder|et under|la meraviglia|✨|||cur_b1_132.wonder
+фарширований|stuffed|fyldt|ripieno|🫑|||cur_b1_150.stuffed
 гортати (стрічку)|to scroll|at scrolle|scorrere|📜||przewijać|b2m_gadgets.to_scroll
 бездротовий|wireless|trådløs|senza fili|📶||bezprzewodowy|b2m_gadgets.wireless
 кров'яний тиск|blood pressure|et blodtryk|la pressione sanguigna|🩸|blood_pressure|ciśnienie krwi|b2m_medicine.blood_pressure
@@ -4626,7 +4631,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 імпорт|import|import|l'importazione|📥||import|b2x01_economy.import
 відкрити власну справу|to start a business|at starte en virksomhed|avviare un'attività|🏁||otworzyć własną firmę|b2x01_business.to_start_a_business
 бізнес-план|business plan|en forretningsplan|il piano aziendale|🗂️||biznesplan|b2x01_business.business_plan
-телескоп|telescope|et teleskop|il telescopio|🔭||teleskop|b2x02_science.telescope
 комп'ютерний вірус|computer virus|en computervirus|il virus informatico|🦠||wirus komputerowy|b2x02_tech.computer_virus
 винахідник|inventor|en opfinder|l'inventore|🧑‍🔧||wynalazca|b2x02_tech.inventor
 зберігати спокій|to keep calm|at bevare roen|mantenere la calma|🧘||zachować spokój|b2x02_psych.to_keep_calm
@@ -4644,7 +4648,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 мова жестів|sign language|et tegnsprog|la lingua dei segni|🤟||język migowy|c2x01_linguistics.sign_language
 ратуша|town hall|et rådhus|il municipio|🏢||ratusz|a1x01_town.town_hall
 Не сумуй!|Cheer up!|Op med humøret!|Su con la vita!|🌞||Nie smuć się!|a1x01_feelings.cheer_up
-вимикач|light switch|en lyskontakt|l'interruttore|💡||włącznik światła|a1x02_house.light_switch
+вимикач|light switch|en lyskontakt|l'interruttore|💡|turn_on_light_switch_,_to|włącznik światła|a1x02_house.light_switch
 Вибачте, що турбую.|Sorry to bother you.|Undskyld, at jeg forstyrrer.|Scusi il disturbo.|🙇||Przepraszam, że przeszkadzam.|a1x02_polite.sorry_to_bother_you
 Почувайся як удома.|Make yourself at home.|Føl dig hjemme.|Fai come se fossi a casa tua.|🏠||Czuj się jak u siebie w domu.|a1x02_polite.make_yourself_at_home
 рецензія|review|en anmeldelse|la recensione|📝||recenzja|c1m_arts.review
@@ -4667,7 +4671,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 жовтень|October|oktober|ottobre|🎃|||a1x03_months.october
 листопад|November|november|novembre|🍁|||a1x03_months.november
 грудень|December|december|dicembre|🎄|||a1x03_months.december
-осінь (амер.)|fall|et efterår|l'autunno|🍁|||a1x03_months.fall
+осінь (амер.)|fall|et efterår|l'autunno|🍁|autumn||a1x03_months.fall
 пора року|season|en årstid|la stagione|🔄||pora roku|a1x03_months.season
 #a1x04_phr_a1_meet|Фрази: знайомство й коротка розмова|👋|A1
 Як ся маєш?|How's it going?|Hvordan går det?|Come va?|👋|||a1x04_phr_a1_meet.how_s_it_going
@@ -5620,13 +5624,11 @@ NemKonto — рахунок для виплат від держави||en NemKon
 гуртожиток|dorm|et kollegium|lo studentato|🛏️|||cur_b2_052.dorm
 семінар|seminar|et seminar|il seminario|👥|||cur_b2_052.seminar
 дипломна робота|thesis|en afhandling|la tesi|📖|||cur_b2_052.thesis
-майстер|master|en mester|il maestro|🏅|||cur_b2_052.master
 вибірковий|elective|valgfri|a scelta|📚|||cur_b2_052.elective
 академічна довідка|transcript|en karakterudskrift|il certificato degli esami|📄|||cur_b2_052.transcript
 престиж|prestige|prestige|il prestigio|🏛️|||cur_b2_052.prestige
 престижний|prestigious|prestigefyldt|prestigioso|🏆|||cur_b2_052.prestigious
-#cur_b2_053|Школа|2️⃣|B2
-другорядний|secondary|sekundær|secondario|2️⃣|||cur_b2_053.secondary
+#cur_b2_053|Школа|🤷|B2
 необов'язковий|optional|frivillig|facoltativo|🤷|||cur_b2_053.optional
 відвідуваність|attendance|et fremmøde|la frequenza|📋|||cur_b2_053.attendance
 дисципліна|discipline|en disciplin|la disciplina|📏|||cur_b2_053.discipline
@@ -5701,8 +5703,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 карнавал|carnival|et karneval|il carnevale|🎡|||cur_b2_058.carnival
 ветеран|veteran|en veteran|il veterano|🎖️|||cur_b2_058.veteran
 вшановувати|to honor|at ære|onorare|🫡|||cur_b2_058.to_honor
-резолюція|resolution|en resolution|la risoluzione|🗳️||rezolucja|c2x01_geopolitics.resolution
-наддержава|superpower|en supermagt|la superpotenza|🦅||supermocarstwo|c2x01_geopolitics.superpower
 #cur_b2_059|Традиції й обряди|🕯️|B2
 ритуал|ritual|et ritual|il rituale|🕯️|||cur_b2_059.ritual
 обряд|rite|en ritus|il rito|🪔|||cur_b2_059.rite
@@ -6213,8 +6213,7 @@ NemKonto — рахунок для виплат від держави||en NemKon
 живописний|picturesque|malerisk|pittoresco|🏞️|||cur_b2_094.picturesque
 пані|madam|en frue|la signora|👩|||cur_b2_094.madam
 приголомшливий|breathtaking|betagende|mozzafiato|😮||oszałamiający|c1m_arts.breathtaking
-#cur_b2_095|Інший транспорт|🐪|B2
-караван|caravan|en karavane|la carovana|🐪|caravan||cur_b2_095.caravan
+#cur_b2_095|Інший транспорт|🚕|B2
 зупиняти|to hail|at praje|fermare|🚕|||cur_b2_095.to_hail
 педаль|pedal|en pedal|il pedale|🚲|||cur_b2_095.pedal
 скутер|scooter|en scooter|lo scooter|🛵|||cur_b2_095.scooter
@@ -6470,12 +6469,12 @@ NemKonto — рахунок для виплат від держави||en NemKon
 перевершувати|to outdo|at overgå|superare|📈|||cur_b2_113.to_outdo
 затьмарювати|to outshine|at overstråle|eclissare|🌟|||cur_b2_113.to_outshine
 дискваліфікувати|to disqualify|at diskvalificere|squalificare|🚫|||cur_b2_113.to_disqualify
-огидний|foul|modbydelig|disgustoso|🤢|||cur_b2_113.foul
 гандикап|handicap|et handicap|l'handicap|⛳|||cur_b2_113.handicap
 поразка|defeat|et nederlag|la sconfitta|😞||porażka|b1m_sport.defeat
 півфінал|semifinal|en semifinale|la semifinale|🥈|||cur_b2_113.semifinal
 незручність|inconvenience|en gene|il disagio|😣||niedogodność|b1x01_travelproblems.inconvenience
 страйк|strike|en strejke|lo sciopero|🪧||strajk|b1x01_travelproblems.strike
+правління (кооперативу)|board|en bestyrelse|il consiglio di amministrazione|👥||zarząd|b1x02_neighbours.board
 #cur_b2_114|Тренування|📋|B2
 тренувати|to coach|at coache|allenare|📋|||cur_b2_114.to_coach
 особистий тренер|trainer|en personlig træner|il personal trainer|🏋️|||cur_b2_114.trainer
@@ -7459,7 +7458,11 @@ NemKonto — рахунок для виплат від держави||en NemKon
 невпевнений у собі|insecure|usikker|insicuro|🫣||niepewny siebie|b2x03_feelings.insecure
 буркотливий|grumpy|gnaven|scontroso|😠||zrzędliwy|b2x03_feelings.grumpy
 задишка|shortness of breath|åndenød|il fiato corto|😮‍💨|||cur_b2_041.shortness_of_breath
+майстер|master|en mester|il maestro|🏅|||cur_b2_052.master
+другорядний|secondary|sekundær|secondario|2️⃣|||cur_b2_053.secondary
 знак оклику|exclamation point|et udråbstegn|il punto esclamativo|❗|||cur_b2_055.exclamation_point
+караван|caravan|en karavane|la carovana|🐪|caravan||cur_b2_095.caravan
+огидний|foul|modbydelig|disgustoso|🤢|||cur_b2_113.foul
 психувати|to freak out|at flippe ud|dare di matto|😱|||cur_b2_120.to_freak_out
 вибірка (статистична)|sample|en stikprøve|il campione|📊|test_tube|próba|c1_science.sample
 конкурентна перевага|competitive advantage|en konkurrencefordel|il vantaggio competitivo|🏆|winner|przewaga konkurencyjna|c1_business.competitive_advantage
@@ -7471,9 +7474,6 @@ NemKonto — рахунок для виплат від держави||en NemKon
 теоретично|in theory|i teorien|in teoria|📖||teoretycznie|c2x01_thinking.in_theory
 спонтанний|spontaneous|spontan|spontaneo|🎈||spontaniczny|c2x01_style.spontaneous
 саркастичний|sarcastic|sarkastisk|sarcastico|😜||sarkastyczny|c2x01_style.sarcastic
-гуманітарна допомога|humanitarian aid|humanitær bistand|gli aiuti umanitari|📦||pomoc humanitarna|c2x01_geopolitics.humanitarian_aid
-дипломатичні відносини|diplomatic relations|diplomatiske forbindelser|le relazioni diplomatiche|🌉||stosunki dyplomatyczne|c2x01_geopolitics.diplomatic_relations
-міжнародне право|international law|folkeret|il diritto internazionale|⚖️||prawo międzynarodowe|c2x01_geopolitics.international_law
 мова тіла|body language|et kropssprog|il linguaggio del corpo|🙆||mowa ciała|c2x01_linguistics.body_language
 мовний бар'єр|language barrier|en sprogbarriere|la barriera linguistica|🚧||bariera językowa|c2x01_linguistics.language_barrier
 гормон|hormone|et hormon|l'ormone|⚗️||hormon|c2x02_science.hormone
@@ -7582,7 +7582,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 різке падіння|plunge|et brat fald|il crollo|🔻|||cur_c1_02.plunge
 швидко поширюватися|to proliferate|at sprede sig|proliferare|🌱|||cur_c1_02.to_proliferate
 вибухово|explosively|eksplosivt|esplosivamente|💥|||cur_c1_02.explosively
-ефектний жест|flourish|en flot gestus|il gesto teatrale|🎩|||cur_c1_02.flourish
 процвітати|to flourish|at blomstre|prosperare|🌸|||cur_c1_02.to_flourish
 бути вдосталь|to abound|at findes i overflod|abbondare|🌾|||cur_c1_02.to_abound
 сплеск|burst|et udbrud|l'esplosione|💥|||cur_c1_02.burst
@@ -7872,7 +7871,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 фракція|faction|en fraktion|la fazione|👥|||cur_c1_22.faction
 оспорювати|to contest|at anfægte|contestare|⚖️|||cur_c1_22.to_contest
 оспорюваний|contested|anfægtet|contestato|❓|||cur_c1_22.contested
-першорядний|premier|ypperste|di primo piano|🏆|||cur_c1_22.premier
 бюрократичний|bureaucratic|bureaukratisk|burocratico|📋|||cur_c1_22.bureaucratic
 бюрократично|bureaucratically|bureaukratisk|burocraticamente|🗂️|||cur_c1_22.bureaucratically
 започатковувати|to institute|at indføre|istituire|🏛️|||cur_c1_22.to_institute
@@ -8357,7 +8355,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 висікати|to chisel|at mejsle|scalpellare|🗿|||cur_c1_56.to_chisel
 майструвати|to craft|at fremstille|realizzare|🧶|||cur_c1_56.to_craft
 копирсатися|to tinker|at pusle|armeggiare|🔧|||cur_c1_56.to_tinker
-лудильник|tinker|en kedelflikker|lo stagnino|🫖|||cur_c1_56.tinker
 копіткий|fiddly|besværlig|laborioso|🪡|||cur_c1_56.fiddly
 рівно|cleanly|rent|di netto|✂️|||cur_c1_56.cleanly
 висмикувати|to wrench|at vriste|strappare|💪|||cur_c1_56.to_wrench
@@ -8425,7 +8422,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 туманно|obscurely|uklart|oscuramente|🌫️|||cur_c1_60.obscurely
 #cur_c1_61|Ідіоми: шлях до мети|🧭|C1
 на манівці|astray|på afveje|fuori strada|🧭|||cur_c1_61.astray
-протектор|tread|et dækmønster|il battistrada|🛞|||cur_c1_61.tread
 гонитва|scramble|et ræs|la corsa|🏃|||cur_c1_61.scramble
 розпалювати|to stoke|at puste til|alimentare|🔥|||cur_c1_61.to_stoke
 переслідувати|to plague|at plage|tormentare|🦟|||cur_c1_61.to_plague
@@ -8486,7 +8482,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 гудок|honk|et dyt|il colpo di clacson|🚗|||cur_c1_65.honk
 #cur_c1_66|Звуки й рухи|✊|C1
 міцно тримати|to clutch|at knuge|stringere|✊|||cur_c1_66.to_clutch
-зчеплення|clutch|en kobling|la frizione|🚗|||cur_c1_66.clutch
 змахувати|to flick|at knipse|spazzare via|👆|||cur_c1_66.to_flick
 мерехтіння|flicker|et flimmer|il tremolio|🕯️|||cur_c1_66.flicker
 роззявляти рота|to gape|at måbe|restare a bocca aperta|😮|||cur_c1_66.to_gape
@@ -8601,7 +8596,12 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 дезінформація|disinformation|en desinformation|la disinformazione|🤥||dezinformacja|c1m_media.disinformation
 оглядач (колумніст)|columnist|en klummeskribent|l'opinionista|✍️||felietonista|c1m_media.columnist
 розголошувати|to disclose|at afsløre|divulgare|🔓||ujawniać|c1m_media.to_disclose
+ефектний жест|flourish|en flot gestus|il gesto teatrale|🎩|||cur_c1_02.flourish
 схильний|apt to|tilbøjelig til|incline a|↘️|||cur_c1_04.apt_to
+першорядний|premier|ypperste|di primo piano|🏆|||cur_c1_22.premier
+лудильник|tinker|en kedelflikker|lo stagnino|🫖|||cur_c1_56.tinker
+протектор|tread|et dækmønster|il battistrada|🛞|||cur_c1_61.tread
+зчеплення|clutch|en kobling|la frizione|🚗|||cur_c1_66.clutch
 смаковий сосочок|taste bud|et smagsløg|la papilla gustativa|👅|||cur_c1_69.taste_bud
 пом'якшувати (наслідки)|to mitigate|at afbøde|mitigare|🩹||łagodzić|c2_academic.to_mitigate
 парадигма|paradigm|et paradigme|il paradigma|🔄||paradygmat|c2_academic.paradigm
@@ -8877,8 +8877,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 некваліфікований|menial|ufaglært|umile|🧹|||cur_c2_17.menial
 марудна робота|drudgery|et slid|la corvée|😩|||cur_c2_17.drudgery
 годувальник|breadwinner|en forsørger|il capofamiglia|🍞|||cur_c2_17.breadwinner
-надлишковість|redundancy|en redundans|la ridondanza|🔁|||cur_c2_17.redundancy
-надлишково|redundantly|redundant|in modo ridondante|🗄️|||cur_c2_17.redundantly
 схвальний відгук|testimonial|en kundeudtalelse|la testimonianza|💬|||cur_c2_17.testimonial
 позакласний|extracurricular|uden for skoletiden|extrascolastico|🎭|||cur_c2_17.extracurricular
 #cur_c2_18|Великий бізнес|🏢|C2
@@ -8900,7 +8898,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 методологічний|methodological|metodologisk|metodologico|📐|||cur_c2_19.methodological
 методологічно|methodologically|metodologisk|metodologicamente|🧪|||cur_c2_19.methodologically
 якісний|qualitative|kvalitativ|qualitativo|🔍|||cur_c2_19.qualitative
-корелят|correlate|et korrelat|il correlato|🔗|||cur_c2_19.correlate
 корелювати|to correlate|at korrelere|correlare|📉|||cur_c2_19.to_correlate
 пропорційний|proportional|proportional|proporzionale|⚖️|||cur_c2_19.proportional
 пропорційно|proportionally|proportionalt|proporzionalmente|📏|||cur_c2_19.proportionally
@@ -9075,7 +9072,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 #cur_c2_31|Катастрофи й конфлікти|🥀|C2
 на межі загибелі|moribund|døende|moribondo|🥀|||c2x07_change.moribund
 облягати|to besiege|at belejre|assediare|🏰|||cur_c2_31.to_besiege
-прибудова|annex|en tilbygning|l'edificio annesso|🏠|||cur_c2_31.annex
 анексувати|to annex|at annektere|annettere|🗺️|||cur_c2_31.to_annex
 бунтівний|mutinous|mytterisk|ribelle|⚓|||cur_c2_31.mutinous
 зброярня|armory|et våbenlager|l'armeria|🛡️|||cur_c2_31.armory
@@ -9324,9 +9320,9 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 жалюгідний|abject|ynkelig|misero|🕳️|||cur_c2_47.abject
 бідолашний|hapless|uheldig|sfortunato|☔|||cur_c2_47.hapless
 депресивний|depressive|depressiv|depressivo|🌫️|||cur_c2_47.depressive
-виводок|brood|et kuld|la covata|🐥|||cur_c2_47.brood
 сповнений каяття|remorseful|angerfuld|pentito|😔|||cur_c2_47.remorseful
 сиротливо|forlornly|fortabt|sconsolatamente|🪑|||cur_c2_47.forlornly
+томлива нудьга|ennui|en livslede|il tedio|🥱|||c2x04_feelings.ennui
 #cur_c2_48|Жанри|🦊|C2
 алегоричний|allegorical|allegorisk|allegorico|🦊|||cur_c2_48.allegorical
 притча|parable|en lignelse|la parabola|📜|||cur_c2_48.parable
@@ -9446,7 +9442,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 шматувати|to mangle|at maltraktere|stritolare|🗜️|||cur_c2_55.to_mangle
 обсмалювати|to singe|at svide|bruciacchiare|🔥|||cur_c2_55.to_singe
 вести м'яч|to dribble|at drible|dribblare|⚽|||cur_c2_55.to_dribble
-цівка|dribble|en tynd stråle|il rivoletto|💧|||cur_c2_55.dribble
 стирчати|to protrude|at stikke ud|sporgere|📌|||cur_c2_55.to_protrude
 випин|protrusion|et fremspring|la sporgenza|⛰️|||cur_c2_55.protrusion
 відбиватися|to rebound|at prelle af|rimbalzare|🏀|||cur_c2_55.to_rebound
@@ -9534,6 +9529,12 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 натякати|to allude to|at hentyde til|alludere a|😉||robić aluzję|c2x02_argument.to_allude_to
 оточувати кордоном|to cordon off|at afspærre|transennare|🚧|||cur_c2_14.to_cordon_off
 рішуче протестувати|to remonstrate|at protestere|protestare|🙅|||cur_c2_15.to_remonstrate
+надлишковість|redundancy|en redundans|la ridondanza|🔁|||cur_c2_17.redundancy
+надлишково|redundantly|redundant|in modo ridondante|🗄️|||cur_c2_17.redundantly
+корелят|correlate|et korrelat|il correlato|🔗|||cur_c2_19.correlate
+прибудова|annex|en tilbygning|l'edificio annesso|🏠|||cur_c2_31.annex
+виводок|brood|et kuld|la covata|🐥|||cur_c2_47.brood
+цівка|dribble|en tynd stråle|il rivoletto|💧|||cur_c2_55.dribble
 #a1_phrases|Вирази|💬|A1
 мене звати…|my name is…|jeg hedder…|mi chiamo…|🏷️||mam na imię…|a1_phrases.my_name_is
 приємно познайомитися|nice to meet you|hyggeligt at møde dig|piacere di conoscerti|🤝|meet_,_to|miło cię poznać|a1_phrases.nice_to_meet_you
@@ -9570,8 +9571,8 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 щодня|every day|hver dag|ogni giorno|📆||codziennie|a1x01_time.every_day
 минулого тижня|last week|i sidste uge|la settimana scorsa|⏪||w zeszłym tygodniu|a1x01_time.last_week
 наступного тижня|next week|i næste uge|la settimana prossima|⏩|next_week|w przyszłym tygodniu|a1x01_time.next_week
-вранці|in the morning|om morgenen|di mattina|🌅||rano|a1x01_time.in_the_morning
-уночі|at night|om natten|di notte|🌙||w nocy|a1x01_time.at_night
+вранці|in the morning|om morgenen|di mattina|🌅|morning|rano|a1x01_time.in_the_morning
+уночі|at night|om natten|di notte|🌙|night|w nocy|a1x01_time.at_night
 #a1x02_meet|Знайомство і перші розмови|🤝|A1
 Я живу в Копенгагені.|I live in Copenhagen.|Jeg bor i København.|Abito a Copenaghen.|🏙️||Mieszkam w Kopenhadze.|a1x02_meet.i_live_in_copenhagen
 Мені двадцять років.|I'm twenty years old.|Jeg er tyve år gammel.|Ho vent'anni.|🎂||Mam dwadzieścia lat.|a1x02_meet.i_m_twenty_years_old
@@ -9611,15 +9612,15 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 #a1x02_cafe|Фрази в кафе і ресторані|☕|A1
 Мені каву, будь ласка.|I'd like a coffee, please.|Jeg vil gerne have en kop kaffe.|Vorrei un caffè, per favore.|☕||Dla mnie kawę, proszę.|a1x02_cafe.i_d_like_a_coffee_please
 Можна меню, будь ласка?|Can I have the menu, please?|Må jeg se menukortet?|Posso avere il menù, per favore?|📋||Czy mogę prosić o menu?|a1x02_cafe.can_i_have_the_menu_please
-чашка чаю|cup of tea|en kop te|la tazza di tè|🍵||filiżanka herbaty|a1x02_cafe.cup_of_tea
-склянка води|glass of water|et glas vand|il bicchiere d'acqua|💧||szklanka wody|a1x02_cafe.glass_of_water
+чашка чаю|cup of tea|en kop te|la tazza di tè|🍵|tea|filiżanka herbaty|a1x02_cafe.cup_of_tea
+склянка води|glass of water|et glas vand|il bicchiere d'acqua|💧|water|szklanka wody|a1x02_cafe.glass_of_water
 Що ви бажаєте?|What would you like?|Hvad skal det være?|Cosa desidera?|🤔||Co podać?|a1x02_cafe.what_would_you_like
 Без цукру, будь ласка.|Without sugar, please.|Uden sukker, tak.|Senza zucchero, per favore.|🚫||Bez cukru, proszę.|a1x02_cafe.without_sugar_please
 З молоком, будь ласка.|With milk, please.|Med mælk, tak.|Con il latte, per favore.|🥛||Z mlekiem, proszę.|a1x02_cafe.with_milk_please
 Ще один, будь ласка.|One more, please.|En til, tak.|Un altro, per favore.|☝️||Jeszcze jeden, proszę.|a1x02_cafe.one_more_please
 гарячий шоколад|hot chocolate|en varm kakao|la cioccolata calda|🍫|hot_chocolate|gorąca czekolada|a1x02_cafe.hot_chocolate
 апельсиновий сік|orange juice|en appelsinjuice|il succo d'arancia|🧃|orange_juice|sok pomarańczowy|a1x02_cafe.orange_juice
-кафе|café|en café|il bar|☕||kawiarnia|a1x02_cafe.cafe
+кафе|café|en café|il bar|☕|cafe|kawiarnia|a1x02_cafe.cafe
 #a1x02_directions|Як пройти|🧭|A1
 Вибачте, де банк?|Excuse me, where is the bank?|Undskyld, hvor ligger banken?|Scusi, dov'è la banca?|🏦||Przepraszam, gdzie jest bank?|a1x02_directions.excuse_me_where_is_the_bank
 Ідіть прямо.|Go straight on.|Gå ligeud.|Vada sempre dritto.|⬆️||Proszę iść prosto.|a1x02_directions.go_straight_on
@@ -9654,20 +9655,20 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 велика сім'я|big family|en stor familie|la famiglia numerosa|👨‍👩‍👧‍👦||duża rodzina|a1x02_family.big_family
 Це моя мама.|This is my mother.|Det er min mor.|Questa è mia madre.|👩||To moja mama.|a1x02_family.this_is_my_mother
 У мене двоє дітей.|I have two children.|Jeg har to børn.|Ho due figli.|👨‍👧‍👦||Mam dwoje dzieci.|a1x02_family.i_have_two_children
-старша сестра|older sister|en storesøster|la sorella maggiore|👧||starsza siostra|a1x02_family.older_sister
-молодший брат|younger brother|en lillebror|il fratello minore|👦||młodszy brat|a1x02_family.younger_brother
+старша сестра|older sister|en storesøster|la sorella maggiore|👧|sister|starsza siostra|a1x02_family.older_sister
+молодший брат|younger brother|en lillebror|il fratello minore|👦|brother|młodszy brat|a1x02_family.younger_brother
 #a1x02_routine|Мій день|🌅|A1
-чистити зуби|to brush one's teeth|at børste tænder|lavarsi i denti|🪥||myć zęby|a1x02_routine.to_brush_one_s_teeth
-снідати|to have breakfast|at spise morgenmad|fare colazione|🍳||jeść śniadanie|a1x02_routine.to_have_breakfast
-обідати|to have lunch|at spise frokost|pranzare|🥪||jeść obiad|a1x02_routine.to_have_lunch
-вечеряти|to have dinner|at spise aftensmad|cenare|🍽️||jeść kolację|a1x02_routine.to_have_dinner
+чистити зуби|to brush one's teeth|at børste tænder|lavarsi i denti|🪥|brush_teeth_,_to|myć zęby|a1x02_routine.to_brush_one_s_teeth
+снідати|to have breakfast|at spise morgenmad|fare colazione|🍳|breakfast_1|jeść śniadanie|a1x02_routine.to_have_breakfast
+обідати|to have lunch|at spise frokost|pranzare|🥪|lunch_1|jeść obiad|a1x02_routine.to_have_lunch
+вечеряти|to have dinner|at spise aftensmad|cenare|🍽️|dinner|jeść kolację|a1x02_routine.to_have_dinner
 ходити на роботу|to go to work|at gå på arbejde|andare al lavoro|💼||chodzić do pracy|a1x02_routine.to_go_to_work
 приходити додому|to come home|at komme hjem|tornare a casa|🏠||wracać do domu|a1x02_routine.to_come_home
-лягати спати|to go to bed|at gå i seng|andare a letto|🛏️||kłaść się spać|a1x02_routine.to_go_to_bed
-готувати вечерю|to cook dinner|at lave aftensmad|preparare la cena|🍲||gotować kolację|a1x02_routine.to_cook_dinner
-робити домашнє завдання|to do homework|at lave lektier|fare i compiti|📝||odrabiać pracę domową|a1x02_routine.to_do_homework
-дивитися телевізор|to watch TV|at se tv|guardare la TV|📺||oglądać telewizję|a1x02_routine.to_watch_tv
-читати книжку|to read a book|at læse en bog|leggere un libro|📖||czytać książkę|a1x02_routine.to_read_a_book
+лягати спати|to go to bed|at gå i seng|andare a letto|🛏️|bed_time|kłaść się spać|a1x02_routine.to_go_to_bed
+готувати вечерю|to cook dinner|at lave aftensmad|preparare la cena|🍲|cook_,_to|gotować kolację|a1x02_routine.to_cook_dinner
+робити домашнє завдання|to do homework|at lave lektier|fare i compiti|📝|study_,_to|odrabiać pracę domową|a1x02_routine.to_do_homework
+дивитися телевізор|to watch TV|at se tv|guardare la TV|📺|childrens_tv|oglądać telewizję|a1x02_routine.to_watch_tv
+читати книжку|to read a book|at læse en bog|leggere un libro|📖|read_book_,_to|czytać książkę|a1x02_routine.to_read_a_book
 увечері|in the evening|om aftenen|di sera|🌆||wieczorem|a1x02_routine.in_the_evening
 після роботи|after work|efter arbejde|dopo il lavoro|🕔||po pracy|a1x02_routine.after_work
 закінчувати роботу|to finish work|at få fri|finire di lavorare|🏁||kończyć pracę|a1x02_routine.to_finish_work
@@ -9734,9 +9735,9 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 Ким ти працюєш?|What do you do?|Hvad arbejder du med?|Che lavoro fai?|💼||Czym się zajmujesz?|a2x01_phrases.what_do_you_do
 Це далеко звідси?|Is it far from here?|Er det langt herfra?|È lontano da qui?|🗺️||Czy to daleko stąd?|a2x01_phrases.is_it_far_from_here
 #a2x02_phrasal~A1|Фразові дієслова і сталі вирази|🔗|A1
-сідати|to sit down|at sætte sig|sedersi|🪑||siadać|a2x02_phrasal.to_sit_down
+сідати|to sit down|at sætte sig|sedersi|🪑|sit_,_to|siadać|a2x02_phrasal.to_sit_down
 повертатися|to come back|at komme tilbage|tornare|↩️||wracać|a2x02_phrasal.to_come_back
-фотографувати|to take a photo|at tage et billede|fare una foto|📸||robić zdjęcie|a2x02_phrasal.to_take_a_photo
+фотографувати|to take a photo|at tage et billede|fare una foto|📸|take_picture_,_to|robić zdjęcie|a2x02_phrasal.to_take_a_photo
 ходити по магазинах|to go shopping|at shoppe|fare shopping|🛍️||chodzić na zakupy|a2x02_phrasal.to_go_shopping
 #a1x01_school~A2|Школа і клас|🏫|A2
 клей|glue|en lim|la colla|🧴|glue|klej|a1x01_school.glue
@@ -9814,24 +9815,24 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 Що ви порадите?|What do you recommend?|Hvad kan du anbefale?|Cosa mi consiglia?|🤔||Co pan poleca?|a2x01_restaurant.what_do_you_recommend
 #a2x01_doctor|У лікаря та в аптеці|🩺|A2
 біль у горлі|sore throat|ondt i halsen|il mal di gola|😷||ból gardła|a2x01_doctor.sore_throat
-застудитися|to catch a cold|at blive forkølet|prendere il raffreddore|🤧||przeziębić się|a2x01_doctor.to_catch_a_cold
+застудитися|to catch a cold|at blive forkølet|prendere il raffreddore|🤧|sneeze_cold|przeziębić się|a2x01_doctor.to_catch_a_cold
 зала очікування|waiting room|et venteværelse|la sala d'attesa|🪑||poczekalnia|a2x01_doctor.waiting_room
-приймати ліки|to take medicine|at tage medicin|prendere le medicine|💊||brać leki|a2x01_doctor.to_take_medicine
+приймати ліки|to take medicine|at tage medicin|prendere le medicine|💊|medicine|brać leki|a2x01_doctor.to_take_medicine
 двічі на день|twice a day|to gange om dagen|due volte al giorno|🕑||dwa razy dziennie|a2x01_doctor.twice_a_day
 нудити (мене нудить)|to feel sick|at have kvalme|avere la nausea|🤢||mieć mdłości|a2x01_doctor.to_feel_sick
 швидка допомога|ambulance|en ambulance|l'ambulanza|🚑|ambulance|karetka|a2x01_doctor.ambulance
 одужувати|to get better|at få det bedre|migliorare|🙂||zdrowieć|a2x01_doctor.to_get_better
 #a2x01_post_bank|Пошта і банк|🏦|A2
 поштова скринька|postbox|en postkasse|la cassetta delle lettere|📮||skrzynka pocztowa|a2x01_post_bank.postbox
-листоноша|postman|et postbud|il postino|📬||listonosz|a2x01_post_bank.postman
-банкомат|cash machine|en hæveautomat|il bancomat|🏧||bankomat|a2x01_post_bank.cash_machine
+листоноша|postman|et postbud|il postino|📬|post_person_1a|listonosz|a2x01_post_bank.postman
+банкомат|cash machine|en hæveautomat|il bancomat|🏧|cash_point|bankomat|a2x01_post_bank.cash_machine
 заповнювати бланк|to fill in a form|at udfylde en formular|compilare un modulo|📝||wypełniać formularz|a2x01_post_bank.to_fill_in_a_form
 #a2x01_flat|Оренда житла і хатні справи|🏠|A2
 рахунок за електрику|electricity bill|en elregning|la bolletta della luce|🧾⚡||rachunek za prąd|a2x01_flat.electricity_bill
-мити посуд|to do the washing-up|at vaske op|lavare i piatti|🍽️||zmywać naczynia|a2x01_flat.to_do_the_washing_up
+мити посуд|to do the washing-up|at vaske op|lavare i piatti|🍽️|wash_up_,_to|zmywać naczynia|a2x01_flat.to_do_the_washing_up
 застеляти ліжко|to make the bed|at rede seng|rifare il letto|🛏️|make_the_bed_,_to|ścielić łóżko|a2x01_flat.to_make_the_bed
-виносити сміття|to take out the rubbish|at tage skraldet ud|portare fuori la spazzatura|🗑️||wynosić śmieci|a2x01_flat.to_take_out_the_rubbish
-поливати рослини|to water the plants|at vande planterne|annaffiare le piante|🪴||podlewać rośliny|a2x01_flat.to_water_the_plants
+виносити сміття|to take out the rubbish|at tage skraldet ud|portare fuori la spazzatura|🗑️|put_out_rubbish_,_to|wynosić śmieci|a2x01_flat.to_take_out_the_rubbish
+поливати рослини|to water the plants|at vande planterne|annaffiare le piante|🪴|water_plants_,_to|podlewać rośliny|a2x01_flat.to_water_the_plants
 #a2x01_transport|Громадський транспорт і квитки|🚌|A2
 вокзал|railway station|en banegård|la stazione ferroviaria|🚉||dworzec|a2x01_transport.railway_station
 платформа|platform|en perron|il binario|🛤️||peron|a2x01_transport.platform
@@ -9839,11 +9840,11 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 квиток в один бік|single ticket|en enkeltbillet|il biglietto di sola andata|🎫||bilet w jedną stronę|a2x01_transport.single_ticket
 квиток туди й назад|return ticket|en returbillet|il biglietto di andata e ritorno|🎟️||bilet w obie strony|a2x01_transport.return_ticket
 пересідати на інший потяг|to change trains|at skifte tog|cambiare treno|🔁||przesiadać się|a2x01_transport.to_change_trains
-багаж|luggage|bagage|i bagagli|🧳||bagaż|a2x01_transport.luggage
+багаж|luggage|bagage|i bagagli|🧳|suitcase_1|bagaż|a2x01_transport.luggage
 спізнитися на потяг|to miss the train|at komme for sent til toget|perdere il treno|😩||spóźnić się na pociąg|a2x01_transport.to_miss_the_train
 квиткова каса|ticket office|et billetkontor|la biglietteria|🏢||kasa biletowa|a2x01_transport.ticket_office
 #a2x01_phone|Телефон і повідомлення|📱|A2
-надсилати есемеску|to send a text|at sende en sms|mandare un messaggio|💬||wysyłać SMS-a|a2x01_phone.to_send_a_text
+надсилати есемеску|to send a text|at sende en sms|mandare un messaggio|💬|text_mobile_message_,_to|wysyłać SMS-a|a2x01_phone.to_send_a_text
 відповідати на дзвінок|to answer the phone|at tage telefonen|rispondere al telefono|☎️||odbierać telefon|a2x01_phone.to_answer_the_phone
 пропущений дзвінок|missed call|et ubesvaret opkald|la chiamata persa|📵||nieodebrane połączenie|a2x01_phone.missed_call
 голосове повідомлення|voice message|en talebesked|il messaggio vocale|🎙️||wiadomość głosowa|a2x01_phone.voice_message
@@ -9851,8 +9852,8 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 телефонна розмова|phone call|et opkald|la telefonata|📞||rozmowa telefoniczna|a2x01_phone.phone_call
 передзвонювати|to call back|at ringe tilbage|richiamare|🔁||oddzwaniać|a2x01_phone.to_call_back
 Хто дзвонить?|Who's calling?|Hvem taler jeg med?|Chi parla?|❓||Kto mówi?|a2x01_phone.who_s_calling
-вимикати|to switch off|at slukke|spegnere|📴||wyłączać|a2x01_phone.to_switch_off
-вмикати|to switch on|at tænde|accendere|💡||włączać|a2x01_phone.to_switch_on
+вимикати|to switch off|at slukke|spegnere|📴|turn_off_light_switch_,_to|wyłączać|a2x01_phone.to_switch_off
+вмикати|to switch on|at tænde|accendere|💡|turn_on_light_switch_,_to|włączać|a2x01_phone.to_switch_on
 #a2x01_phrases|Корисні фрази|💬|A2
 Що не так?|What's wrong?|Hvad er der galt?|Cosa c'è che non va?|😟||Co jest nie tak?|a2x01_phrases.what_s_wrong
 Чи не могли б ви мені допомогти?|Could you help me?|Kunne du hjælpe mig?|Può aiutarmi?|🙋||Czy mógłby mi pan pomóc?|a2x01_phrases.could_you_help_me
@@ -9863,17 +9864,17 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 Як пройшов твій день?|How was your day?|Hvordan var din dag?|Com'è andata la giornata?|🌇||Jak ci minął dzień?|a2x01_phrases.how_was_your_day
 І вам того ж!|Same to you!|I lige måde!|Altrettanto!|🔄||Wzajemnie!|a2x01_phrases.same_to_you
 #a2x02_sport|Спорт і хобі|⚽|A2
-катання на ковзанах|ice skating|skøjteløb|il pattinaggio su ghiaccio|⛸️||jazda na łyżwach|a2x02_sport.ice_skating
-ходити на риболовлю|to go fishing|at tage ud at fiske|andare a pescare|🎣||chodzić na ryby|a2x02_sport.to_go_fishing
-їздити з наметами|to go camping|at tage på camping|andare in campeggio|🏕️||jeździć pod namiot|a2x02_sport.to_go_camping
-ходити в похід (пішки)|to go hiking|at tage på vandretur|fare escursioni|🥾||chodzić na wędrówki|a2x02_sport.to_go_hiking
+катання на ковзанах|ice skating|skøjteløb|il pattinaggio su ghiaccio|⛸️|skate_,_to|jazda na łyżwach|a2x02_sport.ice_skating
+ходити на риболовлю|to go fishing|at tage ud at fiske|andare a pescare|🎣|fish_,_to|chodzić na ryby|a2x02_sport.to_go_fishing
+їздити з наметами|to go camping|at tage på camping|andare in campeggio|🏕️|camp_,_to|jeździć pod namiot|a2x02_sport.to_go_camping
+ходити в похід (пішки)|to go hiking|at tage på vandretur|fare escursioni|🥾|hike_,_to|chodzić na wędrówki|a2x02_sport.to_go_hiking
 #a2x02_school|Школа і навчання|🏫|A2
 географія|geography|geografi|la geografia|🌍|geography|geografia|a2x02_school.geography
 хімія|chemistry|kemi|la chimica|⚗️||chemia|a2x02_school.chemistry
 фізика|physics|fysik|la fisica|⚛️||fizyka|a2x02_school.physics
-зошит|exercise book|et hæfte|il quaderno|📓||zeszyt|a2x02_school.exercise_book
+зошит|exercise book|et hæfte|il quaderno|📓|notebook|zeszyt|a2x02_school.exercise_book
 гумка (для стирання)|rubber|et viskelæder|la gomma|🧽||gumka|a2x02_school.rubber
-шкільний портфель|schoolbag|en skoletaske|la cartella|🎒||tornister|a2x02_school.schoolbag
+шкільний портфель|schoolbag|en skoletaske|la cartella|🎒|school_bag|tornister|a2x02_school.schoolbag
 зробити помилку|to make a mistake|at lave en fejl|fare un errore|❌||popełnić błąd|a2x02_school.to_make_a_mistake
 підняти руку|to raise your hand|at række hånden op|alzare la mano|✋||podnieść rękę|a2x02_school.to_raise_your_hand
 шкільна форма|school uniform|en skoleuniform|la divisa scolastica|🏫👔||mundurek szkolny|a2x02_school.school_uniform
@@ -9894,18 +9895,18 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 хостел|youth hostel|et vandrerhjem|l'ostello|🏠||hostel|a2x02_hotel.youth_hostel
 намет|tent|et telt|la tenda|🏕️||namiot|a2x02_hotel.tent
 #a2x02_phrasal|Фразові дієслова і сталі вирази|🔗|A2
-доглядати (за кимось)|to look after|at passe på|prendersi cura di|🧑‍🍼||opiekować się|a2x02_phrasal.to_look_after
+доглядати (за кимось)|to look after|at passe på|prendersi cura di|🧑‍🍼|take_care_of_,_to|opiekować się|a2x02_phrasal.to_look_after
 повертати (річ)|to give back|at give tilbage|restituire|🤲||oddawać|a2x02_phrasal.to_give_back
 виходити (розважитися)|to go out|at gå ud|uscire|🎉||wychodzić|a2x02_phrasal.to_go_out
 поспішати|to hurry up|at skynde sig|sbrigarsi|🏃||spieszyć się|a2x02_phrasal.to_hurry_up
 заводити друзів|to make friends|at få venner|fare amicizia|🤝||zaprzyjaźniać się|a2x02_phrasal.to_make_friends
 розважатися|to have fun|at have det sjovt|divertirsi|🥳||bawić się|a2x02_phrasal.to_have_fun
 робити перерву|to take a break|at holde en pause|fare una pausa|☕||robić przerwę|a2x02_phrasal.to_take_a_break
-відпочивати|to have a rest|at hvile sig|riposarsi|😌||odpoczywać|a2x02_phrasal.to_have_a_rest
+відпочивати|to have a rest|at hvile sig|riposarsi|😌|relax_3_,_to|odpoczywać|a2x02_phrasal.to_have_a_rest
 проводити час|to spend time|at tilbringe tid|passare il tempo|⏱️||spędzać czas|a2x02_phrasal.to_spend_time
 казати правду|to tell the truth|at sige sandheden|dire la verità|🗣️||mówić prawdę|a2x02_phrasal.to_tell_the_truth
 зберігати таємницю|to keep a secret|at holde på en hemmelighed|mantenere un segreto|🤫||dochowywać tajemnicy|a2x02_phrasal.to_keep_a_secret
-заблукати|to get lost|at fare vild|perdersi|🧭||zgubić się|a2x02_phrasal.to_get_lost
+заблукати|to get lost|at fare vild|perdersi|🧭|lost|zgubić się|a2x02_phrasal.to_get_lost
 #b1_phrases~A2|Вирази|💬|A2
 Ти маєш рацію|You're right|Du har ret|Hai ragione|✅|correct|Masz rację|b1_phrases.you_re_right
 Я так не думаю|I don't think so|Det tror jeg ikke|Non credo|🙅|wrong_thought|Nie sądzę|b1_phrases.i_don_t_think_so
@@ -9973,9 +9974,9 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 #mix_A2_2|Різні слова 2|🧩|A2
 близнюки|twins|tvillinger|i gemelli|👯||bliźnięta|a1x02_family.twins
 єдина дитина|only child|et enebarn|il figlio unico|🧒||jedynak|a1x02_family.only_child
-родичі|relatives|slægtninge|i parenti|👪||krewni|a1x02_family.relatives
-розчісувати волосся|to comb one's hair|at rede sit hår|pettinarsi|🪮||czesać włosy|a1x02_routine.to_comb_one_s_hair
-вигулювати собаку|to walk the dog|at gå tur med hunden|portare a spasso il cane|🐕||wyprowadzać psa|a1x02_routine.to_walk_the_dog
+родичі|relatives|slægtninge|i parenti|👪|family_2|krewni|a1x02_family.relatives
+розчісувати волосся|to comb one's hair|at rede sit hår|pettinarsi|🪮|brush_hair_,_to|czesać włosy|a1x02_routine.to_comb_one_s_hair
+вигулювати собаку|to walk the dog|at gå tur med hunden|portare a spasso il cane|🐕|walk_dog_,_to|wyprowadzać psa|a1x02_routine.to_walk_the_dog
 #mix_A2_3|Різні слова 3|🧩|A2
 прогноз погоди|weather forecast|en vejrudsigt|le previsioni del tempo|📺🌦️||prognoza pogody|a2_weather.weather_forecast
 знижка|discount|en rabat|lo sconto|🔖||zniżka|a2_shopping.discount
@@ -10008,21 +10009,21 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 З найкращими побажаннями (у листі)|Best wishes|De bedste hilsner|Un caro saluto|💌||Z najlepszymi życzeniami|c2x02_formal.best_wishes
 пані та панове|ladies and gentlemen|mine damer og herrer|signore e signori|🎤||panie i panowie|c2x02_formal.ladies_and_gentlemen
 #a2x01_doctor~B1|У лікаря та в аптеці|🩺|B1
-сироп від кашлю|cough syrup|en hostesaft|lo sciroppo per la tosse|🍯||syrop na kaszel|a2x01_doctor.cough_syrup
+сироп від кашлю|cough syrup|en hostesaft|lo sciroppo per la tosse|🍯|medicine|syrop na kaszel|a2x01_doctor.cough_syrup
 пластир|plaster|et plaster|il cerotto|🩹|plaster|plaster|a2x01_doctor.plaster
 фармацевт|pharmacist|en farmaceut|il farmacista|⚕️||farmaceuta|a2x01_doctor.pharmacist
 термометр|thermometer|et termometer|il termometro|🌡️|thermometer|termometr|a2x01_doctor.thermometer
 #a2x01_post_bank~B1|Пошта і банк|🏦|B1
 дрібні гроші|small change|småpenge|gli spiccioli|🪙||drobne|a2x01_post_bank.small_change
-дебетова картка|debit card|et betalingskort|la carta di debito|💳||karta debetowa|a2x01_post_bank.debit_card
+дебетова картка|debit card|et betalingskort|la carta di debito|💳|bank_card|karta debetowa|a2x01_post_bank.debit_card
 обмінювати гроші|to exchange money|at veksle penge|cambiare i soldi|💱||wymieniać pieniądze|a2x01_post_bank.to_exchange_money
 ПІН-код|PIN code|en pinkode|il codice PIN|🔢||kod PIN|a2x01_post_bank.pin_code
 #a2x01_flat~B1|Оренда житла і хатні справи|🏠|B1
 мебльований|furnished|møbleret|arredato|🪑||umeblowany|a2x01_flat.furnished
-пилососити|to vacuum|at støvsuge|passare l'aspirapolvere|🧹||odkurzać|a2x01_flat.to_vacuum
+пилососити|to vacuum|at støvsuge|passare l'aspirapolvere|🧹|hoover_,_to|odkurzać|a2x01_flat.to_vacuum
 витирати пил|to dust|at tørre støv af|spolverare|🪶|dust_,_to|ścierać kurze|a2x01_flat.to_dust
 підмітати|to sweep|at feje|spazzare|🧹||zamiatać|a2x01_flat.to_sweep
-мити підлогу|to mop the floor|at vaske gulv|lavare il pavimento|🧽||myć podłogę|a2x01_flat.to_mop_the_floor
+мити підлогу|to mop the floor|at vaske gulv|lavare il pavimento|🧽|mop|myć podłogę|a2x01_flat.to_mop_the_floor
 #a2x02_animals|Тварини і птахи|🦔|B1
 орел|eagle|en ørn|l'aquila|🦅||orzeł|a2x02_animals.eagle
 акула|shark|en haj|lo squalo|🦈||rekin|a2x02_animals.shark
@@ -10159,11 +10160,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 чек для обміну подарунка|gift receipt|en byttelap|lo scontrino di cortesia|🎁||paragon prezentowy|b1x03_shopping.gift_receipt
 отримати гроші назад|to get a refund|at få pengene tilbage|ottenere un rimborso|💶||dostać zwrot pieniędzy|b1x03_shopping.to_get_a_refund
 вітрина|shop window|et udstillingsvindue|la vetrina|🪟||wystawa sklepowa|b1x03_shopping.shop_window
-#b1x03_phone|Спілкування і телефонні дзвінки|📞|B1
-зачекати (на лінії)|to hold on|at vente et øjeblik|restare in linea|⏳||nie rozłączać się|b1x03_phone.to_hold_on
-код країни|country code|en landekode|il prefisso internazionale|🌍||numer kierunkowy kraju|b1x03_phone.country_code
-бути зайнятим (про лінію)|to be engaged|at være optaget|essere occupato|🔴||być zajętym|b1x03_phone.to_be_engaged
-шепотіти|to whisper|at hviske|sussurrare|🤫|whisper_,_to|szeptać|b1x03_phone.to_whisper
 #b1x03_city|Місто і послуги|🏙️|B1
 вивезення сміття|rubbish collection|skraldeafhentning|la raccolta dei rifiuti|🚛||wywóz śmieci|b1x03_city.rubbish_collection
 центр обслуговування громадян|citizen service centre|Borgerservice|lo sportello del cittadino|🏢||biuro obsługi mieszkańców|b1x03_city.citizen_service_centre
@@ -10708,6 +10704,12 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 за винятком|with the exception of|med undtagelse af|ad eccezione di|➖||z wyjątkiem|c2x01_formal.with_the_exception_of
 Тим, кого це стосується|To whom it may concern|Til rette vedkommende|A chi di competenza|📃|||c2x01_formal.to_whom_it_may_concern
 протокол засідання|minutes of a meeting|et referat|il verbale|🗒️||protokół z posiedzenia|c2x01_formal.minutes_of_a_meeting
+#c2x01_geopolitics~B2|Міжнародна політика|🌐|B2
+гуманітарна допомога|humanitarian aid|humanitær bistand|gli aiuti umanitari|📦||pomoc humanitarna|c2x01_geopolitics.humanitarian_aid
+резолюція|resolution|en resolution|la risoluzione|🗳️||rezolucja|c2x01_geopolitics.resolution
+дипломатичні відносини|diplomatic relations|diplomatiske forbindelser|le relazioni diplomatiche|🌉||stosunki dyplomatyczne|c2x01_geopolitics.diplomatic_relations
+міжнародне право|international law|folkeret|il diritto internazionale|⚖️||prawo międzynarodowe|c2x01_geopolitics.international_law
+наддержава|superpower|en supermagt|la superpotenza|🦅||supermocarstwo|c2x01_geopolitics.superpower
 #c2x02_economics~B2|Економіка (поглиблено)|📈|B2
 попит і пропозиція|supply and demand|udbud og efterspørgsel|la domanda e l'offerta|⚖️||popyt i podaż|c2x02_economics.supply_and_demand
 споживчі витрати|consumer spending|et privatforbrug|la spesa dei consumatori|🛒||wydatki konsumpcyjne|c2x02_economics.consumer_spending
@@ -10732,7 +10734,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 Тримай мене в курсі|Keep me posted|Hold mig orienteret|Tienimi aggiornato|📲||Informuj mnie na bieżąco|b1m_phrases.keep_me_posted
 вкластися в термін|to meet a deadline|at overholde en deadline|rispettare una scadenza|📅||dotrzymać terminu|b1x01_collocations.to_meet_a_deadline
 у довгостроковій перспективі|in the long run|i det lange løb|a lungo andare|🛤️||na dłuższą metę|b1x01_collocations.in_the_long_run
-правління (кооперативу)|board|en bestyrelse|il consiglio di amministrazione|👥||zarząd|b1x02_neighbours.board
 доглядач будинку|caretaker|en vicevært|il custode|🧹|caretaker_1a|dozorca|b1x02_neighbours.caretaker
 домофон|intercom|et samtaleanlæg|il citofono|🔔||domofon|b1x02_neighbours.intercom
 #mix_B2_4|Різні слова 4|🧩|B2
@@ -11486,7 +11487,6 @@ Wi-Fi постійно зникає.|The Wi-Fi keeps cutting out.|Wi-fi'en falde
 помірний (у їжі й питві)|abstemious|mådeholden|frugale|🥛|||c2x04_character.abstemious
 нахабство|effrontery|en frækhed|la sfrontatezza|😤|||c2x04_character.effrontery
 #c2x04_feelings|Стани душі|🌫️|C2
-томлива нудьга|ennui|en livslede|il tedio|🥱|||c2x04_feelings.ennui
 острах (тривожне очікування)|trepidation|en bæven|la trepidazione|😨|||c2x04_feelings.trepidation
 гірко шкодувати|to rue|at angre|rimpiangere|😣|||c2x04_feelings.to_rue
 душевна рівновага|equanimity|en sindsligevægt|l'imperturbabilità|⚖️|||c2x04_feelings.equanimity
