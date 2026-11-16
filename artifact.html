@@ -3146,6 +3146,19 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .nf-pcs.m9 .nf-pc-i{width:40px;height:40px;border-radius:13px}.nf-pcs.m9 .nf-pc-i svg{width:20px;height:20px}
 .nf-pcs.m9 .nf-pc b{font-size:15.5px}.nf-pcs.m9 .nf-pc small{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--mut)}
 .nf-pcs.m9 .nf-pc>svg{width:18px;height:18px}
+
+/* ---------- самооцінка перед тестом — покращення (16.11.2026) ---------- */
+#app>.pt-self .pt-self-o button{justify-content:flex-start!important}
+#app>.pt-self .pt-self-o .pt-ot{flex:1;min-width:0}
+.pt-bars{flex:none;width:42px;height:42px;border-radius:13px;background:color-mix(in srgb,var(--lime) 12%,var(--s2));display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:11px;box-sizing:border-box}
+.pt-bars i{width:4px;border-radius:2px;background:color-mix(in srgb,var(--mut) 35%,transparent)}
+.pt-bars i:nth-child(1){height:6px}.pt-bars i:nth-child(2){height:10px}.pt-bars i:nth-child(3){height:14px}.pt-bars i:nth-child(4){height:18px}
+.pt-bars i.on{background:var(--lime-t)}
+.pt-new{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:12px;width:100%;padding:10px 16px;border-radius:18px;border:1.5px dashed color-mix(in srgb,var(--lime-t) 55%,transparent);color:var(--ink);text-align:left}
+.pt-new>svg:first-child{flex:none;width:20px;height:20px;color:var(--lime-t)}.pt-new>svg:last-child{flex:none;width:16px;height:16px;color:var(--mut);margin-left:auto}
+.pt-new b{display:block;font-size:15px}.pt-new small{display:block;font-size:12.5px;color:var(--mut)}
+.pt-new:focus-visible{outline:2px solid var(--lime);outline-offset:2px}.pt-new:active{transform:scale(.98)}
+@media (max-height:700px){.pt-bars{width:36px;height:36px;padding-bottom:9px}.pt-new{padding:8px 14px}}
 </style>
 </head>
 <body>
@@ -19572,10 +19585,10 @@ const PT_SELF=[['Знаю лише кілька слів','алфавіт, пр�
   ['Розумію серіали з субтитрами','листуюся, читаю прості статті',2],['Вільно читаю й говорю','роботу, новини, книжки — цією мовою',3]];
 function ptSelf(){applyTheme();document.body.classList.add('in-session');REDRAW=ptSelf;
   app.innerHTML=`<div class="ds-scr pt-self"><header class="ds-top"><button class="ds-x nf-back" onclick="nfGuide()" aria-label="Назад">${icn('arrow')}</button>
-    <div class="ds-prog"><div class="ds-prog-h"><span>Перед тестом</span><span>1 питання</span></div></div></header>
-   <section class="ds-q"><p class="ds-qlab">Як ти оцінюєш свою ${langAcc()} зараз?</p><span class="ds-qtr">Тест почнеться з питань близько до твого рівня, а далі підлаштується сам — помилитися з відповіддю тут не страшно.</span></section>
-   <div class="ds-opts pt-self-o">${PT_SELF.map(([t,s,li])=>`<button onclick="ptStart(${li})"><span class="pt-ot"><b>${t}</b><small>${s}</small></span><em class="pt-lv">${li>=3?LEVELS[li]+'+':LEVELS[li]}</em></button>`).join('')}</div>
-   <div class="ds-foot"><button class="nf-link" onclick="nfBeginner()">Я зовсім новачок — почати з A1 без тесту</button></div></div>`;window.scrollTo(0,0)}
+    <div class="ds-prog"><div class="ds-prog-h"><span>Перед тестом</span><span>далі ${PT_TOTAL} завдань</span></div></div></header>
+   <section class="ds-q"><p class="ds-qlab">Як ти оцінюєш свою ${langAcc()} зараз?</p><span class="ds-qtr">Почнемо з питань твого рівня, далі тест підлаштується сам. Помилятися тут не страшно.</span></section>
+   <div class="ds-opts pt-self-o">${PT_SELF.map(([t,s,li])=>`<button onclick="ptStart(${li})"><span class="pt-bars" aria-hidden="true">${[0,1,2,3].map(k=>`<i class="${k<=li?'on':''}"></i>`).join('')}</span><span class="pt-ot"><b>${t}</b><small>${s}</small></span><em class="pt-lv">${li>=3?LEVELS[li]+'+':LEVELS[li]}</em></button>`).join('')}</div>
+   <div class="ds-foot"><button class="pt-new" onclick="nfBeginner()">${icn('sparkle')}<span><b>Я зовсім новачок</b><small>почати з A1 без тесту</small></span>${icn('chev')}</button></div></div>`;window.scrollTo(0,0)}
 function ptStart(start){applyTheme();document.body.classList.add('in-session');start=ptClamp(+start||0);
   PX={n:0,k:0,start,th:ptMu(start),log:[],used:new Set(),usedG:new Set(),textDone:false,t0:Date.now(),sel:null,typed:'',q:null};ptNext()}
 function ptOk(q){if(q.kind==='type'){const v=ptNorm(PX.typed);return !!v&&q.acc.some(a=>a===v||(a.length>=6&&lev(a,v)<=1))}
