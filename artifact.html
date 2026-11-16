@@ -3051,6 +3051,24 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .gref-lvc .gp-bar{height:3px;margin-top:4px}
 .gref-lvh{flex-wrap:wrap}.gref-lvh>.gp-bar{flex-basis:100%;margin-top:8px}
 .gref-lvc .gp-bar{width:80%;margin-left:auto;margin-right:auto}
+/* «Читання» (88_reader_plus.js): нові слова перед текстом, переклад речення і всього тексту */
+.rp-nw{margin:14px 0 16px;padding:14px;border-radius:22px;background:var(--s1);border:1px solid var(--line)}
+.rp-nw-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}.rp-nw-h b{font-size:16px}.rp-nw-h small{color:var(--mut);font-size:12.5px;flex:1}
+.rp-all{all:unset;cursor:pointer;padding:7px 12px;border-radius:999px;background:var(--lime);color:#111;font-weight:800;font-size:13px}
+.rp-all:disabled{opacity:.6;cursor:default}
+.rp-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rp-w{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px;border-radius:16px;background:var(--s2);min-width:0}
+.rp-w>svg{flex:none;width:16px;height:16px;color:var(--mut);margin-left:auto}
+.rp-pic{flex:none;width:36px;height:36px;border-radius:10px;background:#EEEBE5;display:grid;place-items:center;overflow:hidden}
+.rp-pic .hp-ltr{font-size:18px;text-shadow:none;color:var(--lime-t)}
+.rp-pic img{width:100%;height:100%;object-fit:contain}
+.rp-t{display:flex;flex-direction:column;min-width:0}.rp-t b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rp-t small{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rp-full{margin:14px 0;border-radius:18px;background:var(--s1);border:1px solid var(--line);overflow:hidden}
+.rp-full summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 14px;font-weight:700}
+.rp-full summary svg{width:18px;height:18px;color:var(--lime-t)}.rp-full summary::-webkit-details-marker{display:none}
+.rp-full-b{padding:0 14px 14px;line-height:1.6;color:var(--ink);opacity:.9}
+.rp-su{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.45;max-width:280px}
+.rp-su small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-bottom:2px}
 </style>
 </head>
 <body>
@@ -22518,6 +22536,31 @@ function gpEnhance(){try{const a=document.getElementById('app');if(!a||!a.queryS
 // пошук / розгортання перемальовують частину списку — доповнюємо нові картки
 (function(){try{const app=document.getElementById('app');if(!app||typeof MutationObserver!=='function')return;let t=0;
   new MutationObserver(()=>{if(t)return;t=setTimeout(()=>{t=0;if(document.querySelector('#app .gref-it:not(:has(.gp-n))'))gpEnhance()},30)}).observe(app,{childList:true,subtree:true})}catch(e){}})();
+
+/* ---------- «Читання» — покращення (16.11.2026, рішення автора):
+   1) текст відкривається повністю (режим «увесь текст» для всіх рівнів, а не по реченню);
+   2) дотик до слова чи фрази — переклад слова І переклад усього речення; під текстом — «Переклад усього тексту»;
+   3) перед текстом — «Нові слова»: слово, переклад, картинка, звук і «Вчити всі» (у навчання, повтор завтра). ---------- */
+rdLvMode=function(t){return S.rdMode||'A'};
+function rpNewWords(t){let L_=[];try{L_=rdNw(t).map(([en,uk])=>({en,uk}))}catch(e){}
+  if(!L_.length)try{L_=textWordsSafe(t).slice(0,10).map(w=>({en:w[S.lang]||w.en,uk:w.uk,w}))}catch(e){}
+  return L_.filter(x=>x.en&&x.uk).slice(0,12)}
+function rpPic(en){try{const w=WORDS.find(x=>String(x[S.lang]||'').toLowerCase()===String(en).toLowerCase());return w&&typeof hasPic==='function'&&hasPic(w)?picHTML(w):''}catch(e){return ''}}
+function rpWordsHTML(t){const L_=rpNewWords(t);if(!L_.length)return '';
+  return `<section class="rp-nw" aria-label="Нові слова перед читанням"><div class="rp-nw-h"><b>Нові слова</b><small>${L_.length} · вивчи перед читанням</small>
+    <button class="rp-all" onclick="rpLearnAll()">Вчити всі</button></div>
+    <div class="rp-list">${L_.map(x=>{const p=rpPic(x.en);return `<button class="rp-w" onclick="speak(${js(x.en)})"><span class="rp-pic">${p||`<span class="hp-ltr">${esc((x.en.replace(/^(to|a|an|the|at|en|et)\s+/i,'')[0]||'').toUpperCase())}</span>`}</span><span class="rp-t"><b lang="${S.lang}">${esc(x.en)}</b><small>${esc(x.uk)}</small></span>${icn('speaker')}</button>`}).join('')}</div></section>`}
+function rpLearnAll(){if(!RD)return;let n=0;rpNewWords(RD.t).forEach(x=>{try{if(addMy(x.en,x.uk,'📖',{quiet:true,due:addDays(1)}))n++}catch(e){}});
+  toast(n?`Додано ${n} ${pluralUk(n,['слово','слова','слів'])} у навчання · повтор завтра`:'Ці слова вже в словнику');const b=document.querySelector('.rp-all');if(b){b.disabled=true;b.textContent='Додано'}}
+function rpFullTrHTML(t){const uk=String(t.uk||'').trim();if(!uk)return '';
+  return `<details class="rp-full"><summary>${icn('lang')} Переклад усього тексту</summary><div class="rp-full-b">${esc(uk).replace(/\n+/g,'<br><br>')}</div></details>`}
+{const _rpA=rdRenderA;rdRenderA=function(){const r=_rpA.apply(this,arguments);try{const a=document.getElementById('app'),t=RD&&RD.t;if(!a||!t)return r;
+  const h=a.querySelector('.rd-hero');if(h&&!a.querySelector('.rp-nw'))h.insertAdjacentHTML('afterend',rpWordsHTML(t));
+  const g=a.querySelector('#gtext');if(g&&!a.querySelector('.rp-full'))g.insertAdjacentHTML('afterend',rpFullTrHTML(t))}catch(e){console.error(e)}return r}}
+// дотик до слова/фрази: під перекладом слова — переклад усього речення
+{const _rpPop=rdPop;rdPop=function(el){const r=_rpPop.apply(this,arguments);try{const p=document.getElementById('rdPop'),s=el.closest('[data-s]');if(!p||!s||!RD)return r;
+  const su=rdSu(RD.t,+s.dataset.s);if(su){p.querySelector('.rd-pt').insertAdjacentHTML('afterend',`<div class="rp-su"><small>Усе речення</small>${esc(su)}</div>`);
+    const rr=el.getBoundingClientRect(),ph=p.offsetHeight;if(rr.bottom+ph+40>window.innerHeight)p.style.top=Math.max(window.scrollY+8,rr.top+window.scrollY-ph-10)+'px'}}catch(e){}return r}}
 
 bootApp();bigLoad();
 </script>
