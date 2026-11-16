@@ -3050,6 +3050,7 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .gp-bar>i{display:block;height:100%;border-radius:4px;background:var(--lime-t)}
 .gref-lvc .gp-bar{height:3px;margin-top:4px}
 .gref-lvh{flex-wrap:wrap}.gref-lvh>.gp-bar{flex-basis:100%;margin-top:8px}
+.gref-lvc .gp-bar{width:80%;margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body>
@@ -22502,10 +22503,10 @@ function npSec(t,sub,ns,yr){return `<div class="np-sec"><div class="bk-sec">${es
 /* ---------- «Граматика» — покращення без зміни вмісту (16.11.2026, рішення автора: «покращити і удосконалити»):
    номер уроку в кружечку (пройдений — галочка), наступний урок підсвічено «Далі», формула — в один рядок,
    компактніші картки (на екрані вдвічі більше уроків), смужки прогресу в чипах рівнів і в заголовку рівня ---------- */
-function gpBar(n,t){const f=t?Math.round(100*n/t):0;return `<i class="gp-bar" aria-hidden="true"><i style="width:${Math.max(n?6:0,f)}%"></i></i>`}
+function gpBar(n,t){const f=t?Math.min(100,Math.round(100*n/t)):0;return `<i class="gp-bar" aria-hidden="true"><i style="width:${Math.max(n?6:0,f)}%"></i></i>`}
 function gpEnhance(){try{const a=document.getElementById('app');if(!a||!a.querySelector('.gref-it'))return;
   // чипи рівнів: «0/20» → смужка
-  a.querySelectorAll('.gref-lvc').forEach(c=>{if(c.querySelector('.gp-bar'))return;const m=(c.textContent||'').match(/(\d+)\s*\/\s*(\d+)/);if(m)c.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))});
+  a.querySelectorAll('.gref-lvc').forEach(c=>{if(c.querySelector('.gp-bar'))return;const m=((c.querySelector('small')||{}).textContent||'').match(/^\s*(\d+)\s*\/\s*(\d+)/);if(m)c.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))});
   const h=a.querySelector('.gref-lvh');if(h&&!h.querySelector('.gp-bar')){const m=(h.textContent||'').match(/(\d+)\s*з\s*(\d+)/);if(m)h.insertAdjacentHTML('beforeend',gpBar(+m[1],+m[2]))}
   let nextSet=!!a.querySelector('.gref-it.gp-next');
   a.querySelectorAll('.gref-blk').forEach(b=>{let k=0;b.querySelectorAll(':scope > .gref-it').forEach(it=>{k++;const s=it.querySelector(':scope > summary');if(!s||s.querySelector('.gp-n'))return;
