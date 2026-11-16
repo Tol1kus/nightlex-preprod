@@ -3191,6 +3191,10 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
   #app>.ds-goalscr .ds-goals{gap:6px}
 }
 body:has(#app>.ds-goalscr){padding-bottom:0!important}
+/* кнопка «UA» не видна під час заставки — з'являється разом зі стартом (як орбіта); 16.11.2026 */
+.nf-launch-in .ul-btn{opacity:0;animation:nfLaunchIn .5s ease 2.9s forwards}
+.nf-launch-in.nf-quick .ul-btn{animation-delay:.35s}
+@media (prefers-reduced-motion:reduce){.nf-launch-in .ul-btn{opacity:1;animation:none}}
 </style>
 </head>
 <body>
