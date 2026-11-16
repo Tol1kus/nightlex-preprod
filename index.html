@@ -2864,7 +2864,7 @@ header.ds-hd.nf-gd-hd{display:flex!important;align-items:center;gap:14px;padding
 #app>.nf-guide .ds-foot{flex:none;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
 #app:has(>.nf-guide){padding-bottom:0!important;min-height:0!important}
 html:has(#app>.nf-guide){overflow:hidden;height:100%;overscroll-behavior:none}
-body:has(#app>.nf-guide){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+body:has(#app>.nf-guide){height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
 @media (max-height:700px){#app>.nf-guide .nf-ff{width:110px;height:110px}#app>.nf-guide .nf-say-b p{font-size:15px;line-height:1.4}#app>.nf-guide .nf-guide-hero{margin-top:auto}}
 /* ===== самооцінка: рівно в один екран, вміст по центру, нерухома, «Назад», рівень біля кожного варіанта (15.11.2026, рішення автора) ===== */
 #app>.pt-self{display:flex;flex-direction:column;height:calc(100dvh - 16px - env(safe-area-inset-top,0px));min-height:0;overflow:hidden}
@@ -2878,7 +2878,7 @@ body:has(#app>.nf-guide){position:fixed;inset:0;overflow:hidden;overscroll-behav
 #app>.pt-self .pt-self-o button:active{transform:scale(.98);border-color:var(--lime-t)}
 #app:has(>.pt-self){padding-bottom:0!important;min-height:0!important}
 html:has(#app>.pt-self){overflow:hidden;height:100%;overscroll-behavior:none}
-body:has(#app>.pt-self){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+body:has(#app>.pt-self){height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
 @media (max-height:700px){#app>.pt-self .ds-qlab{font-size:21px}#app>.pt-self .pt-self-o button{min-height:56px;padding:8px 14px}#app>.pt-self .ds-qtr{font-size:13px}}
 /* ===== новий логотип і заставка запуску (15.11.2026, рішення автора) ===== */
 .nf-logo.nl-logo{position:relative;background:#232226!important;color:#fff!important;font:700 26px/1 Literata,Georgia,serif!important;box-shadow:0 6px 18px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.08)}
@@ -2918,7 +2918,7 @@ body:has(#app>.pt-self){position:fixed;inset:0;overflow:hidden;overscroll-behavi
 #app>.nf-launch .nf-lang:last-of-type{margin-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
 #app:has(>.nf-launch){padding-bottom:0!important;min-height:0!important}
 html:has(#app>.nf-launch){overflow:hidden;height:100%;overscroll-behavior:none}
-body:has(#app>.nf-launch){position:fixed;inset:0;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
+body:has(#app>.nf-launch){height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;padding-bottom:0!important}
 .lp-sub{position:absolute;left:50%;top:calc(50% + 30px);transform:translateX(-50%);font-size:12.5px;font-weight:700;color:var(--mut);white-space:nowrap;pointer-events:none}
 .nf-orbit-top .ds-orb-c{margin-top:-8px}
 .lp-tw{position:absolute;fill:var(--ink);opacity:0;animation:nlTw 2.4s ease-in-out infinite;pointer-events:none}
@@ -2938,6 +2938,16 @@ body:has(#app>.nf-launch){position:fixed;inset:0;overflow:hidden;overscroll-beha
 :root[data-theme="light"] .nl-logo-s,:root[data-theme="light"] .nl-star{fill:color-mix(in srgb,var(--lime) 55%,#fff)}
 :root[data-theme="light"] #app>.nf-launch .nf-orbit-top svg path{stroke:var(--lime-t)!important;filter:none!important}
 :root[data-theme="light"] .nf-launch .lp-bar>i,:root[data-theme="light"] .nf-launch .nf-lang.on .lp-bar>i{background:var(--lime-t)}
+/* ===== смуги Safari на iPhone (16.11.2026): зона під панеллю адреси — колір низу градієнта сторінки, а не темне тло
+   (раніше html{background:var(--bg)!important} — тому тут теж !important і вища специфічність) ===== */
+html:root{background:color-mix(in srgb,var(--lime) 16%,var(--s1))!important}
+html:root[data-theme="light"]{background:color-mix(in srgb,var(--lime) 6%,#fff)!important}
+html:root:has(.nf-splash.nl-sp){background:color-mix(in srgb,var(--lime) 26%,var(--bg))!important}
+html:root[data-theme="light"]:has(.nf-splash.nl-sp){background:color-mix(in srgb,#fff 60%,var(--bg))!important}
+/* фон більший за екран (16.11.2026, рішення автора): градієнт і заставка виходять за краї — під годинник і під «смужку» iPhone,
+   тож у застосунку на робочому столі внизу й угорі немає темних смуг */
+body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc(-160px - env(safe-area-inset-bottom,0px))!important;left:0;right:0}
+.nf-splash{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc(-160px - env(safe-area-inset-bottom,0px))!important;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body>
@@ -10534,6 +10544,13 @@ function lpProg(k){const lv=lpLevelOf(k),R=(S.srs||{})[k]||{};let T=0,n=0;
     const k=m[1],started=!!((S.placement||{})[k]||(S.beginner||{})[k]||Object.keys((S.srs||{})[k]||{}).length);if(!started)return;
     const p=lpProg(k),sm=b.querySelector('small');if(sm)sm.insertAdjacentHTML('afterend',`<i class="lp-bar" aria-hidden="true"><i style="width:${Math.max(3,Math.round(p.f*100))}%"></i></i>`)});
  }catch(e){console.error(e)}return r}}
+
+/* ---------- колір смуги під годинником у Safari (meta theme-color) = верх градієнта сторінки (16.11.2026) ---------- */
+function lpCssHex(css){try{const d=document.createElement('i');d.style.cssText='position:absolute;width:0;height:0;color:'+css;document.body.appendChild(d);const v=getComputedStyle(d).color;d.remove();
+  let m=v.match(/rgba?\(([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/),k=255;if(!m){m=v.match(/color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);k=1}if(!m)return '';
+  return '#'+[1,2,3].map(i=>Math.round(Math.max(0,Math.min(255,+m[i]*(255/k)))).toString(16).padStart(2,'0')).join('')}catch(e){return ''}}
+{const _lpAt=applyTheme;applyTheme=function(){const r=_lpAt.apply(this,arguments);try{const m=document.querySelector('meta[name=theme-color]');if(!m||!document.body)return r;
+  const top=lpCssHex(isDark()?'color-mix(in srgb,var(--bg) 70%,#000)':'color-mix(in srgb,var(--lime) 34%,var(--bg))');if(top)m.content=top}catch(e){}return r}}
 
 bootApp();bigLoad();
 </script>
