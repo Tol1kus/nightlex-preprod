@@ -3198,6 +3198,73 @@ body:has(#app>.ds-goalscr){padding-bottom:0!important}
 /* кільце рівня у світлій темі: доріжки сегментів і внутрішнє коло контрастніші (були кольору картки й зливались із фоном); 16.11.2026 */
 :root[data-theme="light"] .nf-ring svg path[stroke="var(--s2)"],:root[data-theme="light"] .nf-ring svg circle[stroke="var(--s2)"]{stroke:color-mix(in srgb,var(--ink) 13%,var(--bg))}
 :root[data-theme="light"] .nf-ring svg path[stroke^="color-mix"]{stroke:color-mix(in srgb,var(--lime) 45%,color-mix(in srgb,var(--ink) 13%,var(--bg)))}
+/* тест рівня — рівно в екран, кнопка завжди внизу (16.11.2026) */
+#app:has(>.ds-testscr){padding-bottom:0!important;min-height:0!important}
+body:has(#app>.ds-testscr){padding-bottom:0!important}
+#app>.ds-testscr{min-height:calc(100dvh - 16px - env(safe-area-inset-top,0px))!important}
+#app>.ds-testscr .ds-foot{margin-top:auto;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (max-height:740px){
+  #app>.ds-testscr .ds-opts button{min-height:48px;padding-top:8px;padding-bottom:8px}
+  #app>.ds-testscr .ds-opts{gap:8px}
+  #app>.ds-testscr .ds-qlab{margin-bottom:2px}
+  #app>.ds-testscr .ds-qnote{margin-top:8px}
+  #app>.ds-testscr .ds-idk{margin-top:8px}
+}
+/* головна на невисоких телефонах (iPhone SE, 667 px): усе до меню — без прокручування (16.11.2026) */
+@media (max-height:740px){
+  #app > .nf-hd{margin-bottom:8px!important}
+  #app > .nf-step{padding-top:14px!important;padding-bottom:14px!important;margin-bottom:8px!important}
+  #app > .nf-step .nf-step-top{margin-bottom:8px!important}
+  #app > .nf-step .nf-step-t{font-size:26px!important;margin-bottom:4px!important}
+  #app > .nf-step .nf-words{margin-bottom:10px!important}
+  #app > .nf-step .nf-words img,#app > .nf-step .nf-words .hp-ltr,#app > .nf-step .nf-words > * > span:first-child{max-width:44px;max-height:44px}
+  #app > .nf-step .nf-cta{min-height:46px!important}
+  #app > .tp-plan{margin-top:8px!important;margin-bottom:6px!important}
+  #app > .nf-stages{margin-bottom:8px!important}
+  #app > .wg-card{margin-top:8px!important;margin-bottom:8px!important;padding-top:10px!important;padding-bottom:10px!important}
+  #app > .wg-card .wg-dots{margin-top:8px!important}
+  #app > .nf-lv{margin-bottom:6px!important}
+}
+/* місце під нижнє меню — один раз і рівно його висота (було 104 px у body + 60 px у .wrap: зайва прокрутка ~100 px навіть там, де все вміщається); 16.11.2026 */
+body:not(.in-session){padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+body:not(.in-session) > .wrap{padding-bottom:8px!important}
+html,body{overscroll-behavior-y:none}
+html{overflow-x:hidden}
+/* порожні рядки у вправах не займають місця (діалог: рядок фази без назви, «почуто» до відповіді); 16.11.2026 */
+.k-phase-row:has(> .k-ph-t:empty):not(:has(.k-timer:not(:empty))){display:none}
+.dv-heard:empty{display:none}
+@media (max-height:740px){.nf-mission p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
+/* «Я», «Читання», «Розмова», головна — без прокручування на телефонах (16.11.2026) */
+@media (max-height:900px){ .t9-next{display:none} }
+@media (max-height:740px){
+  /* Я */
+  .nf-me.m9 .nf-ring{zoom:.56}
+  .nf-me.m9{margin-bottom:6px}
+  .m9-stats{margin:4px 0 6px;gap:6px}.m9-t{padding:6px 4px}.m9-t b{font-size:18px}
+  .m9-wk{padding:8px 10px}.m9-wk-h{margin-bottom:4px}.m9-d i{width:22px;height:22px}
+  .nf-pcs.m9 .nf-pc{padding:7px 12px}.nf-pcs.m9 .nf-pc-i{width:34px;height:34px;border-radius:11px}.nf-pcs.m9 .nf-pc b{font-size:15px}
+  /* Читання */
+  .r9-start .r9-t:nth-of-type(n+3){display:none}
+  .tp-tod.r9-tod{padding:10px 14px;margin-bottom:8px}.tp-tod .r9-pic{width:44px;height:44px}
+  #app > .gref-lvs{margin-bottom:8px}
+  .bk-list .bk-card{padding-top:10px!important;padding-bottom:10px!important}
+  .r9-start{margin-top:0}.r9-start .bk-sec{margin-top:10px}.r9-t{padding:8px 10px;margin-bottom:6px}.r9-t .r9-pic{width:44px;height:44px}
+  /* Розмова */
+  .t9-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .sp-card.t9-tile{padding:10px 8px;align-items:center;text-align:center;gap:6px}
+  .sp-card.t9-tile .sp-t small{display:none}.sp-card.t9-tile .sp-t b{font-size:13px}
+  .t9-grid>.t9-tile:last-child:nth-child(odd){grid-column:auto;flex-direction:column}
+  .t9-hero .nf-step-top>p{display:none!important}
+  /* головна */
+  #app > .nf-lv .nf-lv-q{display:none}
+  #app > .nf-step .nf-step-t{font-size:24px!important}
+}
+@media (max-height:690px){
+  .nf-me.m9 .nf-ring{zoom:.5}.m9-wk-h small{display:none}.m9-wk{padding:6px 10px}
+  .r9-start .r9-t:nth-of-type(n+2){display:none}
+  #app > .nf-hd{margin-top:0!important}
+  #app > .nf-step .nf-cta{min-height:44px!important}
+}
 </style>
 </head>
 <body>
@@ -7895,7 +7962,7 @@ function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[
     :`<p class="ds-qlab">${q.label}</p>`+(q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>${q.uk?`<span class="ds-qtr">${esc(q.uk)}</span>`:''}`
       :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
       :`<strong class="ds-qs${q.small?' sm':''}">${esc(q.big)}</strong>`);
-  app.innerHTML=`<div class="ds-scr">
+  app.innerHTML=`<div class="ds-scr ds-testscr">
    <header class="ds-top"><button class="ds-x" onclick="${PX.onClose||'nfGuide()'}" aria-label="Закрити">${icn('close')}</button>
      <div class="ds-prog"><div class="ds-prog-h"><span>${esc(PX.title||'Тест рівня')} · ${skName.toLowerCase()}</span><span>${PX.n} / ${ptTotal()}</span></div><div class="ds-bar"><i style="width:${(PX.n-1)/ptTotal()*100}%"></i></div></div></header>
    <section class="ds-q"><div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">${PX.fixed!=null?'питання одного рівня':'адаптивний'}</span></div>${body}</section>
@@ -7904,7 +7971,7 @@ function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[
      :`<div class="ds-opts">${q.opts.map((o,i)=>`<button class="${i===s?'on':''}${q.small||q.kind==='text'?' sm':''}" onclick="ptPick(${i})">${esc(o)}</button>`).join('')}</div>`}
    ${d&&!typed?`<section class="ds-pend"><span>Відповідь прийнято. <em>Натиснув(ла) випадково?</em></span><button onclick="PX.sel=null;ptRender()">${icn('refresh')} Переграти</button></section>`
      :`<button class="ds-idk" onclick="PX.sel=-1;PX.typed='';ptNext()">Не знаю — далі</button>`}
-   <p class="ds-qnote">${typed?'Перша літера вже є, кількість рисок — кількість літер. Маленька описка в довгому слові не рахується помилкою.':'Не вгадуй: «Не знаю» дає точніший результат, ніж випадкова відповідь. Правильну відповідь у тесті не показуємо.'}</p>
+   ${PX.n<=2||typed?`<p class="ds-qnote">${typed?'Перша літера вже є, кількість рисок — кількість літер. Маленька описка в довгому слові не рахується помилкою.':'Не вгадуй: «Не знаю» дає точніший результат, ніж випадкова відповідь. Правильну відповідь у тесті не показуємо.'}</p>`:''}
    <div class="ds-foot"><button class="ds-cta ${ready?'':'off'}" ${ready?'':'disabled'} onclick="ptNext()">${PX.n>=ptTotal()?'Побачити результат':'Наступне питання'}</button></div></div>`;
   if(typed){const i=document.getElementById('ptIn');if(i)try{i.focus({preventScroll:true})}catch(e){}}
 }
@@ -11130,7 +11197,9 @@ function varBase(t){const c=t&&typeof CUR_T!=='undefined'&&CUR_T[t.id];return !!
    Усе данське склала модель — носії не перевіряли. ---------- */
 function daCurApply(){try{if(typeof CUR_T==='undefined')return;const da=S.lang==='da';
   Object.keys(CUR_T).forEach(id=>{const c=CUR_T[id];if(!c)return;if(c.t0==null){c.t0=c.t;c.g0=c.g;c.ph0=c.ph}
-    const d=da&&c.da;c.t=d&&d.t||c.t0;c.g=d&&d.g||c.g0;c.ph=d&&d.ph&&d.ph.length?d.ph:c.ph0;
+    const d=da&&c.da;c.t=d&&d.t||c.t0;
+    // данська без данського шару (поки що рівні від A2): НЕ показувати англійську граматику й англійські фрази
+    c.g=da?(d&&d.g||''):c.g0;c.ph=da?(d&&d.ph||[]):c.ph0;
     const t=typeof TOPIC_BY_ID!=='undefined'&&TOPIC_BY_ID[id];if(t)t.name=c.t})}catch(e){}}
 function daDropKey(w){return String(w&&w.en||'').toLowerCase().replace(/^(to|a|an|the)\s+/,'').trim()}
 // у данському курсі прибрати з теми слова зі списку da.drop
@@ -11139,6 +11208,17 @@ function daDropKey(w){return String(w&&w.en||'').toLowerCase().replace(/^(to|a|a
 if(typeof setLang==='function'){const _ds=setLang;setLang=function(){const r=_ds.apply(this,arguments);daCurApply();return r}}
 if(typeof switchLang==='function'){const _dsw=switchLang;switchLang=function(){const r=_dsw.apply(this,arguments);daCurApply();return r}}
 daCurApply();try{on('screen',daCurApply);on('home:before',daCurApply);on('session:start',daCurApply)}catch(e){}
+
+/* ---------- Заняття, почате до 00:00, належить своєму дню (16.11.2026, повідомлення автора:
+   «якщо проходив бонус-завдання і не закінчив до 00:00 — автоматично новий день, і починаєш як новий день»).
+   Раніше все, що робилося після півночі (бонус-раунд, кроки плану), зараховувалося на НОВИЙ день: його кроки ставали виконаними,
+   і новий день починався «з середини». Тепер поки триває заняття (і екран його підсумку), today() повертає день, коли заняття почалося;
+   новий день починається, щойно людина виходить на головну або в іншу вкладку. today(дата) з аргументом працює як раніше. ---------- */
+let SESS_DAY=null;
+const TODAY_REAL=today;
+today=function(d){if(d!==undefined)return TODAY_REAL(d);const t=TODAY_REAL();return SESS_DAY&&SESS_DAY<t?SESS_DAY:t};
+try{on('session:start',()=>{if(!SESS_DAY)SESS_DAY=TODAY_REAL()});
+  on('home:before',()=>{SESS_DAY=null});on('screen',()=>{if(!document.body.classList.contains('in-session'))SESS_DAY=null})}catch(e){}
 
 bootApp();bigLoad();
 </script>
