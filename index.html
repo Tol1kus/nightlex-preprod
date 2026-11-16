@@ -9218,7 +9218,9 @@ function starMini(from){const c=starCounts();if(!c.lit&&!c.dim)return '';const w
   return `<button class="sk-mini" onclick="STAR_FROM='${from}';starScreen()" aria-label="Твоє небо: ${c.lit} зір світять, ${c.dim} тьмяніють. Відкрити">
     <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${s}</svg>
     <span class="sk-mt"><b>Твоє небо</b><small>${c.lit} ${pluralUk(c.lit,['зоря світить','зорі світять','зір світять'])}${c.dim?` · <em>${c.dim} ${pluralUk(c.dim,['тьмяніє','тьмяніють','тьмяніють'])}</em>`:''}</small></span>${icn('arrow')}</button>`}
-on('home:after',()=>{try{if(document.querySelector('#app .sk-mini'))return;const h=document.querySelector('#app .lu-card')||document.querySelector('#app .nf-step');
+// 16.11.2026 (рішення автора): «Твоє небо» прибрано з головної повністю — плашка більше не показується (код екрана лишається, входу немає)
+const STAR_ON=false;
+on('home:after',()=>{try{if(!STAR_ON)return;if(document.querySelector('#app .sk-mini'))return;const h=document.querySelector('#app .lu-card')||document.querySelector('#app .nf-step');
   const m=starMini('home');if(h&&m)h.insertAdjacentHTML('afterend',m)}catch(e){}});
 // 15.11.2026 (прохання користувача): плашка «Твоє небо» — лише на «Сьогодні»; на «Шляху», «Я» і «Прогресі» її більше немає
 // старе «Небо пам'яті» (32_story.js) замінено цим: картка на «Я» і екран ведуть сюди — одне небо замість двох
