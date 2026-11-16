@@ -2942,12 +2942,14 @@ body:has(#app>.nf-launch){height:100%;overflow:hidden;overscroll-behavior:none;t
    (раніше html{background:var(--bg)!important} — тому тут теж !important і вища специфічність) ===== */
 html:root{background:color-mix(in srgb,var(--lime) 16%,var(--s1))!important}
 html:root[data-theme="light"]{background:color-mix(in srgb,var(--lime) 6%,#fff)!important}
-html:root:has(.nf-splash.nl-sp){background:color-mix(in srgb,var(--lime) 26%,var(--bg))!important}
-html:root[data-theme="light"]:has(.nf-splash.nl-sp){background:color-mix(in srgb,#fff 60%,var(--bg))!important}
 /* фон більший за екран (16.11.2026, рішення автора): градієнт і заставка виходять за краї — під годинник і під «смужку» iPhone,
    тож у застосунку на робочому столі внизу й угорі немає темних смуг */
 body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc(-160px - env(safe-area-inset-bottom,0px))!important;left:0;right:0}
-.nf-splash{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc(-160px - env(safe-area-inset-bottom,0px))!important;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+/* заставка (16.11.2026): без власного фону — той самий градієнт сторінки (body::after), тож краї екрана збігаються, як у старій версії,
+   і заставка непомітно переходить у старт; сяйво — рівно за логотипом */
+.nf-splash.nl-sp,:root[data-theme="light"] .nf-splash.nl-sp{background:transparent!important}
+.nf-splash.nl-sp{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.nl-glow{left:50%;top:50%;margin:0;transform:translate(-50%,calc(-50% - 52px))}
 </style>
 </head>
 <body>
