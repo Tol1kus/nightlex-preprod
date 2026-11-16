@@ -3173,6 +3173,24 @@ body::after{top:calc(-60px - env(safe-area-inset-top,0px))!important;bottom:calc
 .ul-t{flex:1;min-width:0;display:flex;flex-direction:column}.ul-t b{font-size:15.5px}.ul-t small{font-size:12px;color:var(--mut)}
 .ul-o>svg{flex:none;width:20px;height:20px;color:var(--lime-t)}
 .ul-o:not(.on){opacity:.75}
+
+/* ---------- мета: екран вибору й рядок у налаштуваннях (94_goal.js, 16.11.2026) ---------- */
+.ds-goal .ds-g-pic{overflow:hidden;background:#EEEBE5;color:#555}.ds-goal .ds-g-pic img{width:100%;height:100%;object-fit:contain}.ds-goal .ds-g-pic svg{width:24px;height:24px}
+.ds-goal .ds-gtx{flex:1;min-width:0}
+.ds-gck{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--lime);color:var(--on-lime,#111)}.ds-gck svg{width:15px;height:15px;stroke-width:2.6}
+.ds-goal:active{transform:scale(.98)}
+.ul-code svg{width:19px;height:19px}
+#app:has(>.ds-goalscr){padding-bottom:0!important;min-height:0!important}
+#app>.ds-goalscr{min-height:calc(100dvh - 16px - env(safe-area-inset-top,0px))!important}
+#app>.ds-goalscr .ds-foot{margin-top:auto}
+@media (max-height:720px){
+  #app>.ds-goalscr .ds-hd2 h1{font-size:26px;line-height:1.1}
+  #app>.ds-goalscr .ds-hd2 p{font-size:13.5px;margin-top:4px}
+  #app>.ds-goalscr .ds-goal{padding:8px 12px;gap:10px}
+  #app>.ds-goalscr .ds-g-pic{width:40px;height:40px;border-radius:12px}
+  #app>.ds-goalscr .ds-goals{gap:6px}
+}
+body:has(#app>.ds-goalscr){padding-bottom:0!important}
 </style>
 </head>
 <body>
@@ -7754,12 +7772,16 @@ function onboarding(step=0){
     document.querySelectorAll('.nf-launch .nf-lang').forEach(c=>{const m=(c.getAttribute('onclick')||'').match(/launchGo\('(\w+)'\)/);if(m)c.setAttribute('onclick',`setStartLang('${m[1]}','us');nfGuide()`)});return}
   if(step===1){const g=S.goal||'work';
     const G=[['work','💼','Робота','листи, зустрічі, співбесіда'],['travel','✈️','Подорожі','аеропорт, готель, місто'],['exam','🎓','Іспит',S.lang==='da'?'Prøve i Dansk 2 / 3 · Indfødsret':'TOEFL · IELTS · B2 / C1'],['self','❤️','Для себе','фільми, книжки, спілкування']];
-    app.innerHTML=`<div class="ds-scr">
-      <header class="ds-hd ds-hd2">${dsDots(2)}<h1>Для чого тобі ${langNom()}?</h1><p>Від мети залежать теми слів і тексти.</p></header>
-      <div class="ds-goals">${G.map(([k,e,t,s])=>`<button class="ds-goal ${k===g?'on':''}" onclick="S.goal='${k}';save();onboarding(1)"><span class="ds-g-pic">${e}</span><span class="ds-gtx"><strong>${t}</strong><span>${s}</span></span><span class="ds-radio"></span></button>`).join('')}</div>
+    app.innerHTML=`<div class="ds-scr ds-goalscr">
+      <header class="ds-hd ds-hd2">${dsDots(2)}<h1>Для чого тобі ${langNom()}?</h1><p>Теми під твою мету підуть раніше. Змінити можна в «Налаштуваннях».</p></header>
+      <div class="ds-goals" role="radiogroup" aria-label="Мета">${G.map(([k,e,t,s])=>`<button class="ds-goal ${k===g?'on':''}" role="radio" aria-checked="${k===g}" onclick="S.goal='${k}';save();onboarding(1)"><span class="ds-g-pic">${goalPic(k)||icn(GOAL_IC[k]||'star')}</span><span class="ds-gtx"><strong>${t}</strong><span>${s}</span></span>${k===g?`<span class="ds-gck">${icn('check')}</span>`:''}</button>`).join('')}</div>
       <div class="ds-foot"><button class="ds-cta" onclick="${PLAN_OPT&&PLAN_OPT.lvl?'ptStartDay()':'nfGuide()'}">${PLAN_OPT&&PLAN_OPT.lvl?`Почати день 1 ${icn('play')}`:`Далі: тест рівня ${icn('arrow')}`}</button></div></div>`;return}
   return nfGuide();
 }
+const GOAL_IC={work:'briefcase',travel:'plane',exam:'cap',self:'heart'};
+// картинки мети — Mulberry за точним англійським словом (за емодзі ✈️ знаходився столярний рубанок «plane»)
+const GOAL_PIC={work:'laptop',travel:'suitcase',exam:'certificate',self:'book'};
+function goalPic(k){try{const key=GOAL_PIC[k],w=key&&WORDS.find(x=>x.en===key&&x.img&&typeof PICS!=='undefined'&&PICS[x.img]);return w?picHTML(w):''}catch(e){return ''}}
 function placementIntro(){nfGuide()}
 
 /* ---------- E03 · адаптивний тест рівня (версія 2, 10.11.2026) ----------
@@ -11039,6 +11061,28 @@ function ulPick(k){const o=UI_LANGS.find(x=>x[0]===k);if(!o)return;if(o[4]){if(t
   toast(k==='en'?'English interface — coming soon':'Dansk brugerflade — kommer snart')}
 {const _ul=launchScreen;launchScreen=function(){const r=_ul.apply(this,arguments);try{const root=document.querySelector('#app .nf-launch');
   if(root&&!root.querySelector('.ul-btn'))root.insertAdjacentHTML('afterbegin',ulBtnHTML())}catch(e){console.error(e)}return r}}
+
+/* ---------- Мета навчання справді працює (16.11.2026, рішення автора)
+   Раніше S.goal (Робота / Подорожі / Іспит / Для себе) лише зберігалась. Тепер теми плану, що пасують до мети, на своєму рівні йдуть раніше:
+   одразу після перших GOAL_KEEP тем рівня (привітання, числа, базові слова лишаються першими). Решта порядку не змінюється.
+   Змінити мету — «Налаштування» → «Мета». Відповідність мети і «життєвої теми» плану (CUR_T[id].life) — GOAL_LIFE. ---------- */
+const GOAL_KEEP=8;
+const GOAL_LIFE={
+  work:/робот|кар'єр|співбесід|зустріч|переговор|бізнес|менеджмент|ділов|презентац|професійн/i,
+  travel:/подорож|транспорт|аеропорт|готель|місто|кав'ярн|супермаркет|покупк/i,
+  exam:/школ|освіт|навчанн|академічн|мислення|думки|аргумент|наука|новини|зв'язні/i,
+  self:/вільний час|вихідні|хобі|друзі|кіно|серіал|музик|мистецтв|літератур|книжк|(?:^|\s)спорт|почутт|стосунк|дозвілл/i};
+const GOAL_NAMES=[['work','Робота','листи, зустрічі, співбесіда'],['travel','Подорожі','аеропорт, готель, місто'],['exam','Іспит',''],['self','Для себе','фільми, книжки, спілкування']];
+function goalMatch(t){const re=GOAL_LIFE[S.goal];if(!re||!t||typeof CUR_T==='undefined')return false;const c=CUR_T[t.id];return !!(c&&re.test(c.life||''))}
+{const _gp=themePrio;themePrio=function(t){const p=_gp(t);try{const c=t&&typeof CUR_T!=='undefined'&&CUR_T[t.id];
+  if(c&&c.o>GOAL_KEEP&&goalMatch(t))return -4000+GOAL_KEEP+0.5+c.o/10000}catch(e){}return p}}
+function goalSheet(){if(typeof bkSheet!=='function')return;
+  bkSheet(`<span class="bk-pic ul-pic">${icn('target')}</span>`,'Мета','теми під мету підуть раніше',
+    GOAL_NAMES.map(([k,t,s])=>`<li><button class="ul-o${(S.goal||'work')===k?' on':''}" onclick="goalSet('${k}')"><span class="ul-code">${icn(GOAL_IC[k]||'star')}</span><span class="ul-t"><b>${t}</b><small>${k==='exam'?(S.lang==='da'?'Prøve i Dansk 2 / 3 · Indfødsret':'TOEFL · IELTS · B2 / C1'):s}</small></span>${(S.goal||'work')===k?icn('check'):''}</button></li>`).join(''))}
+function goalSet(k){S.goal=k;save();if(typeof bkClose==='function')bkClose();toast('Мета: '+((GOAL_NAMES.find(x=>x[0]===k)||[])[1]||''));if(REDRAW===settingsScreen)settingsScreen()}
+{const _gs=settingsScreen;settingsScreen=function(){const r=_gs.apply(this,arguments);try{if(document.querySelector('#app .goal-row'))return r;
+  const anchor=[...document.querySelectorAll('#app .k-srow')].find(x=>/Час на день/.test(x.textContent));const g=GOAL_NAMES.find(x=>x[0]===(S.goal||'work'));
+  if(anchor)anchor.insertAdjacentHTML('beforebegin',`<button class="k-srow goal-row" onclick="goalSheet()"><span>Мета</span><span class="k-val">${esc(g?g[1]:'')} ›</span></button>`)}catch(e){console.error(e)}return r}}
 
 bootApp();bigLoad();
 </script>
