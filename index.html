@@ -8166,6 +8166,94 @@ function letterName(l){const c=String(l||'').toLowerCase();return ((LETTER_NAMES
 speakLetter=function(l){try{speechSynthesis.cancel();speechSynthesis.speak(mkUtter(letterName(l),.75))}catch(e){}};
 if(typeof spellOut==='function')spellOut=function(){const it=SS.items[SS.i];try{speechSynthesis.cancel();[...String(it.word||'')].forEach(ch=>{if(/\s/.test(ch))return;speechSynthesis.speak(mkUtter(letterName(ch),.7))})}catch(e){}};
 
+/* ---------- Ядро: синоніми й «знаю» (17.11.2026, прохання автора «починай робити удосконалення по ядрі», пункти 1–3)
+   1. «Встав слово»: хибний варіант з даних, який теж підходить за змістом (той самий переклад або синонім зі списку:
+      big / large), замінюється іншим.
+   2. Пари синонімів з різним перекладом (happy «щасливий» / glad «радий», start / begin) — SYN_EN / SYN_DA.
+      Діють і в «Встав слово», і в «обери» (distractors), і в тесті рівня. Списки уклала модель; носії не перевіряли.
+      Зайве слово в групі нічого не ламає (лише не стає хибним варіантом), тому групи навмисно широкі.
+   3. «Знаю» (або «Легко») на картці нового слова: якщо далі в уроці немає перевірки цього слова — вона додається в кінець
+      уроку («Перевірка: ти сказав(ла) «знаю»»). Неправильна відповідь знижує слово як звичайна помилка. ---------- */
+const SYN_EN=[
+  'big|large|huge|enormous','small|little|tiny','begin|start','end|finish|stop|quit','shop|store','buy|purchase|get',
+  'happy|glad|pleased','sad|unhappy|upset','quick|fast|rapid|quickly','speak|talk','maybe|perhaps|possibly','also|too|as well',
+  'near|close|nearby','close|shut','often|frequently','job|work|occupation','ill|sick','pretty|beautiful|lovely|attractive|good-looking',
+  'nice|kind|friendly','smart|clever|intelligent|bright','angry|mad|annoyed','scared|afraid|frightened','rich|wealthy',
+  'correct|right','wrong|incorrect','hard|difficult|tough','easy|simple','choose|pick|select','help|assist','need|require',
+  'get|receive|obtain','try|attempt','answer|reply|respond','enough|sufficient','mistake|error','trip|journey|travel',
+  'road|street|way','movie|film','apartment|flat','vacation|holiday','fall|autumn','trash|garbage|rubbish','truck|lorry',
+  'cookie|biscuit','candy|sweets','pants|trousers','elevator|lift','subway|metro|underground','mail|post','line|queue',
+  'restroom|bathroom|toilet|washroom','sofa|couch','kid|child','guy|man','friend|buddy|pal','mom|mother|mum','dad|father',
+  'gift|present','home|house','jump|leap','rock|stone','shout|yell|scream','almost|nearly','quiet|silent|calm','noisy|loud',
+  'cold|chilly|cool','wet|damp','dirty|filthy','empty|vacant','fix|repair|mend','leave|depart|go','build|construct','show|display',
+  'finally|eventually','under|below|beneath','above|over','around|about','completely|totally|entirely','certainly|surely|definitely',
+  'usually|normally|generally','whole|entire|all','ok|okay|fine|all right','hello|hi|hey','goodbye|bye','thanks|thank you',
+  'dinner|supper','doctor|physician','afraid|sorry','strange|weird|odd','tired|sleepy','fat|overweight','thin|slim|skinny',
+  'look|seem|appear','own|have|possess','big|great','quickly|soon','smell|scent','talk|chat','sea|ocean','town|city',
+  'center|centre|middle','color|colour','neighbor|neighbour','gray|grey','favorite|favourite','street|avenue','ground|floor',
+  'cup|mug','plate|dish','bin|can','phone|cellphone|cell phone|mobile','photo|picture|photograph','test|exam|quiz',
+  'lesson|class','teacher|instructor','boss|manager','price|cost','cash|money','car|automobile','bike|bicycle','tv|television',
+  'start|launch','arrive|come','return|come back','sleep|rest','like|enjoy','love|adore','want|wish','think|believe|guess',
+  'learn|study','sick|unwell','sure|certain','glad|happy','wonderful|great|fantastic|amazing|excellent','bad|awful|terrible|horrible'
+];
+const SYN_DA=[
+  'stor|kæmpe|enorm','lille|små|bitte','begynde|starte','slutte|ende|afslutte|stoppe','butik|forretning','glad|lykkelig|tilfreds',
+  'trist|ked af det|ulykkelig','hurtig|hurtigt|rap','snakke|tale|sige','måske|muligvis','også|ligeledes','tæt på|nær|nærheden',
+  'lukke|smække','ofte|tit','job|arbejde|stilling','syg|dårlig|utilpas','smuk|køn|flot|pæn','sød|venlig|rar|flink','klog|smart|intelligent',
+  'vred|sur|gal','bange|skræmt','rig|velhavende','rigtig|korrekt','forkert|fejl','svær|vanskelig|hård','let|nem|enkel','vælge|udvælge',
+  'hjælpe|assistere','behøve|have brug for','få|modtage','prøve|forsøge','svare|besvare','nok|tilstrækkelig','fejl|fejltagelse',
+  'tur|rejse','vej|gade','film|biograf','lejlighed|bolig','ferie|fridag','efterår|høst','skrald|affald','bukser|jeans',
+  'mor|mo|mama','far|fa|papa','gave|present','hus|hjem','hoppe|springe','sten|klippe','råbe|skrige','næsten|nærmest',
+  'stille|rolig','høj|larmende','kold|kølig','våd|fugtig','beskidt|snavset','tom|ledig','reparere|ordne|fikse','tage af sted|afrejse|rejse',
+  'bygge|opføre','vise|fremvise','endelig|til sidst','under|nedenunder','over|ovenpå','omkring|cirka|ca.','helt|fuldstændig|totalt',
+  'sikkert|bestemt|helt sikkert','normalt|sædvanligvis|plejer','hel|hele','hej|goddag|halløj','farvel|hej hej|vi ses','tak|mange tak',
+  'aftensmad|middag','læge|doktor','mærkelig|underlig|sær','træt|søvnig','tyk|overvægtig','tynd|slank','se ud|virke','eje|have',
+  'by|bydel','midte|centrum','kop|krus','tallerken|fad','telefon|mobil','billede|foto','prøve|eksamen|test','lektion|time',
+  'lærer|underviser','chef|leder','pris|beløb','penge|kontanter','bil|vogn','cykel','fjernsyn|tv','komme|ankomme','sove|hvile',
+  'kunne lide|elske|nyde','ville|ønske','tro|mene|synes|tænke','lære|studere','dejlig|skøn|vidunderlig|fantastisk|super',
+  'dårlig|skidt|elendig|forfærdelig'
+];
+function synNorm(s){return String(s||'').toLowerCase().replace(/[’`]/g,"'").replace(/^(to|a|an|the|en|et|at)\s+/,'').replace(/[.,!?;:«»"]/g,'').replace(/\s+/g,' ').trim()}
+const SYN_IX={en:new Map(),da:new Map()};
+[['en',SYN_EN],['da',SYN_DA]].forEach(([l,L])=>L.forEach((g,i)=>g.split('|').forEach(x=>{const k=synNorm(x);if(!k)return;const m=SYN_IX[l];if(!m.has(k))m.set(k,new Set());m.get(k).add(i)})));
+// прості форми: works → work, started → start, faster → fast; данське hurtige → hurtig, butikken → butik
+function synStems(s,lang){const k=synNorm(s),out=new Set([k]);if(!k||k.includes(' '))return out;
+  const suf=lang==='da'?['erne','ene','en','et','er','ne','e','r','t']:['ies','es','s','ed','d','ing','er','est','ly'];
+  suf.forEach(x=>{if(k.length>x.length+2&&k.endsWith(x)){out.add(k.slice(0,-x.length));if(x==='ies')out.add(k.slice(0,-3)+'y');if(x==='ing'||x==='ed')out.add(k.slice(0,-x.length)+'e')}});
+  // подвоєна приголосна: stopped → stop, bigger → big
+  [...out].forEach(t=>{if(t.length>3&&t.at(-1)===t.at(-2))out.add(t.slice(0,-1))});return out}
+function synSame(a,b,lang){try{lang=lang||S.lang;const m=SYN_IX[lang];if(!m)return false;
+  const A=[...synStems(a,lang)].flatMap(k=>[...(m.get(k)||[])]);if(!A.length)return false;const As=new Set(A);
+  return [...synStems(b,lang)].some(k=>[...(m.get(k)||[])].some(i=>As.has(i)))}catch(e){return false}}
+
+// ---- 1 + 2: «Встав слово» ----
+let SYN_WIX=null,SYN_WIX_L='';
+function synWordOf(s){try{if(!SYN_WIX||SYN_WIX_L!==S.lang){SYN_WIX=new Map();SYN_WIX_L=S.lang;
+    WORDS.forEach(x=>{if(!x||x.my||!x[S.lang])return;const k=synNorm(stripArt(String(x[S.lang]),S.lang));if(k&&!SYN_WIX.has(k))SYN_WIX.set(k,x)})}
+  return SYN_WIX.get(synNorm(stripArt(String(s||''),S.lang)))||null}catch(e){return null}}
+// хибний варіант o «теж підходить», якщо він синонім відповіді / слова або його слово має ТОЧНО той самий переклад.
+// М'якше за ukClash навмисно: речення саме розводить схожі слова (Good morning / Good evening, one-way / round-trip ticket) — це і є вправа.
+function fillClash(w,g,o){try{const n=synNorm(o);if(!n||n===synNorm(g.answer))return false;
+  if(synSame(o,g.answer)||synSame(o,w[S.lang]))return true;
+  const x=synWordOf(o);return !!(x&&x.id!==w.id&&typeof ukCore==='function'&&ukCore(x)&&ukCore(x)===ukCore(w))}catch(e){return false}}
+{const _fso=fillSafeOpts;fillSafeOpts=function(w,g){const r=_fso.apply(this,arguments);try{if(!r||r.length<2)return r;
+  const ans=r[0],ok=r.slice(1).filter(o=>!fillClash(w,g,o));if(ok.length===r.length-1)return r;
+  const out=[ans].concat(ok),has=o=>out.some(x=>fillNorm(x)===fillNorm(o));
+  if(out.length<4&&typeof fillOpts==='function')for(const o of fillOpts(w,g).slice(1))if(out.length<4&&!has(o)&&!fillClash(w,g,o))out.push(o);
+  return out.length>=3?out:r}catch(e){return r}}}
+// «обери»: синоніми з різним перекладом теж не стають хибними варіантами
+{const _dsy=distractors;distractors=function(w,key,n=3){const r=_dsy.call(this,w,key,n+6);try{const L=S.lang;
+  const f=r.filter(x=>!synSame(x[L],w[L],L));if(f.length>=n)return f.slice(0,n);
+  for(const x of _dsy.call(this,w,key,n+20))if(f.length<n&&!f.includes(x)&&!synSame(x[L],w[L],L))f.push(x);return f.length>=Math.min(n,2)?f.slice(0,n):r.slice(0,n)}catch(e){return r.slice(0,n)}}}
+
+// ---- 3: «знаю» на новій картці — перевірка того ж дня ----
+function cqHasCheck(w,from){try{for(let i=from;i<SS.items.length;i++){const x=SS.items[i];if(x&&x.w&&x.w.id===w.id&&x.kind!=='card')return true}}catch(e){}return false}
+{const _cq=cardAnswer;cardAnswer=function(q){try{const it=SS&&SS.items&&SS.items[SS.i];
+  if(it&&it.kind==='card'&&it.intro&&it.w&&(q==='good'||q==='easy'||q===true)&&!cqHasCheck(it.w,SS.i+1)){const w=it.w;
+    const k=!dirToUk()&&typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice';
+    SS.items.push({kind:k,w,toUk:dirToUk(),phase:'Перевірка: ти сказав(ла) «знаю»',cq:1})}}catch(e){}
+  return _cq.apply(this,arguments)}}
+
 bootApp();bigLoad();
 </script>
 </body>
