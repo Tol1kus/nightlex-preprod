@@ -8254,6 +8254,35 @@ function cqHasCheck(w,from){try{for(let i=from;i<SS.items.length;i++){const x=SS
     SS.items.push({kind:k,w,toUk:dirToUk(),phase:'Перевірка: ти сказав(ла) «знаю»',cq:1})}}catch(e){}
   return _cq.apply(this,arguments)}}
 
+/* ---------- Перевірка написаного (17.11.2026, «удосконалення по ядрі», пункт 4)
+   Хук check:pre (після US/UK з 07 і скорочень з 23). Зараховує як правильне:
+   • дефіс / пробіл / разом: ice cream = ice-cream, e-mail = email, T-shirt = t shirt (разом / окремо — лише англійська);
+   • британський правопис у фразі з кількох слів (favourite colour → favorite color; одне слово вже приймає 07);
+   • англійська без «to» / «a» / «an» / «the» (на картках «to» більше не показуємо, тож вимагати його нечесно); данська без «at».
+     Данський en / et — ні: рід учимо, без артикля це помилка, як і раніше;
+   • інше слово з ТОЧНО тим самим перекладом (чоловік: man / husband) — «Теж правильно», але зарах. м'якше (як з підказкою)
+     і з назвою слова цієї картки. Синоніми зі списку 99d тут не беремо: там групи навмисно широкі. ---------- */
+const CK_PFX={en:/^(to|a|an|the) /,da:/^at /};
+function ckForms(s,lang){const n=norm(String(s||''),lang),out=new Set([n]);const sp=n.replace(/-/g,' ').replace(/\s+/g,' ').trim();out.add(sp);if(lang==='en')out.add(sp.replace(/ /g,'')); // данською окреме написання складного слова — справжня помилка (særskrivning)
+  if(lang==='en'&&typeof GB2US!=='undefined'){const us=sp.split(' ').map(t=>GB2US[t]||t).join(' ');out.add(us);out.add(us.replace(/ /g,''))}
+  return out}
+function ckMeet(a,b,lang){const A=ckForms(a,lang);for(const x of ckForms(b,lang))if(x&&A.has(x))return true;return false}
+function ckSoft(){try{const it=SS&&SS.items&&SS.items[SS.i];if(it&&!it.answered)it.hint=Math.max(it.hint||0,1)}catch(e){}}
+on('check:pre',(r,input,stored,lang)=>{if(r||(lang!=='en'&&lang!=='da'))return r;try{
+  const u=norm(String(input||''),lang),s=norm(String(stored||''),lang);if(!u||u===s)return null;
+  // 1) дефіс, пробіл, британський правопис
+  if(ckMeet(u,s,lang))return{ok:true,kind:'perfect',note:'Правильно. Пишемо так: '+stored};
+  // 2) без «to» / артикля (англійська) або без «at» (данська)
+  const P=CK_PFX[lang],m=s.match(P);
+  if(m&&!P.test(u)&&!(lang==='da'&&/^(en|et) /.test(u))&&ckMeet(u,s.slice(m[0].length),lang))
+    return{ok:true,kind:'perfect',note:'Правильно. Словникова форма: '+stored};
+  // 3) інше слово з тим самим перекладом
+  if(typeof WORDS!=='undefined'){const it=SS&&SS.items&&SS.items[SS.i],w=it&&it.w;
+    if(w&&w[lang]&&norm(String(w[lang]),lang)===s&&w.uk){const wu=norm(String(w.uk),'uk'),uc=stripArt(u,lang);
+      const x=WORDS.find(x=>x!==w&&!x.my&&x[lang]&&x.uk&&norm(String(x.uk),'uk')===wu&&ckMeet(stripArt(norm(String(x[lang]),lang),lang),uc,lang));
+      if(x){ckSoft();return{ok:true,kind:'syn',note:'Теж правильно — «'+x[lang]+'» теж означає «'+w.uk+'». Але слово цієї картки: '+stored}}}}
+}catch(e){}return null});
+
 bootApp();bigLoad();
 </script>
 </body>
