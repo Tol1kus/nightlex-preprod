@@ -20563,7 +20563,7 @@ function nfIsPhrase(w){try{if(!w)return false;if(w.phrase||w.story||/_phr_/.test
   return n>2||(n===2&&/[.!?]$/.test(t))}catch(e){return false}}
 {const _phPh=picHTML;picHTML=function(w){if(w&&!w.my&&!(S.picOver&&S.picOver[w.id])&&nfIsPhrase(w))return '<i class="nopic" aria-hidden="true"></i>';return _phPh.apply(this,arguments)}}
 (function(){try{const st=document.createElement('style');st.textContent=
-  '*:has(> i.nopic:only-child){display:none!important}.wc-planet:has(i.nopic),.wc-planet:has(.wc-flip){display:none!important}'+  // кружок-перевертень з тим самим текстом фрази — зайвий
+  '.wc-planet:has(i.nopic),.wc-planet:has(.wc-flip){display:none!important}'+  // кружок-перевертень з тим самим текстом фрази — зайвий
   
   'img.om-ui{width:1.2em;height:1.2em;vertical-align:-.2em;display:inline-block;object-fit:contain}';document.head.appendChild(st)}catch(e){}})();
 // 19.11.2026 (автор: «затримки, коли перемикаєш картинки»): перетворювач емодзі → OpenMoji прибрано — емодзі Apple в інтерфейсі не знайшлося,
@@ -20574,6 +20574,9 @@ function picPreload(n){try{if(typeof SS==='undefined'||!SS||!SS.items)return;con
     const d=document.createElement('div');d.innerHTML=picHTML(w);
     d.querySelectorAll('img[src]').forEach(x=>{const u=x.getAttribute('src');if(!u||u.startsWith('data:')||PICPRE.has(u))return;PICPRE.add(u);const im=new Image();im.decoding='async';im.src=u})}}catch(e){}}
 on('item:render',()=>setTimeout(()=>picPreload(4),50));on('session:start',()=>setTimeout(()=>picPreload(6),0));
+// рамка, де лише <i class="nopic">, ховається тут, а не CSS-правилом *:has(…) — воно змушує WebKit перевіряти всю сторінку при кожній зміні (гальмує на iPhone)
+function nopicHide(){try{document.querySelectorAll('#app i.nopic').forEach(i=>{const p=i.parentElement;if(p&&p.children.length===1&&!(p.textContent||'').trim())p.style.display='none'})}catch(e){}}
+on('item:render',()=>requestAnimationFrame(nopicHide));on('screen',()=>requestAnimationFrame(nopicHide));on('home:after',()=>requestAnimationFrame(nopicHide));
 
 bootApp();bigLoad();
 </script>
