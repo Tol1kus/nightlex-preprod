@@ -154,7 +154,9 @@ async function review(it){const t=T(),m=$('m');
   const R=res(),q=queue(),done=q.filter(i=>R[i.id]&&R[i.id].st!=='skip').length,prev=R[CUR.id];
   PICK=prev&&prev.st!=='skip'?{st:prev.st,fix:prev.fix||'',note:prev.note||'',tags:(prev.tags||[]).slice()}:null;
   const top=el('div',{class:'top'},el('button',{class:'ic','aria-label':t.close,html:IC.x,onclick:startScreen}),
-    el('div',{class:'prog'},el('div',{class:'h'},el('span',{},`${t.title} · ${ST.lv} · ${t.k[ST.kind]}`),el('span',{},`${done} / ${q.length}`)),el('div',{class:'bar'},el('i',{style:`width:${q.length?done/q.length*100:0}%`}))));
+    el('div',{class:'prog'},el('div',{class:'h'},el('span',{},`${t.title} · ${ST.lv} · ${t.k[ST.kind]}`),el('span',{},`${done} / ${q.length}`)),el('div',{class:'bar'},el('i',{style:`width:${q.length?done/q.length*100:0}%`}))),
+    // 18.11.2026 (прохання автора): зберегти файл можна вже після першої перевіреної відповіді — кнопка прямо під час перевірки
+    (()=>{let n=0;try{n=Object.keys(payload().items).length}catch(e){}return n?el('button',{class:'ic','aria-label':t.send,title:t.send,html:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>',onclick:sendSheet}):null})());
   const lab=t.kl[CUR.k]+(CUR.k==='s'&&CUR.w?` · ${t.word.toUpperCase()}: ${CUR.w}`:CUR.k==='t'||CUR.k==='d'?` · ${CUR.src||''}`:'')+(CUR.k==='d'&&CUR.who&&CUR.who!=='→'?` · ${CUR.who}`:'');
   const x=el('p',{class:'x'+(CUR.k==='s'?' hl':''),id:'x'});markText(x,CUR.x,CUR.k==='s'?CUR.w:'');
   const pic=CUR.p?el('div',{class:'pic'},el('img',{src:`img/${CUR.p}.svg`,alt:'',width:62,height:62,onerror:e=>e.target.parentElement.remove()})):null;
