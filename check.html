@@ -217,7 +217,7 @@ function sendSheet(){const t=T(),p=payload(),v=Object.values(p.items),n=k=>v.fil
   const txt=JSON.stringify(p);
   $('m').replaceChildren(el('div',{class:'top'},el('button',{class:'ic','aria-label':t.close,html:IC.x,onclick:startScreen}),el('b',{},t.sendT)),
     el('div',{class:'center'},el('div',{class:'stat'},el('div',{},el('b',{},String(n('ok'))),el('small',{},t.ok)),el('div',{},el('b',{},String(n('bad'))),el('small',{},t.bad)),el('div',{},el('b',{},String(n('fix'))),el('small',{},t.fix))),
-      el('p',{class:'mut'},t.sendI),el('p',{class:'mut sm'},t.handTip)));
+      el('p',{class:'mut'},t.sendI),el('p',{class:'mut sm'},t.handTip),el('p',{style:'font-weight:700;margin-top:10px'},'📱 ',el('a',{href:'tel:+4552796325',style:'color:var(--acc)'},'+45 52 79 63 25'),' · Telegram / WhatsApp / SMS')));
   // 18.11.2026: .txt і без заголовка — інакше Messenger/WhatsApp надсилали лише текст «Nightlex — …» без файлу
   const file=new File([txt],fname(p),{type:'text/plain'});
   const btns=[el('button',{class:'btn',onclick:()=>{const a=el('a',{href:URL.createObjectURL(file),download:file.name});document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast(t.saved)}},t.file)];
