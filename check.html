@@ -133,7 +133,10 @@ function handIn(file){const t=T(),r=new FileReader();r.onload=()=>{try{const p=J
     for(const id in p.items){if(R[id]&&R[id].st!=='skip')continue;if(!O[id])n++;O[id]=String(p.items[id].lv||'')}save();ITEMS=null;toast(t.handOk.replace('#',n));startScreen()}catch(e){toast(t.handBad)}};r.readAsText(file)}
 async function getIdx(){if(IDX)return IDX;try{IDX=await (await fetch('check/index.json',{cache:'no-cache'})).json()}catch(e){IDX={}}return IDX}
 async function getItems(lang,lv){const r=await fetch(`check/${lang}_${lv}.json`);if(!r.ok)throw new Error(r.status);return r.json()}
-function setDock(nodes){const d=$('dock'),i=$('dockIn');i.replaceChildren(...(nodes||[]));d.hidden=!nodes||!nodes.length}
+function setDock(nodes){const d=$('dock'),i=$('dockIn');i.replaceChildren(...(nodes||[]));d.hidden=!nodes||!nodes.length;dockPad()}
+// 18.11.2026 (знімок автора): нижні кнопки закривали вміст — відступ знизу дорівнює справжній висоті панелі кнопок (їх буває 1–3)
+function dockPad(){try{const d=$('dock'),m=$('m');const h=d.hidden?0:d.getBoundingClientRect().height;m.style.paddingBottom=(h?h+20:24)+'px'}catch(e){}}
+window.addEventListener('resize',dockPad);
 
 /* ---------- старт: мова, ім'я, рівень, що перевіряти ---------- */
 async function startScreen(){CUR=null;HIST=[];document.documentElement.lang=ST.lang;const t=T(),m=$('m'),idx=await getIdx(),R=res();
