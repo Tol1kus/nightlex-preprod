@@ -20,6 +20,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Golos Text',
 main{max-width:640px;margin:0 auto;padding:28px 16px 80px}
 h1{font:800 30px/1.15 Unbounded,sans-serif;margin:6px 0 10px}
 h2{font:700 19px/1.25 Unbounded,sans-serif;margin:0 0 10px}
+h3.hs{font:700 16px 'Golos Text',sans-serif;margin:14px 0 2px;color:var(--acc)}
 .kick{color:var(--mut);font-size:14px}
 .lead{font-size:17px}
 section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}
@@ -43,6 +44,7 @@ textarea{min-height:76px;resize:vertical}
 button.send{width:100%;border:0;background:var(--acc);color:var(--acc-ink);font:700 17px 'Golos Text',sans-serif;border-radius:16px;padding:15px;margin-top:18px;cursor:pointer}
 #ok{color:var(--mut);font-size:14px;text-align:center;min-height:20px;margin-top:8px}
 .langs{display:flex;gap:6px;justify-content:flex-end;margin-bottom:6px}.langs button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font:600 14px 'Golos Text',sans-serif;cursor:pointer}.langs button.on{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.dbtn{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink);font:700 16px 'Golos Text',sans-serif;border-radius:14px;padding:13px;cursor:pointer}.dbtn.main{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
 /* фон — градієнт від майже чорного вгорі до рожевуватого внизу (нерухомий шар позаду вмісту) */
 html{background:#111013}body{background:transparent!important}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#111013 0%,#19181B 42%,#4D3E45 100%)}
@@ -63,11 +65,50 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
 <h2 data-uk="Як почати" data-da="Sådan kommer du i gang">How to start</h2>
 <ol>
 <li data-uk="Відкрий &lt;a href=&quot;./&quot;&gt;Nightlex&lt;/a&gt; на телефоні — у Safari (iPhone) або Chrome (Android)." data-da="Åbn &lt;a href=&quot;./&quot;&gt;Nightlex&lt;/a&gt; på din telefon — i Safari (iPhone) eller Chrome (Android).">Open <a href="./">Nightlex</a> on your phone — in Safari (iPhone) or Chrome (Android).</li>
-<li data-uk="Додай на екран «Додому», щоб застосунок відкривався як звичайний і працював без інтернету:&lt;br&gt;iPhone — «Поділитися» → «На екран Додому»; Android — меню ⋮ → «Додати на головний екран»." data-da="Føj den til hjemmeskærmen, så den åbner som en almindelig app og virker offline:&lt;br&gt;iPhone — Del → “Føj til hjemmeskærm”; Android — menu ⋮ → “Føj til startskærm”.">Add it to your Home Screen so it opens like a normal app and works offline:<br>iPhone — Share → “Add to Home Screen”; Android — menu ⋮ → “Add to Home screen”.</li>
+<li data-uk="Додай на екран «Додому», щоб застосунок відкривався як звичайний і працював без інтернету:&lt;br&gt;iPhone — «Поділитися» → «На екран Додому»; Android — меню ⋮ → «Додати на головний екран»." data-da="Føj den til hjemmeskærmen, så den åbner som en almindelig app og virker offline:&lt;br&gt;iPhone — Del → “Føj til hjemmeskærm”; Android — menu ⋮ → “Føj til startskærm”.">Add it to your Home Screen so it opens like a normal app and works offline:<br>iPhone — Share → “Add to Home Screen”; Android — menu ⋮ → “Add to Home screen”. <a href="#home">Step by step ↓</a></li>
 <li data-uk="Обери мову: англійська (US) або данська." data-da="Vælg sprog: engelsk (US) eller dansk. Med den engelske brugerflade er der kun dansk.">Choose the language: English (US) or Danish. With the English interface there is only Danish.</li>
 <li data-uk="Трохи знаєш мову — пройди тест рівня (10–12 хв). Зовсім з нуля — натисни «Я зовсім новачок»." data-da="Kan du lidt af sproget, så tag niveautesten (10–12 min). Starter du helt fra nul, så tryk «Я зовсім новачок» (“I’m a complete beginner”).">If you know the language a little — take the level test (10–12 min). Starting from zero — tap «Я зовсім новачок» (“I’m a complete beginner”).</li>
 <li data-uk="Обери мету і починай «День 1». Увімкни звук — слова озвучуються." data-da="Vælg et mål, og start “Dag 1”. Slå lyden til — ordene bliver læst op.">Choose a goal and start “Day 1”. Turn the sound on — words are read aloud.</li>
 </ol>
+</section>
+
+<section id="home">
+<h2 data-uk="📱 Ярлик Nightlex на екрані телефону" data-da="📱 Læg Nightlex på din hjemmeskærm">📱 Put Nightlex on your Home Screen</h2>
+<p data-uk="Зроби це один раз — і Nightlex відкриватиметься одним дотиком з іконки, на весь екран, як звичайний застосунок. Посилання більше шукати не треба." data-da="Gør det én gang — så åbner Nightlex med ét tryk på et ikon, i fuld skærm, som en almindelig app. Du skal ikke lede efter linket igen.">Do this once — then Nightlex opens with one tap from an icon, full screen, like a normal app. No need to look for the link again.</p>
+<h3 class="hs" data-uk="iPhone (Safari)" data-da="iPhone (Safari)">iPhone (Safari)</h3>
+<ol>
+<li data-uk="Відкрий посилання на Nightlex у &lt;b&gt;Safari&lt;/b&gt; (не всередині Messenger, Instagram чи Gmail — там спершу натисни «Відкрити в Safari»)." data-da="Åbn Nightlex-linket i &lt;b&gt;Safari&lt;/b&gt; (ikke inde i Messenger, Instagram eller Gmail — tryk først på “Åbn i Safari”).">Open the Nightlex link in <b>Safari</b> (not inside Messenger, Instagram or Gmail — there, tap “Open in Safari” first).</li>
+<li data-uk="Натисни кнопку &lt;b&gt;«Поділитися»&lt;/b&gt;: квадрат зі стрілкою вгору (внизу екрана або біля адресного рядка)." data-da="Tryk på &lt;b&gt;Del&lt;/b&gt;-knappen: firkanten med en pil, der peger op (nederst på skærmen eller ved adresselinjen).">Tap the <b>Share</b> button: the square with an arrow pointing up (at the bottom of the screen, or next to the address bar).</li>
+<li data-uk="Прокрути вниз і натисни &lt;b&gt;«На екран &quot;Додому&quot;»&lt;/b&gt;." data-da="Rul ned, og tryk på &lt;b&gt;“Føj til hjemmeskærm”&lt;/b&gt;.">Scroll down and tap <b>“Add to Home Screen”</b>.</li>
+<li data-uk="Натисни &lt;b&gt;«Додати»&lt;/b&gt; у правому верхньому куті. Іконка Nightlex з’явиться на екрані." data-da="Tryk på &lt;b&gt;“Tilføj”&lt;/b&gt; øverst til højre. Nightlex-ikonet dukker op på din hjemmeskærm.">Tap <b>“Add”</b> in the top-right corner. The Nightlex icon appears on your Home Screen.</li>
+</ol>
+<h3 class="hs" data-uk="Android (Chrome)" data-da="Android (Chrome)">Android (Chrome)</h3>
+<ol>
+<li data-uk="Відкрий посилання на Nightlex у &lt;b&gt;Chrome&lt;/b&gt;." data-da="Åbn Nightlex-linket i &lt;b&gt;Chrome&lt;/b&gt;.">Open the Nightlex link in <b>Chrome</b>.</li>
+<li data-uk="Натисни меню &lt;b&gt;⋮&lt;/b&gt; (три крапки вгорі праворуч)." data-da="Tryk på menuen &lt;b&gt;⋮&lt;/b&gt; (tre prikker øverst til højre).">Tap the menu <b>⋮</b> (three dots, top right).</li>
+<li data-uk="Натисни &lt;b&gt;«Додати на головний екран»&lt;/b&gt; (або «Установити застосунок»), потім &lt;b&gt;«Додати»&lt;/b&gt;." data-da="Tryk på &lt;b&gt;“Føj til startskærm”&lt;/b&gt; (eller “Installer app”), og derefter &lt;b&gt;“Tilføj”&lt;/b&gt;.">Tap <b>“Add to Home screen”</b> (or “Install app”), then <b>“Add”</b>.</li>
+</ol>
+<p class="note" data-uk="Відтепер відкривай Nightlex з іконки. Прогрес у будь-якому разі зберігається на телефоні." data-da="Fra nu af åbner du Nightlex fra ikonet. Din fremgang bliver gemt på telefonen uanset hvad.">From now on, open Nightlex from the icon. Your progress stays on the phone either way.</p>
+</section>
+
+<section id="howto">
+<h2 data-uk="🧭 Як тестувати" data-da="🧭 Sådan tester du">🧭 How to test</h2>
+<ul>
+<li data-uk="&lt;b&gt;Грай як звичайний учень.&lt;/b&gt; Проходь план дня, не поспішай, не скидай прогрес." data-da="&lt;b&gt;Spil som en almindelig elev.&lt;/b&gt; Tag dagens plan, skynd dig ikke, og nulstil ikke din fremgang."><b>Play like a normal learner.</b> Do the daily plan, don’t rush, don’t reset your progress.</li>
+<li data-uk="&lt;b&gt;Відкривай Nightlex завжди однаково&lt;/b&gt; — з іконки на екрані. Прогрес зберігається лише на цьому телефоні; не очищай дані Safari/Chrome." data-da="&lt;b&gt;Åbn altid Nightlex på samme måde&lt;/b&gt; — fra ikonet på hjemmeskærmen. Fremgangen gemmes kun på denne telefon; ryd ikke Safari/Chrome-data."><b>Always open Nightlex the same way</b> — from the Home Screen icon. Progress is saved only on this phone; don’t clear Safari/Chrome data.</li>
+<li data-uk="&lt;b&gt;Щось не так? Одразу зроби знімок екрана.&lt;/b&gt; Помилка в мові, незрозуміла кнопка, неправильно зарахована відповідь, екран завис — важливо все." data-da="&lt;b&gt;Er noget galt? Tag et skærmbillede med det samme.&lt;/b&gt; En sprogfejl, en uklar knap, et svar bedømt forkert, en skærm der frøs — alt tæller."><b>Something wrong? Take a screenshot right away.</b> A mistake in the language, an unclear button, a wrongly marked answer, a frozen screen — everything counts.</li>
+<li data-uk="&lt;b&gt;Запиши коротку нотатку в щоденник нижче&lt;/b&gt; — одне-два речення: що робив(ла) і що помітив(ла). Вона зберігається на телефоні сама." data-da="&lt;b&gt;Skriv en kort note i dagbogen nedenfor&lt;/b&gt; — en eller to sætninger: hvad du lavede, og hvad du lagde mærke til. Den gemmes selv på telefonen."><b>Write a short note in the diary below</b> — one or two sentences: what you did and what you noticed. It saves on this phone by itself.</li>
+<li data-uk="&lt;b&gt;Надсилай нотатки й знімки&lt;/b&gt; тому, хто дав тобі посилання (Telegram, Messenger, пошта) — раз на день або хоча б на 7-й день. Кнопка «Надіслати нотатки»." data-da="&lt;b&gt;Send dine noter og skærmbilleder&lt;/b&gt; til den person, der gav dig linket (Telegram, Messenger, e-mail) — én gang om dagen eller mindst på dag 7. Brug knappen “Send noter”."><b>Send your notes and screenshots</b> to the person who gave you the link (Telegram, Messenger, e-mail) — once a day or at least on day 7. Use the “Send notes” button.</li>
+<li data-uk="&lt;b&gt;День 7:&lt;/b&gt; у Nightlex «Я» → «Звіт для тесту» — надішли його, а потім заповни анкету внизу цієї сторінки." data-da="&lt;b&gt;Dag 7:&lt;/b&gt; i Nightlex åbn «Я» (“Me”) → «Звіт для тесту» (“Test report”) og send den, og udfyld derefter formularen nederst på siden."><b>Day 7:</b> in Nightlex open «Я» (“Me”) → «Звіт для тесту» (“Test report”) and send it, then fill in the form at the bottom of this page.</li>
+</ul>
+</section>
+
+<section id="notes">
+<h2 data-uk="📝 Щоденник тестувальника" data-da="📝 Din testdagbog">📝 Your test diary</h2>
+<p class="kick" data-uk="Нотатки зберігаються лише в цьому браузері, доки ти їх не надішлеш. Відкривай цю сторінку щоразу однаково (у тому самому браузері)." data-da="Noterne bliver kun i denne browser, indtil du sender dem. Åbn siden på samme måde hver gang (samme browser).">Notes stay only in this browser until you send them. Open this page the same way each time (same browser).</p>
+<textarea id="diary" style="min-height:160px" aria-label="Diary"></textarea>
+<div style="display:flex;gap:8px;margin-top:10px"><button type="button" id="dToday" class="dbtn" data-uk="+ Сьогодні" data-da="+ I dag">+ Today</button><button type="button" id="dSend" class="dbtn main" data-uk="Надіслати нотатки" data-da="Send noter">Send notes</button></div>
+<div id="dOk" role="status" style="color:var(--mut);font-size:14px;min-height:20px;margin-top:6px"></div>
 </section>
 
 <section>
@@ -85,6 +126,7 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
 <section>
 <h2 data-uk="Ти носій данської чи англійської?" data-da="Har du dansk eller engelsk som modersmål?">Are you a native Danish or English speaker?</h2>
 <p data-uk="Тоді найбільше допоможе перевірка мови: окрема сторінка показує слова й речення, а ти позначаєш, що звучить природно, а що ні. 10 хвилин — уже велика допомога." data-da="Så er det mest nyttige, du kan gøre, at tjekke sproget: en separat side viser ord og sætninger, og du markerer, hvad der lyder naturligt, og hvad der ikke gør. Selv 10 minutter hjælper meget.">Then the most useful thing you can do is check the language: a separate page shows words and sentences, and you mark what sounds natural and what does not. Even 10 minutes helps a lot.</p>
+<p class="note" data-uk="&lt;b&gt;Хочеш побачити весь застосунок одразу, без очікування плану дня?&lt;/b&gt; У Nightlex: «Я» → «Налаштування» → «Додатково» → увімкни «Вільний доступ до вправ». Якщо ти вчиш мову — краще звичайний режим: нам важливо побачити, як це працює день за днем." data-da="&lt;b&gt;Vil du se hele appen med det samme uden at vente på dagens plan?&lt;/b&gt; I Nightlex: «Я» (“Me”) → «Налаштування» (“Settings”) → «Додатково» (“More”), og slå “Open access to exercises” til. Lærer du sproget, så brug den almindelige rækkefølge — vi vil gerne se, hvordan det virker dag for dag."><b>Want to see the whole app at once, without waiting for the daily plan?</b> In Nightlex open «Я» (“Me”) → «Налаштування» (“Settings”) → «Додатково» (“More”) and turn on “Open access to exercises”. Learners: please keep the normal flow — we want to see how it works day by day.</p>
 <p><a href="check.html?lang=da">Dansk — tjek sproget</a> · <a href="check.html?lang=en">English — check the language</a></p>
 </section>
 
@@ -144,6 +186,18 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
     document.querySelectorAll('.langs button').forEach(b=>{b.classList.toggle('on',b.dataset.l===l);b.setAttribute('aria-pressed',String(b.dataset.l===l))});
     document.title=l==='uk'?'Nightlex — тест на 7 днів':l==='da'?'Nightlex — 7-dages test':'Nightlex — 7-day test';try{localStorage.setItem(KEY+'-lang',l)}catch(e){}}
   document.querySelectorAll('.langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));setLang(LANG);
+
+  // щоденник тестувальника (18.11.2026): нотатки лише в localStorage, «Надіслати» = navigator.share / копіювання
+  (function(){const D=document.getElementById('diary'),K=KEY+'-diary',ok=document.getElementById('dOk');
+    try{D.value=localStorage.getItem(K)||''}catch(e){}
+    const keep=()=>{try{localStorage.setItem(K,D.value)}catch(e){}};D.addEventListener('input',keep);
+    const DM={en:{sent:'Notes sent — thank you!',copied:'Notes copied — paste them into a message.',empty:'Write something first.'},uk:{sent:'Нотатки надіслано — дякуємо!',copied:'Нотатки скопійовано — встав їх у повідомлення.',empty:'Спершу щось напиши.'},da:{sent:'Noterne er sendt — tak!',copied:'Noterne er kopieret — indsæt dem i en besked.',empty:'Skriv noget først.'}};
+    document.getElementById('dToday').addEventListener('click',()=>{const d=new Date(),t=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      D.value=(D.value.trim()?D.value.replace(/\s+$/,'')+'\n\n':'')+'— '+t+' —\n';keep();D.focus();D.setSelectionRange(D.value.length,D.value.length)});
+    document.getElementById('dSend').addEventListener('click',async()=>{const M=DM[LANG]||DM.en,v=D.value.trim();if(!v){ok.textContent=M.empty;return}
+      const text='Nightlex — tester notes\n\n'+v;
+      try{if(navigator.share){await navigator.share({text});ok.textContent=M.sent;return}}catch(e){if(e&&e.name==='AbortError')return}
+      try{await navigator.clipboard.writeText(text);ok.textContent=M.copied}catch(e){D.select();ok.textContent=M.copied}})})();
   document.getElementById('send').addEventListener('click',async()=>{
     const M=MSG[LANG];const lines=['Nightlex — анкета після 7 днів ('+(LANG==='uk'?'українською':LANG==='da'?'данською':'англійською')+')',''];document.querySelectorAll('[data-q]').forEach(el=>{lines.push(el.dataset.q+': '+(val(el)||'—'))});
     const text=lines.join('\n'),ok=document.getElementById('ok');
