@@ -20556,8 +20556,7 @@ if(typeof meScreen==='function'){const _me=meScreen;meScreen=function(){const r=
       а рамку, де лише вона, ховає CSS (`:has(> i.nopic:only-child)`). nfHasPic (35_mvp_next.js) теж каже «немає» — картка слова показує текст.
       Фраза = те саме правило, що й picturable (39_dict.js): понад 2 слова, або 2 слова з . ! ? у кінці без to/a/an/the/en/et/at; також теми *_phr_* і фрази історій.
       Власна картинка учня (w.my, S.picOver) лишається.
-   2) Емодзі Apple в інтерфейсі (значки блоків, мети, рядків) — інший стиль, ніж ілюстрації слів. Якщо елемент містить ЛИШЕ один емодзі
-      і для нього є OpenMoji (OM_MAP) — замінюємо на ту саму ілюстрацію OpenMoji. Тексти мови, поля вводу й речення не чіпаємо. */
+   2) Картинки наступних карток уроку вантажаться заздалегідь (picPreload). */
 function nfIsPhrase(w){try{if(!w)return false;if(w.phrase||w.story||/_phr_/.test(w.topic||''))return true;
   const t=String(w[S.lang]||w.gb||w.en||'').trim();if(!t)return false;const n=t.toLowerCase().replace(/^(to|a|an|the|en|et|at)\s+/,'').split(/\s+/).length;
   // одне слово з ! . ? («Help!», «Mr.», «a.m.») — слово, з картинкою; два слова з ! . ? («Thank you!») і 3+ слова — фраза
@@ -20567,15 +20566,14 @@ function nfIsPhrase(w){try{if(!w)return false;if(w.phrase||w.story||/_phr_/.test
   '*:has(> i.nopic:only-child){display:none!important}.wc-planet:has(i.nopic),.wc-planet:has(.wc-flip){display:none!important}'+  // кружок-перевертень з тим самим текстом фрази — зайвий
   
   'img.om-ui{width:1.2em;height:1.2em;vertical-align:-.2em;display:inline-block;object-fit:contain}';document.head.appendChild(st)}catch(e){}})();
-const OMUI_RE=/^\s*(\p{Extended_Pictographic}(?:️|‍\p{Extended_Pictographic}|\p{Emoji_Modifier})*)\s*$/u;
-function omUiSrc(e){try{if(typeof OM_MAP==='undefined'||typeof omSrc!=='function')return '';const h=OM_MAP[omNorm(e)];return h&&h.length===1?omSrc(h[0]):''}catch(x){return ''}}
-function omUiNode(el){try{if(!el||el.nodeType!==1||el.closest(':not(html)[lang],input,textarea,select,script,style,svg,.om,.om-ui,[data-noi18n],#toast'))return;
-  if(el.children.length)return;const m=(el.textContent||'').match(OMUI_RE);if(!m)return;const s=omUiSrc(m[1]);if(!s)return;
-  const i=document.createElement('img');i.className='om-ui';i.alt='';i.setAttribute('aria-hidden','true');i.src=s;el.replaceChildren(i)}catch(e){}}
-function omUiScan(root){try{if(!root||root.nodeType!==1)return;omUiNode(root);root.querySelectorAll('span,i,b,div,em,small,button').forEach(omUiNode)}catch(e){}}
-try{const app=document.getElementById('app')||document.body;let q=[],t=0;
-  new MutationObserver(rs=>{for(const r of rs)r.addedNodes.forEach(n=>{if(n.nodeType===1)q.push(n);else if(n.nodeType===3&&n.parentElement)q.push(n.parentElement)});
-    if(!t)t=requestAnimationFrame(()=>{t=0;const a=q;q=[];a.forEach(omUiScan)})}).observe(document.body,{childList:true,subtree:true})}catch(e){}
+// 19.11.2026 (автор: «затримки, коли перемикаєш картинки»): перетворювач емодзі → OpenMoji прибрано — емодзі Apple в інтерфейсі не знайшлося,
+// а стеження за кожною зміною сторінки коштувало часу. Натомість — попереднє завантаження картинок наступних карток уроку (файли сайту img/*.svg, om/*.svg).
+const PICPRE=new Set();
+function picPreload(n){try{if(typeof SS==='undefined'||!SS||!SS.items)return;const from=(SS.i||0)+1;
+  for(let k=from;k<Math.min(SS.items.length,from+(n||4));k++){const it=SS.items[k],w=it&&(it.w||it.word);if(!w)continue;
+    const d=document.createElement('div');d.innerHTML=picHTML(w);
+    d.querySelectorAll('img[src]').forEach(x=>{const u=x.getAttribute('src');if(!u||u.startsWith('data:')||PICPRE.has(u))return;PICPRE.add(u);const im=new Image();im.decoding='async';im.src=u})}}catch(e){}}
+on('item:render',()=>setTimeout(()=>picPreload(4),50));on('session:start',()=>setTimeout(()=>picPreload(6),0));
 
 bootApp();bigLoad();
 </script>

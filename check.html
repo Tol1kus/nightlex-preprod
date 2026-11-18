@@ -100,7 +100,7 @@ const UI={
   sendT:'Send dine svar',sendI:'Svarene ligger kun på denne enhed. Send filen til den, der bad dig om hjælp.',file:'Hent fil',share:'Del',copy:'Kopiér',close:'Luk',
   copied:'Kopieret',saved:'Gemt',empty:'Alt på dette niveau er tjekket — tak!',nothing:'Du har ikke tjekket noget endnu.',needName:'Skriv dit navn først',
   two:'Hver linje tjekkes af to personer.',speak:'Hør',lang:'Sprog',loading:'Henter…',
-  saveSend:'Gem og send',handBtn:'Fortsæt, hvor en anden slap (åbn fil)',handOk:'Indlæst: # svar. Du fortsætter efter dem.',handBad:'Filen kan ikke bruges her.',handTip:'Du kan give filen videre til en anden, som fortsætter, hvor du slap.',others:'andre',
+  saveSend:'Gem og send',handBtn:'Fortsæt, hvor en anden slap (åbn fil)',handHow:'Har en anden tjekket fx 100 ord? Gem filen, du fik fra vedkommende, skriv dit navn, tryk her og vælg filen — de tjekkede ord springes over. Vil du give videre selv: “Gem og send” → “Del”.',handOk:'Indlæst: # svar. Du fortsætter efter dem.',handBad:'Filen kan ikke bruges her.',handTip:'Du kan give filen videre til en anden, som fortsætter, hvor du slap.',others:'andre',
   homeT:'Læg siden på hjemmeskærmen',homeI:'iPhone (Safari): Del → «Føj til hjemmeskærm». Android (Chrome): menu ⋮ → «Føj til startskærm». Gør det, før du begynder: ikonet på hjemmeskærmen gemmer sine svar for sig. Er du allerede i gang, så hent din fil først og åbn den fra ikonet.'},
  en:{title:'Language check',intro:'Thanks for helping! You don\'t need to learn anything — just tell us whether the English sounds right (American English). Everything was written by an AI and has not been checked by a native speaker yet.',
   name:'Your name',namePh:'e.g. Mike',level:'Level',kind:'What do you want to check?',start:'Start',cont:'Continue',send:'Send your answers',
@@ -111,7 +111,7 @@ const UI={
   sendT:'Send your answers',sendI:'Your answers are stored on this device only. Send the file to the person who asked you to help.',file:'Download file',share:'Share',copy:'Copy',close:'Close',
   copied:'Copied',saved:'Saved',empty:'Everything on this level is checked — thank you!',nothing:'You haven\'t checked anything yet.',needName:'Please enter your name first',
   two:'Every line is checked by two people.',speak:'Listen',lang:'Language',loading:'Loading…',
-  saveSend:'Save & send',handBtn:'Continue where someone else stopped (open file)',handOk:'Loaded: # answers. You continue after them.',handBad:'This file can’t be used here.',handTip:'You can pass the file on to someone else, who continues where you stopped.',others:'others',
+  saveSend:'Save & send',handBtn:'Continue where someone else stopped (open file)',handHow:'Someone already checked, say, 100 words? Save the file they sent you, write your name, tap here and choose the file — checked words are skipped. To pass it on yourself: “Save & send” → “Share”.',handOk:'Loaded: # answers. You continue after them.',handBad:'This file can’t be used here.',handTip:'You can pass the file on to someone else, who continues where you stopped.',others:'others',
   homeT:'Add this page to your Home Screen',homeI:'iPhone (Safari): Share → “Add to Home Screen”. Android (Chrome): menu ⋮ → “Add to Home screen”. Do it before you start: the Home Screen icon keeps its own answers. Already started? Download your file first and open it from the icon.'}};
 const LVS=['A1','A2','B1','B2','C1','C2'],KEY='nightlex-check-v1';
 const IC={x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
@@ -150,7 +150,7 @@ async function startScreen(){CUR=null;HIST=[];document.documentElement.lang=ST.l
     el('div',{class:'sec'},t.lang),el('div',{class:'chips'},...[['da','Dansk'],['en','English (US)']].map(([k,n])=>el('button',{class:'chip'+(ST.lang===k?' on':''),onclick:()=>{ST.lang=k;ITEMS=null;save();startScreen()}},n))),
     el('div',{class:'sec'},t.name),name,
     // 18.11.2026: «продовжити за іншим» — великою кнопкою одразу під ім'ям (унизу її не помічали)
-    el('button',{class:'hand',onclick:()=>$('handF').click()},el('span',{class:'hi'},'📂'),el('span',{},t.handBtn)),el('input',{type:'file',id:'handF',accept:'.txt,.json,text/plain,application/json',hidden:true,onchange:e=>{const f=e.target.files&&e.target.files[0];if(f)handIn(f)}}),
+    el('button',{class:'hand',onclick:()=>$('handF').click()},el('span',{class:'hi'},'📂'),el('span',{},t.handBtn)),el('p',{class:'mut sm',style:'margin:6px 2px 0'},t.handHow),el('input',{type:'file',id:'handF',accept:'.txt,.json,text/plain,application/json',hidden:true,onchange:e=>{const f=e.target.files&&e.target.files[0];if(f)handIn(f)}}),
     el('div',{class:'sec'},t.level),el('div',{class:'lv'},...LVS.map(lv=>{const c=cnt(lv).all||0,d=doneLv(lv);
       const o=Object.values(oth()).filter(x=>x===lv).length;return el('button',{class:'lvb'+(ST.lv===lv?' on':''),onclick:()=>{ST.lv=lv;ITEMS=null;save();startScreen()}},el('b',{},lv),el('small',{},`${d}${o?' + '+o+' '+t.others:''} / ${c}`),el('div',{class:'bar'},el('i',{style:`width:${c?Math.min(100,d/c*100):0}%`})))})),
     el('div',{class:'sec'},t.kind),el('div',{class:'chips'},...['all','w','s','d','t','g'].map(k=>{const c=k==='all'?cnt(ST.lv).all:cnt(ST.lv)[k];if(k!=='all'&&!c)return null;
@@ -217,7 +217,7 @@ function sendSheet(){const t=T(),p=payload(),v=Object.values(p.items),n=k=>v.fil
   const txt=JSON.stringify(p);
   $('m').replaceChildren(el('div',{class:'top'},el('button',{class:'ic','aria-label':t.close,html:IC.x,onclick:startScreen}),el('b',{},t.sendT)),
     el('div',{class:'center'},el('div',{class:'stat'},el('div',{},el('b',{},String(n('ok'))),el('small',{},t.ok)),el('div',{},el('b',{},String(n('bad'))),el('small',{},t.bad)),el('div',{},el('b',{},String(n('fix'))),el('small',{},t.fix))),
-      el('p',{class:'mut'},t.sendI),el('p',{class:'mut sm'},t.handTip),el('p',{style:'font-weight:700;margin-top:10px'},'📱 ',el('a',{href:'tel:+4552796325',style:'color:var(--acc)'},'+45 52 79 63 25'),' · Telegram / WhatsApp / SMS')));
+      el('p',{class:'mut'},t.sendI),el('p',{class:'mut sm'},t.handTip)));
   // 18.11.2026: .txt і без заголовка — інакше Messenger/WhatsApp надсилали лише текст «Nightlex — …» без файлу
   const file=new File([txt],fname(p),{type:'text/plain'});
   const btns=[el('button',{class:'btn',onclick:()=>{const a=el('a',{href:URL.createObjectURL(file),download:file.name});document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast(t.saved)}},t.file)];
