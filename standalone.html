@@ -20582,10 +20582,14 @@ on('item:render',()=>requestAnimationFrame(nopicHide));on('screen',()=>requestAn
    Порядок: заставка (анімація) → окремий екран «Мова інтерфейсу» (Українська / English) → старт з орбітою й вибором мови, яку вчиш.
    Екран мови інтерфейсу показуємо, доки людина його не обрала (localStorage UI_KEY порожній); кнопку «UA» вгорі старту прибрано,
    змінити пізніше — тихе посилання внизу старту. English = окремий профіль прогресу (99g_i18n.js): вибір → перезапуск. */
-// 19.11.2026 (автор): екран вибору бачать усі один раз — і нові, і ті, хто вже вчився; jsdom-тести (старий старт з картками) — пропускають
-function uiChosen(){try{if(localStorage.getItem(UI_KEY)!=null)return true;if(/jsdom/i.test(navigator.userAgent||''))return !!(S.onb||Object.keys(S.srs||{}).some(k=>Object.keys(S.srs[k]||{}).length));return false}catch(e){return true}}
+// 19.11.2026 (автор: «треба щоб це вікно загружалось кожен раз, коли відкриваєш застосунок»): питаємо при КОЖНОМУ відкритті —
+// один раз за запуск сторінки (UI_ASKED); після вибору English сторінка перезапускається — sessionStorage не дає спитати вдруге.
+// jsdom-тести (старий старт з картками) — лише без вибору й без прогресу, як раніше.
+let UI_ASKED=false;try{if(sessionStorage.getItem('nf-ui-asked')){UI_ASKED=true;sessionStorage.removeItem('nf-ui-asked')}}catch(e){}
+function uiChosen(){try{if(/jsdom/i.test(navigator.userAgent||'')){if(localStorage.getItem(UI_KEY)!=null)return true;return !!(S.onb||Object.keys(S.srs||{}).some(k=>Object.keys(S.srs[k]||{}).length))}
+  return UI_ASKED}catch(e){return true}}
 function uiChooseHTML(){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
-  const opt=(k,code,t,s)=>`<button class="nf-lang${k===cur?' on':''}" data-noi18n onclick="uiChoose('${k}')"><span class="nf-lt${k===cur?' lime':''}">${code}</span><span><b>${t}</b><small>${s}</small></span>${icn('chev')}</button>`;
+  const opt=(k,code,t,s)=>`<button class="nf-lang" data-noi18n onclick="uiChoose('${k}')"><span class="nf-lt">${code}</span><span><b>${t}</b><small>${s}</small></span>${icn('chev')}</button>`;
   return `<div class="onb nf-onb nf-full nf-launch ui-first">
     <div class="nf-brand">${nfLogoHTML()}<b>Nightlex</b></div>
     <h2 class="ui-q" data-noi18n>Мова інтерфейсу<small>Interface language</small></h2>
@@ -20593,9 +20597,9 @@ function uiChooseHTML(){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
     ${opt('en','EN','English','learn Danish with English explanations')}
   </div>`}
 function uiChooseScreen(){applyTheme();document.body.classList.add('in-session');REDRAW=uiChooseScreen;app.innerHTML=uiChooseHTML()}
-function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
+function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASKED=true;
   if(k===cur){try{localStorage.setItem(UI_KEY,k)}catch(e){}launchScreen();return}
-  try{flushSave()}catch(e){}try{localStorage.setItem(UI_KEY,k)}catch(e){}
+  try{flushSave()}catch(e){}try{localStorage.setItem(UI_KEY,k)}catch(e){}try{sessionStorage.setItem('nf-ui-asked','1')}catch(e){}
   if(!(typeof navigator!=='undefined'&&navigator.webdriver)&&!window.NF_NO_RELOAD){try{location.reload();return}catch(e){}}
   try{if(typeof ulPick==='function')ulPick(k)}catch(e){}launchScreen()}
 {const _lp=launchScreen;launchScreen=function(){const r=_lp.apply(this,arguments);try{
