@@ -8597,6 +8597,44 @@ on('item:render',()=>setTimeout(()=>picPreload(4),50));on('session:start',()=>se
 function nopicHide(){try{document.querySelectorAll('#app i.nopic').forEach(i=>{const p=i.parentElement;if(p&&p.children.length===1&&!(p.textContent||'').trim())p.style.display='none'})}catch(e){}}
 on('item:render',()=>requestAnimationFrame(nopicHide));on('screen',()=>requestAnimationFrame(nopicHide));on('home:after',()=>requestAnimationFrame(nopicHide));
 
+/* ====================== СТАРТ: СПЕРШУ МОВА ІНТЕРФЕЙСУ (19.11.2026, рішення автора) ======================
+   Порядок: заставка (анімація) → окремий екран «Мова інтерфейсу» (Українська / English) → старт з орбітою й вибором мови, яку вчиш.
+   Екран мови інтерфейсу показуємо, доки людина його не обрала (localStorage UI_KEY порожній); кнопку «UA» вгорі старту прибрано,
+   змінити пізніше — тихе посилання внизу старту. English = окремий профіль прогресу (99g_i18n.js): вибір → перезапуск. */
+// хто вже вчився (є прогрес) — вважаємо, що обрав українську: екран лише для нових людей
+function uiChosen(){try{if(localStorage.getItem(UI_KEY)!=null)return true;return !!(S.onb||Object.keys(S.srs||{}).some(k=>Object.keys(S.srs[k]||{}).length))}catch(e){return true}}
+function uiChooseHTML(){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
+  const opt=(k,code,t,s)=>`<button class="nf-lang${k===cur?' on':''}" data-noi18n onclick="uiChoose('${k}')"><span class="nf-lt${k===cur?' lime':''}">${code}</span><span><b>${t}</b><small>${s}</small></span>${icn('chev')}</button>`;
+  return `<div class="onb nf-onb nf-full nf-launch ui-first">
+    <div class="nf-brand">${nfLogoHTML()}<b>Nightlex</b></div>
+    <h2 class="ui-q" data-noi18n>Мова інтерфейсу<small>Interface language</small></h2>
+    ${opt('uk','UA','Українська','вчу англійську (US) або данську')}
+    ${opt('en','EN','English','learn Danish with English explanations')}
+  </div>`}
+function uiChooseScreen(){applyTheme();document.body.classList.add('in-session');REDRAW=uiChooseScreen;app.innerHTML=uiChooseHTML()}
+function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
+  if(k===cur){try{localStorage.setItem(UI_KEY,k)}catch(e){}launchScreen();return}
+  try{flushSave()}catch(e){}try{localStorage.setItem(UI_KEY,k)}catch(e){}
+  if(!(typeof navigator!=='undefined'&&navigator.webdriver)&&!window.NF_NO_RELOAD){try{location.reload();return}catch(e){}}
+  try{if(typeof ulPick==='function')ulPick(k)}catch(e){}launchScreen()}
+{const _lp=launchScreen;launchScreen=function(){const r=_lp.apply(this,arguments);try{
+  // ще не обрано мову інтерфейсу: на місці старту — екран вибору (заставка, якщо вона йде, тане поверх нього)
+  if(!uiChosen()&&!window.NF_SKIP_UI_CHOOSE){app.innerHTML=uiChooseHTML();REDRAW=uiChooseScreen;
+    // поки йде заставка — екран вибору прихований, з'являється, коли вона тане (інакше просвічує крізь анімацію)
+    const el=document.querySelector('#app .ui-first');if(el&&document.querySelector('.nf-splash')){el.classList.add('ui-wait');
+      const t=setInterval(()=>{const sp=document.querySelector('.nf-splash');if(!sp||sp.classList.contains('out')){clearInterval(t);el.classList.remove('ui-wait')}},120)}
+    return r}
+  const root=document.querySelector('#app .nf-launch');if(!root||root.dataset.uip)return r;root.dataset.uip='1';
+  const u=root.querySelector('.ul-btn');if(u)u.remove();
+  const en=typeof uiEn==='function'&&uiEn();
+  root.insertAdjacentHTML('beforeend',`<button class="ui-link" data-noi18n onclick="uiChooseScreen()">${icn('globe')}<span>${en?'Interface: English · change':'Інтерфейс: українська · змінити'}</span></button>`);
+}catch(e){console.error(e)}return r}}
+(function(){try{const st=document.createElement('style');st.textContent=
+  '.nf-launch .ui-q{font:800 26px/1.15 Unbounded,sans-serif;margin:18px 0 16px}.nf-launch .ui-q small{display:block;font:600 14px "Golos Text",sans-serif;opacity:.6;margin-top:6px}'+
+  '#app .nf-launch.ui-first{padding-top:calc(env(safe-area-inset-top) + max(40px,16dvh))!important}.nf-launch.ui-first{transition:opacity .45s ease}.nf-launch.ui-first.ui-wait{opacity:0}'+
+  '.nf-launch .ui-link{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin:14px auto 0;padding:8px 12px;font-size:13px;opacity:.6}.nf-launch .ui-link svg{width:15px;height:15px}';
+  document.head.appendChild(st)}catch(e){}})();
+
 bootApp();bigLoad();
 </script>
 </body>
