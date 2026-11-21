@@ -20669,7 +20669,16 @@ function ttsFile(t){try{if(S.ttsOff||typeof AUDIO_MODE==='undefined'||AUDIO_MODE
 {const _spT=speak;speak=function(text){const f=ttsFile(text);if(!f)return _spT.apply(this,arguments);const self=this,args=arguments;let fell=false;
   const fb=()=>{if(fell)return;fell=true;_spT.apply(self,args)};
   try{if(AU.cur)try{AU.cur.pause()}catch(e){}try{speechSynthesis.cancel()}catch(e){}
-    const a=new Audio(f);AU.cur=a;a.playbackRate=Math.max(.8,Math.min(1.15,(S.rate||.9)/.9));a.onerror=fb;const p=a.play();if(p&&p.catch)p.catch(fb)}catch(e){fb()}}}
+    const a=new Audio(f);AU.cur=a;a.onerror=fb;const p=a.play();if(p&&p.catch)p.catch(fb)}catch(e){fb()}}}
+
+// Читалка (41_reader.js): речення тексту — записом (голос Iapetus), якщо він є; по черзі, з підсвічуванням, як і раніше.
+if(typeof rdSpeakFrom==='function'){const _rdT=rdSpeakFrom;rdSpeakFrom=function(i,chain){if(!RD)return;const f=ttsFile(RD.ss[i]&&RD.ss[i].plain);if(!f)return _rdT.apply(this,arguments);
+  RD.tok++;const tok=RD.tok;RD.cur=i;RD.playing=!!chain;rdHl(true);rdDock();
+  try{try{speechSynthesis.cancel()}catch(e){}if(AU.cur)try{AU.cur.pause()}catch(e){}const a=new Audio(f);AU.cur=a;
+    a.onended=()=>{if(!RD||RD.tok!==tok)return;if(RD.playing&&RD.cur<RD.ss.length-1)return rdSpeakFrom(RD.cur+1,true);RD.playing=false;rdDock()};
+    a.onerror=()=>{if(RD&&RD.tok===tok)_rdT.call(this,i,chain)};const p=a.play();if(p&&p.catch)p.catch(()=>{if(RD&&RD.tok===tok)_rdT.call(this,i,chain)})}catch(e){_rdT.apply(this,arguments)}}}
+if(typeof rdStop==='function'){const _rsT=rdStop;rdStop=function(){try{if(AU.cur)AU.cur.pause()}catch(e){}return _rsT.apply(this,arguments)}}
+if(typeof rdSay==='function'){const _rsy=rdSay;rdSay=function(i){const f=ttsFile(RD&&RD.ss[i]&&RD.ss[i].plain);if(!f)return _rsy.apply(this,arguments);try{speechSynthesis.cancel();if(AU.cur)AU.cur.pause();const a=new Audio(f);AU.cur=a;a.play().catch(()=>_rsy.apply(this,arguments))}catch(e){_rsy.apply(this,arguments)}}}
 
 /* ====================== ЗГЕНЕРОВАНІ КАРТИНКИ СЛІВ (21.11.2026, рішення автора: «картинки, що є, не подобаються») ======================
    На сайті слово, для якого є файл aipic/<id>.webp (FLUX.1 schnell через Replicate, стиль погоджено з автором; описи сцен — data/pictures/ai_scenes.jsonl),
