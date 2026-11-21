@@ -8660,7 +8660,9 @@ function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASK
   '.nf-launch .ui-q{font:800 26px/1.15 Unbounded,sans-serif;margin:18px 0 16px}.nf-launch .ui-q small{display:block;font:600 14px "Golos Text",sans-serif;opacity:.6;margin-top:6px}'+
   '#app .nf-launch.ui-first{padding-top:calc(env(safe-area-inset-top) + max(40px,16dvh))!important}.nf-launch.ui-first{transition:opacity .45s ease}.nf-launch.ui-first.ui-wait{opacity:0}'+
   '.nf-launch .ui-today{font:800 19px/1.2 Unbounded,sans-serif;margin:4px 2px 12px}'+
-  '.nf-launch{position:relative}.nf-launch .ui-back{position:absolute;left:16px;top:calc(env(safe-area-inset-top,0px) + 14px);z-index:6;margin:0}'+
+  '.nf-launch{position:relative}.nf-launch .ui-back{position:absolute;left:12px;top:calc(env(safe-area-inset-top,0px) + 2px);z-index:6;margin:0;width:38px!important;height:38px!important;min-height:0!important;border-radius:12px!important}'+
+  /* 21.11.2026 (автор: «слова, що рухаються, проходять під стрілкою»): стрілка вище й менша, а орбіта — трохи нижче, щоб слова не заходили під стрілку */
+  '.nf-launch .ui-back svg{width:18px;height:18px}.nf-launch:has(> .ui-back) .nf-orbit-top{margin-top:34px}@media (max-height:700px){.nf-launch:has(> .ui-back) .nf-orbit-top{margin-top:26px;margin-bottom:8px}}'+
   '.nf-launch .ui-link{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin:14px auto 0;padding:8px 12px;font-size:13px;opacity:.6}.nf-launch .ui-link svg{width:15px;height:15px}';
   document.head.appendChild(st)}catch(e){}})();
 
