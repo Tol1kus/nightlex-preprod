@@ -18634,7 +18634,7 @@ on('screen',()=>{try{remindClose()}catch(e){}});
 function fbWord(){try{const it=SS&&SS.items&&SS.items[Math.min(SS.i,SS.items.length-1)];return it&&it.w&&it.w[S.lang]?it.w:null}catch(e){return null}}
 function fbAnsHTML(w,word,tr){const pic='';  // 21.11.2026 (автор): після правильної відповіді картинку вдруге не показуємо — лише слово, переклад і звук
   const say=word||(w&&w[S.lang])||'';
-  return `<div class="fb-ans">${pic?`<span class="fb-pic">${pic}</span>`:''}<span class="fb-w"><b lang="${S.lang}">${esc(say)}</b>${tr?`<small>${esc(tr)}</small>`:''}</span>${say?`<button class="fb-say" onclick="event.stopPropagation();speak(${js(say)})" aria-label="Послухати">${icn('speaker')}</button><button class="fb-say fb-slow" onclick="event.stopPropagation();slowSpeak(${js(say)})" aria-label="Слухати повільно">${icn('turtle')}</button>`:''}</div>`}
+  return `<div class="fb-ans">${pic?`<span class="fb-pic">${pic}</span>`:''}<span class="fb-w"><b lang="${S.lang}">${esc(say)}</b>${tr?`<small>${esc(tr)}</small>`:''}</span>${say?`<button class="fb-say" onclick="event.stopPropagation();speak(${js(say)})" aria-label="Послухати">${icn('speaker')}</button><button class="fb-say fb-slow" onclick="event.stopPropagation();slowSpeak(${js(say)})" aria-label="Слухати повільно">${icn('turtle')}<span>повільно</span></button>`:''}</div>`}
 function fbPolish(el){if(!el||el.dataset.fp)return;el.dataset.fp=1;
   // провідний текст до першого елемента: «✓ Правильно! [середина] [+N XP]»
   let lead='',n=el.firstChild;const nodes=[];while(n&&(n.nodeType===3||(n.nodeType===1&&/^(B|I|EM|STRONG|SPAN)$/.test(n.tagName)&&!n.className))){lead+=n.textContent;nodes.push(n);n=n.nextSibling}
@@ -19678,7 +19678,7 @@ function wcRender(it){const w=it.w,t=w[S.lang],fresh=it.intro||!st(w);it.shown=i
     <div class="wc-stack"><article class="nf-wcard wc-card">
       ${lab?`<span class="cs-pos wc-pos">${esc(lab)}</span>`:''}
       ${wcPlanet(w,t)}
-      ${it.shown?`<h1 class="nf-wtitle wc-t${nfLen(tt)}" lang="${S.lang}">${nfArt(tt)}</h1><p class="wc-sub"><span class="nf-wuk">${esc(w.uk)}</span><button class="wc-slow" onclick="event.stopPropagation();slowSpeak(${js(t)})" aria-label="Слухати повільно">${icn('turtle')}</button></p>${nfGen(t)}${wcExample(w)}
+      ${it.shown?`<h1 class="nf-wtitle wc-t${nfLen(tt)}" lang="${S.lang}">${nfArt(tt)}</h1><p class="wc-sub"><span class="nf-wuk">${esc(w.uk)}</span><button class="wc-slow" onclick="event.stopPropagation();slowSpeak(${js(t)})" aria-label="Слухати повільно">${icn('turtle')}<span>повільно</span></button></p>${nfGen(t)}${wcExample(w)}
         <p class="cs-hint wc-hint" aria-hidden="true"><span>← не знаю</span><span>свайпни</span><span>знаю →</span></p>`
        :`<h1 class="nf-wtitle wc-t uk">${esc(w.uk)}</h1><p class="wc-sub"><span class="nf-wuk">Згадай це слово ${langAdv()}</span></p>`}
     </article></div>
@@ -20692,8 +20692,9 @@ if(typeof rdStop==='function'){const _rsT=rdStop;rdStop=function(){try{if(AU.cur
 if(typeof rdSay==='function'){const _rsy=rdSay;rdSay=function(i,rt){const f=ttsFile(RD&&RD.ss[i]&&RD.ss[i].plain,'read');if(!f)return _rsy.apply(this,arguments);try{speechSynthesis.cancel();if(AU.cur)AU.cur.pause();const a=ttsAudio(f,rt?Math.max(TTS_SLOW,rt*ttsRateMul()):0);AU.cur=a;a.play().catch(()=>_rsy.apply(this,arguments))}catch(e){_rsy.apply(this,arguments)}}}
 
 // кнопка-черепаха на картці слова (поруч із перекладом) і в розборі відповіді
-(function(){const st=document.createElement('style');st.textContent=`.wc-slow{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-left:8px;vertical-align:middle;border-radius:99px;border:1px solid var(--line);background:var(--s1);color:var(--ink);padding:0;cursor:pointer}
-.wc-slow svg,.fb-slow svg{width:17px;height:17px}.fb-say.fb-slow{width:36px;height:36px;margin-left:6px}`;document.head.appendChild(st)})();
+(function(){const st=document.createElement('style');st.textContent=`.wc-slow{display:inline-flex;align-items:center;gap:5px;height:30px;margin-left:10px;padding:0 11px 0 9px;vertical-align:middle;border-radius:99px;border:1px solid color-mix(in srgb,var(--lime) 45%,var(--line));background:color-mix(in srgb,var(--lime) 12%,var(--s1));color:var(--ink);font:700 13px 'Golos Text',sans-serif;cursor:pointer;white-space:nowrap}
+.wc-slow svg,.fb-slow svg{width:18px;height:18px;flex:none;color:var(--lime-t,var(--lime))}
+.fb-say.fb-slow{width:auto;height:36px;margin-left:6px;padding:0 11px 0 9px;border-radius:99px;gap:5px;font:700 13px 'Golos Text',sans-serif}`;document.head.appendChild(st)})();
 
 // Алфавіт (21.11.2026, автор: «алфавіт озвучення не тим голосом»): назва літери й слово-приклад (без артикля) — записом Achernar,
 // якщо він є (текст запису літери — сама велика літера, exports/tts_lists/da_alphabet.json); інакше голос пристрою, як у 99c.
@@ -20708,6 +20709,19 @@ if(typeof spellOut==='function'){const _soT=spellOut;spellOut=function(){const i
   if(!ch.length||!ch.every(c=>ttsFile(c.toUpperCase())))return _soT.apply(this,arguments);let i=0;
   const next=()=>{if(i>=ch.length)return;const f=ttsFile(ch[i++].toUpperCase());const a=ttsAudio(f);AU.cur=a;a.onended=()=>setTimeout(next,120);a.onerror=next;a.play().catch(next)};
   try{speechSynthesis.cancel()}catch(e){}if(AU.cur)try{AU.cur.pause()}catch(e){}next()}}
+
+/* Без паузи й без накладання (21.11.2026, автор: «коли вставляєш слова — велика пауза, і голос починає вже інше речення»):
+   1) записи поточного й наступних двох завдань завантажуються заздалегідь (fetch → кеш sw.js), тож після відповіді звук іде одразу;
+   2) новий екран завдання зупиняє запис попереднього; 3) автоперехід (74_center.js) чекає, поки договорить запис, і йде далі через 0,35 с. */
+const TTS_PRE=new Set();
+function ttsPrefetch(t){try{const f=t&&ttsFile(t);if(!f||TTS_PRE.has(f))return;TTS_PRE.add(f);fetch(f).catch(()=>TTS_PRE.delete(f))}catch(e){}}
+function ttsItemTexts(it){if(!it)return [];const w=it.w||{},o=[];if(it.g&&it.g.full)o.push(it.g.full);if(w[S.lang])o.push(w[S.lang]);if(it.sent&&it.sent[S.lang])o.push(it.sent[S.lang]);return o}
+on('item:render',()=>{try{if(AU.cur&&!AU.cur.paused)AU.cur.pause()}catch(e){}
+  try{if(typeof SS==='undefined'||!SS||!SS.items)return;for(let j=SS.i;j<Math.min(SS.items.length,SS.i+3);j++)ttsItemTexts(SS.items[j]).forEach(ttsPrefetch)}catch(e){}});
+if(typeof anNextBtn==='function'){const _anT=anNextBtn;let wait=0;anNextBtn=function(){const b=_anT.apply(this,arguments);
+  try{const a=AU.cur;if(b&&a&&!a.paused&&!a.ended&&a.currentTime<(a.duration||9)-.05){if(wait)return null;wait=1;const i=SS&&SS.i,items=SS&&SS.items;
+    const go=()=>{wait=0;setTimeout(()=>{try{if(SS&&SS.i===i&&SS.items===items){const nb=_anT();if(nb&&document.body.contains(nb))nb.click()}}catch(e){}},350)};
+    a.addEventListener('ended',go,{once:true});a.addEventListener('pause',go,{once:true});setTimeout(()=>{if(wait)go()},8000);return null}}catch(e){}return b}}
 
 /* ====================== ЗГЕНЕРОВАНІ КАРТИНКИ СЛІВ (21.11.2026, рішення автора: «картинки, що є, не подобаються») ======================
    На сайті слово, для якого є файл aipic/<id>.webp (FLUX.1 schnell через Replicate, стиль погоджено з автором; описи сцен — data/pictures/ai_scenes.jsonl),
