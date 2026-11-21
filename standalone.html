@@ -19331,6 +19331,9 @@ on('item:render',ctReset);on('session:end',ctReset);on('screen',ctReset);
    Помилка (.feedback.bad) або підказка (.feedback.warn) — без автопереходу: розбір лишається, «Зрозуміло, далі» — вручну.
    В автотестах (jsdom, webdriver) вимкнено, щоб не перемикало завдання посеред перевірок; window.AUTO_NEXT_FORCE — увімкнути для тесту. */
 const AUTO_NEXT_MS=2200;let AN_T=0,AN_START=0;
+// 21.11.2026 (автор: «треба прибрати автоматичний перехід»): автопереходу немає — після правильної відповіді лише кнопка «Далі» (у «обери» її додаємо самі)
+const AUTO_NEXT_CLICK=false;
+function anAddNext(){try{if(anNextBtn())return;const fb=document.querySelector('#app #fb');if(fb&&fb.querySelector('.feedback.ok')&&!fb.querySelector('.an-next'))fb.insertAdjacentHTML('beforeend','<div class="row an-row"><button class="btn big nf-cta an-next" onclick="nextItem()">Далі</button></div>')}catch(e){}}
 // смужка відліку на поточній кнопці «Далі» (розбір після відповіді перемальовується — кнопка нова, тож позначаємо щоразу, з тим самим часом)
 function anMark(){try{if(!AN_T&&!AN_START)return;let nb=anNextBtn();
   // у вправах «обери» після правильної відповіді кнопки «Далі» немає — додаємо свою, з відліком
@@ -19340,9 +19343,9 @@ function anMark(){try{if(!AN_T&&!AN_START)return;let nb=anNextBtn();
 function anOn(){try{if(window.AUTO_NEXT_FORCE)return true;if(window.AUTO_NEXT_OFF)return false;return !/jsdom/i.test(navigator.userAgent)&&!navigator.webdriver}catch(e){return false}}
 function anNextBtn(){return [...document.querySelectorAll('#app #fb button, #app .fb-pol ~ .row button, #app #fb ~ .row button')].find(b=>/далі|next|continue/i.test(b.textContent)&&!b.disabled)}  // 21.11.2026: і англійською — інакше в English-інтерфейсі додавалась друга кнопка «Next»
 (function(){try{const app=document.getElementById('app');if(!app||typeof MutationObserver!=='function')return;
-  new MutationObserver(()=>{try{if(AN_T)anMark();if(!anOn()||!document.body.classList.contains('in-session')||typeof SS==='undefined'||!SS)return;
+  new MutationObserver(()=>{try{if(AN_T)anMark();if(!AUTO_NEXT_CLICK&&!window.AUTO_NEXT_FORCE_CLICK&&anOn()&&document.body.classList.contains('in-session'))anAddNext();if(!anOn()||!document.body.classList.contains('in-session')||typeof SS==='undefined'||!SS)return;
     const ok=document.querySelector('#app #fb .feedback.ok');if(!ok||ok.dataset.an)return;if(document.querySelector('#app #fb .feedback.bad'))return;
-    ok.dataset.an='1';const i=SS.i,items=SS.items;clearTimeout(AN_T);
+    ok.dataset.an='1';if(!AUTO_NEXT_CLICK&&!window.AUTO_NEXT_FORCE_CLICK){anAddNext();return}const i=SS.i,items=SS.items;clearTimeout(AN_T);
     AN_START=Date.now();anMark();
     AN_T=setTimeout(()=>{AN_T=0;AN_START=0;try{if(typeof SS==='undefined'||!SS||SS.i!==i||SS.items!==items)return;const b=anNextBtn();if(b)b.click()}catch(e){}},AUTO_NEXT_MS)}catch(e){}}).observe(app,{childList:true,subtree:true})}catch(e){}})();
 // дотик будь-де, крім кнопки «Далі», — зупинити відлік (людина хоче роздивитися картинку чи розбір)
@@ -20712,16 +20715,12 @@ if(typeof spellOut==='function'){const _soT=spellOut;spellOut=function(){const i
 
 /* Без паузи й без накладання (21.11.2026, автор: «коли вставляєш слова — велика пауза, і голос починає вже інше речення»):
    1) записи поточного й наступних двох завдань завантажуються заздалегідь (fetch → кеш sw.js), тож після відповіді звук іде одразу;
-   2) новий екран завдання зупиняє запис попереднього; 3) автоперехід (74_center.js) чекає, поки договорить запис, і йде далі через 0,35 с. */
+   2) новий екран завдання (натиснув «Далі») одразу зупиняє запис і голос пристрою попереднього завдання. Автоперехід вимкнено (74_center.js). */
 const TTS_PRE=new Set();
 function ttsPrefetch(t){try{const f=t&&ttsFile(t);if(!f||TTS_PRE.has(f))return;TTS_PRE.add(f);fetch(f).catch(()=>TTS_PRE.delete(f))}catch(e){}}
 function ttsItemTexts(it){if(!it)return [];const w=it.w||{},o=[];if(it.g&&it.g.full)o.push(it.g.full);if(w[S.lang])o.push(w[S.lang]);if(it.sent&&it.sent[S.lang])o.push(it.sent[S.lang]);return o}
-on('item:render',()=>{try{if(AU.cur&&!AU.cur.paused)AU.cur.pause()}catch(e){}
+on('item:render',()=>{try{if(AU.cur&&!AU.cur.paused)AU.cur.pause()}catch(e){}try{speechSynthesis.cancel()}catch(e){}
   try{if(typeof SS==='undefined'||!SS||!SS.items)return;for(let j=SS.i;j<Math.min(SS.items.length,SS.i+3);j++)ttsItemTexts(SS.items[j]).forEach(ttsPrefetch)}catch(e){}});
-if(typeof anNextBtn==='function'){const _anT=anNextBtn;let wait=0;anNextBtn=function(){const b=_anT.apply(this,arguments);
-  try{const a=AU.cur;if(b&&a&&!a.paused&&!a.ended&&a.currentTime<(a.duration||9)-.05){if(wait)return null;wait=1;const i=SS&&SS.i,items=SS&&SS.items;
-    const go=()=>{wait=0;setTimeout(()=>{try{if(SS&&SS.i===i&&SS.items===items){const nb=_anT();if(nb&&document.body.contains(nb))nb.click()}}catch(e){}},350)};
-    a.addEventListener('ended',go,{once:true});a.addEventListener('pause',go,{once:true});setTimeout(()=>{if(wait)go()},8000);return null}}catch(e){}return b}}
 
 /* ====================== ЗГЕНЕРОВАНІ КАРТИНКИ СЛІВ (21.11.2026, рішення автора: «картинки, що є, не подобаються») ======================
    На сайті слово, для якого є файл aipic/<id>.webp (FLUX.1 schnell через Replicate, стиль погоджено з автором; описи сцен — data/pictures/ai_scenes.jsonl),
