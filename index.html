@@ -8694,15 +8694,14 @@ function ttsFile(t){try{if(S.ttsOff||typeof AUDIO_MODE==='undefined'||AUDIO_MODE
    В артефакті й standalone AIPIC порожній. Service worker кешує aipic/* при першому показі (tools/sw.template.js) — далі працює й без мережі. */
 const AIPIC_SET=new Set(typeof AIPIC==='string'&&AIPIC?AIPIC.split('|'):[]);
 function aiPicSrc(w){try{return w&&!w.my&&!(S.picOver&&S.picOver[w.id])&&AIPIC_SET.has(w.id)&&!(typeof nfIsPhrase==='function'&&nfIsPhrase(w))?'aipic/'+encodeURIComponent(w.id)+'.webp':''}catch(e){return ''}}
-// 21.11.2026 (автор: «де немає нової картинки — взагалі без зображення»): на сайті (є AIPIC) слово без згенерованої картинки
-// показується БЕЗ малюнка — старі значки Mulberry / OpenMoji більше не підставляються. Власна картинка учня лишається.
-// В артефакті й standalone (AIPIC порожній) — як раніше.
+// 21.11.2026 (автор): на сайті (є AIPIC) порядок такий: нова картинка → малюнок Mulberry («Mulberry можна залишити») → без зображення.
+// Значки OpenMoji більше не підставляються. Власна картинка учня лишається. В артефакті й standalone (AIPIC порожній) — як раніше.
 const AIPIC_ONLY=AIPIC_SET.size>0;
 {const _phAi=picHTML;picHTML=function(w){const s=aiPicSrc(w);if(s)return `<img class="pimg ai-img" src="${s}" alt="">`;
-  if(AIPIC_ONLY&&w&&!w.my&&!(S.picOver&&S.picOver[w.id]))return '<i class="nopic" aria-hidden="true"></i>';return _phAi.apply(this,arguments)}}
-// вправи з картинками («обери картинку», слухання з картинками, піктограми) — лише для слів із новою картинкою
-if(AIPIC_ONLY){try{const _pcA=picturable;picturable=function(w){return !!aiPicSrc(w)&&_pcA.apply(this,arguments)}  /* і стара умова (не абстрактне, є унікальний ключ малюнка) — на ній тримається добір варіантів */}catch(e){}
-  try{const _hpA=hasPic;hasPic=function(w){return !!aiPicSrc(w)}}catch(e){}}
+  if(AIPIC_ONLY&&w&&!w.my&&!(S.picOver&&S.picOver[w.id])&&!(w.img&&typeof PICS!=='undefined'&&PICS[w.img]))return '<i class="nopic" aria-hidden="true"></i>';
+  return _phAi.apply(this,arguments)}}
+// піктограми у фразах і «Будові речення»: нова картинка або Mulberry
+if(AIPIC_ONLY){try{const _hpA=hasPic;hasPic=function(w){return !!aiPicSrc(w)||_hpA.apply(this,arguments)}}catch(e){}}
 (function(){try{const st=document.createElement('style');st.textContent='.k-pic:has(> i.nopic),.k-mis-pic:has(> i.nopic),.k-tile-pic:has(> i.nopic){display:none!important}img.pimg.ai-img{object-fit:cover;border-radius:22%;background:#FFFDF8}.wc-disc img.pimg.ai-img{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;border-radius:50%!important;margin:0!important}';document.head.appendChild(st)}catch(e){}})();
 
 bootApp();bigLoad();
