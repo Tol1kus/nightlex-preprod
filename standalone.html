@@ -12111,7 +12111,7 @@ function addXP(n){
   if(n<=0)return;
   const t=today(); if(S.lastDay!==t){S.streak=(S.lastDay===addDays(-1))?S.streak+1:1;S.lastDay=t;}
   const before=level(); S.xp+=n; save();
-  if(level()>before) toast('🎉 Новий рівень: '+level()+'!');
+  // 21.11.2026 (автор: «внизу вискакує "Новий рівень 4" — забрати»): спливаючого напису про рівень XP більше немає
 }
 let toastT; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2000)}
 function applyTheme(){const r=document.documentElement;if(L().accent){r.style.setProperty('--accent',L().accent);r.style.setProperty('--accent-l',L().soft)}else{r.style.removeProperty('--accent');r.style.removeProperty('--accent-l')}
@@ -20776,6 +20776,12 @@ let RS_FROM_SET=false;
 // позначаємо натискання саме в налаштуваннях і на «Я» (не перший запуск і не «провідник»)
 document.addEventListener('click',e=>{try{const b=e.target.closest&&e.target.closest('button');if(!b)return;const oc=b.getAttribute('onclick')||'';
   if(/placementIntro\(\)/.test(oc)&&b.closest('.k-set'))RS_FROM_SET=true}catch(_){}},true);
+
+/* Дрібні правки 21.11.2026 (знімки автора).
+   «Склади речення»: слово, поставлене першим у речення, показується з великої літери (плитки внизу — як і раніше, з малої;
+   на перевірку не впливає — buildCheck порівнює без урахування регістру). */
+{const _bdS=buildDraw;buildDraw=function(){const r=_bdS.apply(this,arguments);try{const L=document.getElementById('bline');const b=L&&L.querySelector('.wtile.in');
+  if(b){const t=b.textContent;if(t&&t[0]!==t[0].toUpperCase())b.textContent=t[0].toUpperCase()+t.slice(1)}}catch(e){}return r}}
 
 bootApp();bigLoad();
 </script>
