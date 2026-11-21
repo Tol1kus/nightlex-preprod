@@ -20728,10 +20728,10 @@ on('item:render',()=>{try{if(AU.cur&&!AU.cur.paused)AU.cur.pause()}catch(e){}try
 
 /* ====================== ЗГЕНЕРОВАНІ КАРТИНКИ СЛІВ (21.11.2026, рішення автора: «картинки, що є, не подобаються») ======================
    На сайті слово, для якого є файл aipic/<id>.webp (FLUX.1 schnell через Replicate, стиль погоджено з автором; описи сцен — data/pictures/ai_scenes.jsonl),
-   показує цю картинку замість Mulberry / OpenMoji. Немає файла — як раніше. Фрази — без картинки (99i_pics_ui.js). Власна картинка учня важливіша.
+   показує цю картинку замість Mulberry / OpenMoji. Немає файла — як раніше. З 21.11.2026 (автор: «пусті квадрати не гарно») абстрактні слова й фрази A1–A2 теж мають картинку-асоціацію; фраза без файла — без картинки (99i_pics_ui.js). Власна картинка учня важливіша.
    В артефакті й standalone AIPIC порожній. Service worker кешує aipic/* при першому показі (tools/sw.template.js) — далі працює й без мережі. */
 const AIPIC_SET=new Set(typeof AIPIC==='string'&&AIPIC?AIPIC.split('|'):[]);
-function aiPicSrc(w){try{return w&&!w.my&&!(S.picOver&&S.picOver[w.id])&&AIPIC_SET.has(w.id)&&!(typeof nfIsPhrase==='function'&&nfIsPhrase(w))?'aipic/'+encodeURIComponent(w.id)+'.webp':''}catch(e){return ''}}
+function aiPicSrc(w){try{return w&&!w.my&&!(S.picOver&&S.picOver[w.id])&&AIPIC_SET.has(w.id)?'aipic/'+encodeURIComponent(w.id)+'.webp':''}catch(e){return ''}}
 // 21.11.2026 (автор): на сайті (є AIPIC) порядок такий: нова картинка → малюнок Mulberry («Mulberry можна залишити») → без зображення.
 // Значки OpenMoji більше не підставляються. Власна картинка учня лишається. В артефакті й standalone (AIPIC порожній) — як раніше.
 const AIPIC_ONLY=AIPIC_SET.size>0;
