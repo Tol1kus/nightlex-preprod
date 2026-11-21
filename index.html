@@ -8189,6 +8189,10 @@ const LETTER_NAMES={
 function letterName(l){const c=String(l||'').toLowerCase();return ((LETTER_NAMES[S.lang]||{})[c])||c}
 speakLetter=function(l){try{speechSynthesis.cancel();speechSynthesis.speak(mkUtter(letterName(l),.75))}catch(e){}};
 if(typeof spellOut==='function')spellOut=function(){const it=SS.items[SS.i];try{speechSynthesis.cancel();[...String(it.word||'')].forEach(ch=>{if(/\s/.test(ch))return;speechSynthesis.speak(mkUtter(letterName(ch),.7))})}catch(e){}};
+// 21.11.2026 (автор: «в алфавіті називає літеру, робить паузу і додає до слів приставку en»): після назви літери слово-приклад звучить
+// БЕЗ артикля (abe, а не «en abe») і тим самим голосом пристрою, що й літера (а не записом іншим голосом), з коротшою паузою.
+abcTap=function(b,l,word){speakLetter(l);const w=String(word||'').replace(/^(en|et|at|a|an|the|to)\s+/i,'').trim();
+  if(w)setTimeout(()=>{try{speechSynthesis.speak(mkUtter(w,.85))}catch(e){}},650);b.classList.add('tapped');setTimeout(()=>b.classList.remove('tapped'),600)};
 
 /* ---------- Ядро: синоніми й «знаю» (17.11.2026, прохання автора «починай робити удосконалення по ядрі», пункти 1–3)
    1. «Встав слово»: хибний варіант з даних, який теж підходить за змістом (той самий переклад або синонім зі списку:
