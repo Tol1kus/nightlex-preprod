@@ -7352,7 +7352,7 @@ on('item:render',ctReset);on('session:end',ctReset);on('screen',ctReset);
 const AUTO_NEXT_MS=2200;let AN_T=0,AN_START=0;
 // 21.11.2026 (автор: «треба прибрати автоматичний перехід»): автопереходу немає — після правильної відповіді лише кнопка «Далі» (у «обери» її додаємо самі)
 const AUTO_NEXT_CLICK=false;
-function anAddNext(){try{if(anNextBtn())return;const fb=document.querySelector('#app #fb');if(fb&&fb.querySelector('.feedback.ok')&&!fb.querySelector('.an-next'))fb.insertAdjacentHTML('beforeend','<div class="row an-row"><button class="btn big nf-cta an-next" onclick="nextItem()">Далі</button></div>')}catch(e){}}
+function anAddNext(){try{if(anNextBtn()||[...document.querySelectorAll('#app button')].some(b=>!b.classList.contains('an-next')&&/^\s*(далі|next|continue)/i.test(b.textContent)&&b.offsetParent!==null))return;const fb=document.querySelector('#app #fb');if(fb&&fb.querySelector('.feedback.ok')&&!fb.querySelector('.an-next'))fb.insertAdjacentHTML('beforeend','<div class="row an-row"><button class="btn big nf-cta an-next" onclick="nextItem()">Далі</button></div>')}catch(e){}}
 // смужка відліку на поточній кнопці «Далі» (розбір після відповіді перемальовується — кнопка нова, тож позначаємо щоразу, з тим самим часом)
 function anMark(){try{if(!AN_T&&!AN_START)return;let nb=anNextBtn();
   // у вправах «обери» після правильної відповіді кнопки «Далі» немає — додаємо свою, з відліком
