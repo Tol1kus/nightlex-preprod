@@ -20620,6 +20620,8 @@ function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASK
   const root=document.querySelector('#app .nf-launch');if(!root||root.dataset.uip)return r;root.dataset.uip='1';
   const u=root.querySelector('.ul-btn');if(u)u.remove();
   const en=typeof uiEn==='function'&&uiEn();
+  // кілька курсів на вибір — питання над картками (автор: «яку мову будеш вивчати сьогодні», лише там, де більше 1 мови)
+  {const cards=root.querySelectorAll('.nf-lang');if(cards.length>1&&!root.querySelector('.ui-today'))cards[0].insertAdjacentHTML('beforebegin',`<h2 class="ui-today">${en?'Which language are you learning today?':'Яку мову вчиш сьогодні?'}</h2>`)}
   // стрілка «назад» угорі ліворуч — повернутись до вибору мови інтерфейсу (автор, 21.11.2026)
   if(!root.querySelector('.ui-back'))root.insertAdjacentHTML('afterbegin',`<button class="ds-x nf-back ui-back" data-noi18n onclick="uiChooseScreen()" aria-label="${en?'Back: interface language':'Назад: мова інтерфейсу'}">${icn('arrow')}</button>`);
   root.insertAdjacentHTML('beforeend',`<button class="ui-link" data-noi18n onclick="uiChooseScreen()">${icn('globe')}<span>${en?'Interface: English · change':'Інтерфейс: українська · змінити'}</span></button>`);
@@ -20627,6 +20629,7 @@ function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASK
 (function(){try{const st=document.createElement('style');st.textContent=
   '.nf-launch .ui-q{font:800 26px/1.15 Unbounded,sans-serif;margin:18px 0 16px}.nf-launch .ui-q small{display:block;font:600 14px "Golos Text",sans-serif;opacity:.6;margin-top:6px}'+
   '#app .nf-launch.ui-first{padding-top:calc(env(safe-area-inset-top) + max(40px,16dvh))!important}.nf-launch.ui-first{transition:opacity .45s ease}.nf-launch.ui-first.ui-wait{opacity:0}'+
+  '.nf-launch .ui-today{font:800 19px/1.2 Unbounded,sans-serif;margin:4px 2px 12px}'+
   '.nf-launch{position:relative}.nf-launch .ui-back{position:absolute;left:16px;top:calc(env(safe-area-inset-top,0px) + 14px);z-index:6;margin:0}'+
   '.nf-launch .ui-link{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin:14px auto 0;padding:8px 12px;font-size:13px;opacity:.6}.nf-launch .ui-link svg{width:15px;height:15px}';
   document.head.appendChild(st)}catch(e){}})();
