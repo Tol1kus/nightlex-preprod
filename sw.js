@@ -3,7 +3,7 @@
 // Встановлення (14.11.2026): не качає заново те, що сторінка щойно завантажила — index.html лише звіряється (304), файли з хешем беруться з HTTP-кешу.
 // 15.11.2026: dev, preprod і main — на одному домені, кеші спільні; назва кешу містить шлях сайту, і кожен SW видаляє лише свої старі кеші
 const PFX='lingvo-'+new URL(self.registration.scope).pathname.replace(/[^a-z0-9-]/gi,'')+'~';  // «~» — щоб «lingvo-nightlex~» не був початком «lingvo-nightlex-main~»
-const CACHE=PFX+'7196c77bd6';
+const CACHE=PFX+'1c81a96859';
 const HASHED=["data/core.858fc3adc4.js", "data/more.8321a49a4f.js", "fonts/golos-text-cyrillic.woff2", "fonts/golos-text-latin-ext.woff2", "fonts/golos-text-latin.woff2", "fonts/unbounded-cyrillic.woff2", "fonts/unbounded-latin-ext.woff2", "fonts/unbounded-latin.woff2", "fonts/literata-latin-700-normal.woff2"];
 const CORE=['./','index.html','manifest.json','icon-192.png','icon-512.png','data/sent_A1.json','data/sent_A2.json','data/sent_B1.json','data/sent_B2.json','data/sent_C1.json','data/sent_C2.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.all([
@@ -14,3 +14,8 @@ self.addEventListener('fetch',e=>{
   if(u.pathname.includes('/img/')||u.pathname.includes('/aipic/')||u.pathname.includes('/audio/')||u.pathname.includes('/fonts/')||/\/data\/(core|more)\.[0-9a-f]+\.js$/.test(u.pathname)){e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const c=res.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return res})));return}
   e.respondWith(fetch(u.href,{cache:'no-cache',credentials:'same-origin'}).then(res=>{const c=res.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return res}).catch(()=>caches.match(e.request).then(r=>r||caches.match('index.html'))));
 });
+// нагадування (Web Push, 22.11.2026): сервер api.nightlex.com надсилає {title, body, url}; дотик відкриває гру
+self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{}}catch(x){d={body:e.data&&e.data.text()}}
+  e.waitUntil(self.registration.showNotification(d.title||'NightLex',{body:d.body||'',icon:'icon-192.png',badge:'icon-192.png',tag:'nightlex-daily',renotify:true,data:{url:d.url||'./'}}))});
+self.addEventListener('notificationclick',e=>{e.notification.close();const url=(e.notification.data&&e.notification.data.url)||'./';
+  e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(cs=>{for(const c of cs){if('focus' in c)return c.focus()}return self.clients.openWindow(url)}))});
