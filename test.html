@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self' https://api.nightlex.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="theme-color" content="#111013">
 <title>Nightlex — 7-day test</title>
 <!-- Сторінка для тестувальників (14.11.2026; з 15.11 — англійською, українська — перемикачем або ?lang=uk): інструкція, план на 7 днів, анкета. Нічого нікуди не надсилає:
@@ -157,7 +157,7 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
 
 <section>
 <h2 data-uk="Твої дані" data-da="Dine data">Your data</h2>
-<p data-uk="Увесь прогрес зберігається лише на твоєму телефоні: без реєстрації, реклами й аналітики. Ми не бачимо твоїх відповідей — лише те, що ти сам(а) надішлеш. Копія прогресу і видалення — «Налаштування» → «Дані» → «Приватність»." data-da="Al fremgang gemmes kun på din telefon: ingen tilmelding, ingen reklamer, ingen analyse. Vi kan ikke se dine svar — kun det, du selv sender. En kopi af din fremgang og sletning: «Налаштування» → «Дані» → «Приватність» (“Settings” → “Data” → “Privacy”).">All progress is stored only on your phone: no sign-up, no ads, no analytics. We don’t see your answers — only what you send yourself. A copy of your progress and deleting it: «Налаштування» → «Дані» → «Приватність» (“Settings” → “Data” → “Privacy”).</p>
+<p data-uk="Увесь прогрес зберігається лише на твоєму телефоні: без реєстрації, реклами й аналітики. Ми не бачимо твоїх відповідей — лише те, що ти сам(а) надішлеш: кнопка «Надіслати відповіді» зберігає анкету на сервері Nightlex (без імені, IP і реклами). Копія прогресу і видалення — «Налаштування» → «Дані» → «Приватність»." data-da="Al fremgang gemmes kun på din telefon: ingen tilmelding, ingen reklamer, ingen analyse. Vi kan ikke se dine svar — kun det, du selv sender: knappen «Send svar» gemmer spørgeskemaet på Nightlex-serveren (uden navn, IP og reklamer). En kopi af din fremgang og sletning: «Налаштування» → «Дані» → «Приватність» (“Settings” → “Data” → “Privacy”).">All progress is stored only on your phone: no sign-up, no ads, no analytics. We don’t see your answers — only what you send yourself: the “Send answers” button saves the survey to the Nightlex server (no name, no IP, no ads). A copy of your progress and deleting it: «Налаштування» → «Дані» → «Приватність» (“Settings” → “Data” → “Privacy”).</p>
 <p data-uk="Дякуємо за час і чесність!" data-da="Tak for din tid og ærlighed!">Thank you for your time and honesty!</p>
 </section>
 </main>
@@ -182,7 +182,12 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
     document.title=l==='uk'?'Nightlex — тест на 7 днів':l==='da'?'Nightlex — 7-dages test':'Nightlex — 7-day test';try{localStorage.setItem(KEY+'-lang',l)}catch(e){}}
   document.querySelectorAll('.langs button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));setLang(LANG);
 
+/* ---------- база Nightlex (Cloudflare D1, 22.11.2026): відповіді зберігаються на сервері Nightlex; файл / «поділитися» лишаються запасним шляхом ---------- */
+const NX_API='https://api.nightlex.com';
+function nxClient(){try{let c=localStorage.getItem('nightlex-client');if(!c){c=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2));localStorage.setItem('nightlex-client',c)}return c}catch(e){return ''}}
+async function nxSave(kind,lang,name,data){try{const c=nxClient();if(!c)return false;const r=await fetch(NX_API+'/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,client:c,lang,name,data})});const j=await r.json().catch(()=>({}));return r.ok&&j.ok}catch(e){return false}}
   document.getElementById('send').addEventListener('click',async()=>{
+    try{const o={};document.querySelectorAll('[data-q]').forEach(el=>{o[el.dataset.q]=val(el)});nxSave('test',LANG,'',{answers:o,date:new Date().toISOString().slice(0,10)}).then(ok=>{if(ok){const e=document.getElementById('ok');if(e&&!e.textContent)e.textContent=LANG==='uk'?'Відповіді збережено ✓':LANG==='da'?'Svarene er gemt ✓':'Answers saved ✓'}})}catch(e){}
     const M=MSG[LANG];const lines=['Nightlex — анкета після 7 днів ('+(LANG==='uk'?'українською':LANG==='da'?'данською':'англійською')+')',''];document.querySelectorAll('[data-q]').forEach(el=>{lines.push(el.dataset.q+': '+(val(el)||'—'))});
     const text=lines.join('\n'),ok=document.getElementById('ok');
     try{if(navigator.share){await navigator.share({title:M.title,text});ok.textContent=M.sent;return}}catch(e){if(e&&e.name==='AbortError')return}

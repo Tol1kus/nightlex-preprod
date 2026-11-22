@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self' https://api.nightlex.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="theme-color" content="#111013">
 <meta name="robots" content="noindex">
 <title>Nightlex — Sprogtjek</title>
@@ -97,7 +97,7 @@ const UI={
   save:'Gem og næste',skip:'Spring over',back:'Forrige',gloss:'Engelsk',done:'tjekket',of:'af',
   k:{all:'Alle',w:'Ord',s:'Sætninger',d:'Dialoger',t:'Tekster',g:'Grammatik',r:'Regler'},kl:{w:'Ord',s:'Sætning',d:'Dialog',t:'Tekst',g:'Grammatik',r:'Regel (forklaring på engelsk — er den rigtig?)'},word:'ord',
   tags:['Grammatik','Ordvalg','Stavning','Udtale','Oversættelse'],
-  sendT:'Send dine svar',sendI:'Svarene ligger kun på denne enhed. Send filen til den, der bad dig om hjælp.',file:'Hent fil',share:'Del',copy:'Kopiér',close:'Luk',
+  sendT:'Send dine svar',sendI:'Svarene gemmes automatisk på Nightlex-serveren. Filen er kun en reserve, hvis der ikke er internet.',cloudOk:'Gemt på serveren ✓',cloudNo:'Ikke gemt på serveren (intet internet?) — send filen i stedet.',cloudWait:'Gemmer på serveren…',file:'Hent fil',share:'Del',copy:'Kopiér',close:'Luk',
   copied:'Kopieret',saved:'Gemt',empty:'Alt på dette niveau er tjekket — tak!',nothing:'Du har ikke tjekket noget endnu.',needName:'Skriv dit navn først',
   two:'Hver linje tjekkes af to personer.',speak:'Hør',lang:'Sprog',loading:'Henter…',
   saveSend:'Gem og send',handBtn:'Fortsæt, hvor en anden slap (åbn fil)',handHow:'Har en anden tjekket fx 100 ord? Gem filen, du fik fra vedkommende, skriv dit navn, tryk her og vælg filen — de tjekkede ord springes over. Vil du give videre selv: “Gem og send” → “Del”.',handOk:'Indlæst: # svar. Du fortsætter efter dem.',handBad:'Filen kan ikke bruges her.',handTip:'Du kan give filen videre til en anden, som fortsætter, hvor du slap.',others:'andre',
@@ -108,7 +108,7 @@ const UI={
   save:'Save & next',skip:'Skip',back:'Previous',gloss:'',done:'checked',of:'of',
   k:{all:'All',w:'Words',s:'Sentences',d:'Dialogues',t:'Texts',g:'Grammar',r:'Rules'},kl:{w:'Word',s:'Sentence',d:'Dialogue',t:'Text',g:'Grammar',r:'Rule (is the explanation right?)'},word:'word',
   tags:['Grammar','Word choice','Spelling','Pronunciation','Not US English'],
-  sendT:'Send your answers',sendI:'Your answers are stored on this device only. Send the file to the person who asked you to help.',file:'Download file',share:'Share',copy:'Copy',close:'Close',
+  sendT:'Send your answers',sendI:'Your answers are saved automatically to the Nightlex server. The file is only a backup if there is no internet.',cloudOk:'Saved to the server ✓',cloudNo:'Not saved to the server (no internet?) — send the file instead.',cloudWait:'Saving to the server…',file:'Download file',share:'Share',copy:'Copy',close:'Close',
   copied:'Copied',saved:'Saved',empty:'Everything on this level is checked — thank you!',nothing:'You haven\'t checked anything yet.',needName:'Please enter your name first',
   two:'Every line is checked by two people.',speak:'Listen',lang:'Language',loading:'Loading…',
   saveSend:'Save & send',handBtn:'Continue where someone else stopped (open file)',handHow:'Someone already checked, say, 100 words? Save the file they sent you, write your name, tap here and choose the file — checked words are skipped. To pass it on yourself: “Save & send” → “Share”.',handOk:'Loaded: # answers. You continue after them.',handBad:'This file can’t be used here.',handTip:'You can pass the file on to someone else, who continues where you stopped.',others:'others',
@@ -209,6 +209,10 @@ function say(s){try{const u=new SpeechSynthesisUtterance(s);u.lang=ST.lang==='da
 // клавіші на комп'ютері: 1 — правильно, 2 — неприродно, 3 — виправити
 document.addEventListener('keydown',e=>{if(!CUR||/input|textarea/i.test((e.target.tagName||'')))return;if(e.key==='1')choose('ok');else if(e.key==='2')choose('bad');else if(e.key==='3')choose('fix')});
 
+/* ---------- база Nightlex (Cloudflare D1, 22.11.2026): відповіді зберігаються на сервері Nightlex; файл / «поділитися» лишаються запасним шляхом ---------- */
+const NX_API='https://api.nightlex.com';
+function nxClient(){try{let c=localStorage.getItem('nightlex-client');if(!c){c=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2));localStorage.setItem('nightlex-client',c)}return c}catch(e){return ''}}
+async function nxSave(kind,lang,name,data){try{const c=nxClient();if(!c)return false;const r=await fetch(NX_API+'/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,client:c,lang,name,data})});const j=await r.json().catch(()=>({}));return r.ok&&j.ok}catch(e){return false}}
 /* ---------- надіслати: файл / поділитися / копіювати ---------- */
 function payload(){const R=res(),items={};for(const id in R)if(R[id].st!=='skip')items[id]=R[id];return {app:'nightlex-check',v:1,lang:ST.lang,name:ST.name||'?',date:new Date().toISOString().slice(0,10),items}}
 function fname(p){return `nightlex-check-${p.lang}-${String(p.name).replace(/[^\p{L}\p{N}]+/gu,'-').slice(0,30)}-${p.date}.txt`}
@@ -223,7 +227,11 @@ function sendSheet(){const t=T(),p=payload(),v=Object.values(p.items),n=k=>v.fil
   const btns=[el('button',{class:'btn',onclick:()=>{const a=el('a',{href:URL.createObjectURL(file),download:file.name});document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast(t.saved)}},t.file)];
   if(navigator.canShare&&navigator.canShare({files:[file]}))btns.push(el('button',{class:'btn ghost',onclick:()=>navigator.share({files:[file]}).catch(()=>{})},t.share));
   btns.push(el('button',{class:'btn ghost',onclick:()=>{(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast(t.copied)).catch(()=>{})}},t.copy));
-  setDock(btns)}
+  setDock(btns);
+  const st=el('p',{class:'mut sm',id:'cloudSt'},t.cloudWait||'…');$('m').querySelector('.center').append(st);
+  nxSave('check',p.lang,p.name,p).then(ok=>{const e=document.getElementById('cloudSt');if(e)e.textContent=ok?t.cloudOk:t.cloudNo})}
+// кожні 10 відповідей — тихе збереження на сервері, щоб нічого не загубилось
+let NX_N=0;{const _st=store;store=function(){const r=_st.apply(this,arguments);try{if(++NX_N%10===0){const p=payload();if(Object.keys(p.items).length)nxSave('check',p.lang,p.name,p)}}catch(e){}return r}}
 // пряме посилання за мовою: check.html?lang=da — для данців, ?lang=en — для американців
 try{const q=new URLSearchParams(location.search).get('lang');if(q==='da'||q==='en'){if(ST.lang!==q)ITEMS=null;ST.lang=q;save()}}catch(e){}
 startScreen();
