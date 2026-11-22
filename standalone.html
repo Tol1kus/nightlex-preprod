@@ -19093,11 +19093,11 @@ on('home:after',()=>{try{S.pfFix=S.pfFix||{};if(S.pfFix[S.lang])return;S.pfFix[S
   const n=creditedCount();if(n>PF_CREDIT_DAY*21||WORDS.some(w=>!w[S.lang]&&(S.srs[S.lang][w.id]||{}).pl))creditSpread();save()}catch(e){}});
 // «N слів знаєш» = вивчені тут + зараховані тестом; на «Прогресі» — пояснення
 on('home:after',()=>{try{const c=creditedCount();if(!c)return;const sm=document.querySelector('#app .nf-lv small');if(!sm||sm.dataset.pf)return;sm.dataset.pf=1;
-  const known=WORDS.filter(w=>w[S.lang]&&learned(w)).length+c;
+  const known=nxWordCounts().known;
   sm.firstChild&&sm.firstChild.nodeType===3&&(sm.firstChild.textContent=sm.firstChild.textContent.replace(/^\d+\s+\S+\s+знаєш/,`${known} ${pluralUk(known,['слово','слова','слів'])} знаєш`))}catch(e){}});
 function pfDecorate(){try{if(!document.querySelector('#app .nf-chips .ok, #app .summary'))return;const c=creditedCount();if(!c)return;
   const chip=[...document.querySelectorAll('#app .nf-chips .ok')].find(x=>/знаєш/.test(x.textContent));
-  if(chip&&!chip.dataset.pf){chip.dataset.pf=1;const known=WORDS.filter(w=>w[S.lang]&&learned(w)).length+c;
+  if(chip&&!chip.dataset.pf){chip.dataset.pf=1;const known=nxWordCounts().known;
     const tn=[...chip.childNodes].find(n=>n.nodeType===3&&/знаєш/.test(n.textContent));if(tn)tn.textContent=` ${known} ${pluralUk(known,['слово','слова','слів'])} знаєш`}
   const sum=document.querySelector('#app .summary');
   if(sum&&!document.querySelector('#app .pf-note')){const cells=sum.querySelectorAll('div');
@@ -19975,9 +19975,9 @@ function m9Week(){const t=new Date(today()+'T12:00:00'),dow=(t.getDay()+6)%7,act
     return `<span class="m9-d${on?' on':''}${i===dow?' now':''}${fut?' fut':''}"><i>${on?icn('check'):''}</i><small>${l}</small></span>`}).join('');
   return `<div class="m9-wk"><div class="m9-wk-h"><b>Цей тиждень</b><small>${n} ${pluralUk(n,["день","дні","днів"])} з 7</small></div><div class="m9-days">${days}</div></div>`}
 function m9Enhance(){try{const a=document.getElementById('app'),me=a&&a.querySelector('.nf-me');if(!me||me.dataset.m9)return;me.dataset.m9='1';me.classList.add('m9');const pcs=a.querySelector('.nf-pcs');if(pcs)pcs.classList.add('m9');
-  const m=S.minutes||30,sec=((S.act||{})[today()]||{}).sec||0,known=WORDS.filter(w=>w[S.lang]&&learned(w)).length;
+  const m=S.minutes||30,sec=((S.act||{})[today()]||{}).sec||0,known=nxWordCounts().known,learnN=nxWordCounts().learn;
   const ch=me.querySelector('.nf-chips');const tile=(cls,ic,v,t)=>`<span class="m9-t ${cls}">${icn(ic)}<b>${v}</b><small>${t}</small></span>`;
-  const html=`<div class="m9-stats">${tile('am','flame',S.streak|0,pluralUk(S.streak|0,['день поспіль','дні поспіль','днів поспіль']))}${tile('ok','check',known,pluralUk(known,['слово знаєш','слова знаєш','слів знаєш']))}${tile('sk','clock',`${Math.floor(sec/60)}<em>/${m}</em>`,'хв сьогодні')}</div>${m9Week()}`;
+  const html=`<div class="m9-stats">${tile('am','flame',S.streak|0,pluralUk(S.streak|0,['день поспіль','дні поспіль','днів поспіль']))}${known||!learnN?tile('ok','check',known,pluralUk(known,['слово знаєш','слова знаєш','слів знаєш'])):tile('ok','check',learnN,pluralUk(learnN,['слово вчиш','слова вчиш','слів вчиш']))}${tile('sk','clock',`${Math.floor(sec/60)}<em>/${typeof paceMin==='function'?paceMin(newPerDay()):m}</em>`,'хв сьогодні')}</div>${m9Week()}`;
   if(ch)ch.outerHTML=html;else me.insertAdjacentHTML('beforeend',html);
   a.querySelectorAll('.nf-pcs .nf-pc').forEach(p=>{const b=p.querySelector('b'),sm=p.querySelector('small');if(!b||!sm)return;const k=b.textContent.trim();
     if(M9_SUB[k])sm.textContent=M9_SUB[k];if(/^Мова:/.test(k))sm.textContent='змінити · прогрес кожної мови окремий';
@@ -20970,7 +20970,8 @@ const PACE_IC={10:'leaf',15:'bolt',20:'flame'};
 // 22.11.2026, автор: «пиши час орієнтовно — приблизно 30 хв на день чи 60»
 // 22.11.2026, автор: «Спокійно» і «Швидко» не можуть обидва бути ≈ 30 хв → ≈ 20 / 30 / 60 (план «Спокійно» справді коротший — 71_plan_fit.js)
 function paceMin(n){return n>=20?60:n>=15?30:20}
-function paceTime(n,en){const m=paceMin(n);return en?`about ${m} min a day`:`≈ ${m} хв на день`}
+// «до N хв»: на A1 у перші тижні (м'який старт) план коротший — так картка темпу не суперечить плану дня
+function paceTime(n,en){const m=paceMin(n);return en?`up to ${m} min a day`:`до ${m} хв на день`}
 const PACE_INFO={10:{uk:'Спокійно',en:'Relaxed',ic:'🌿',min:'≈ 15–20 хв',minEn:'≈ 15–20 min',m:30},15:{uk:'Швидко',en:'Fast',ic:'⚡',min:'≈ 25–30 хв',minEn:'≈ 25–30 min',m:30},20:{uk:'Інтенсивно',en:'Intensive',ic:'🔥',min:'≈ 45–60 хв',minEn:'≈ 45–60 min',m:60}};
 {const _sp=setPace;setPace=function(n){const m=(PACE_INFO[n]||{}).m||30;S.paceSet=S.paceSet||{};S.paceSet[S.lang]=n;
   // план сьогодні вже виконано, а темп стає довшим → нові кроки з'являться завтра (день лишається закритим, без «7 відкритих кроків»)
@@ -21000,7 +21001,7 @@ function paceDone(n){setPace(n);document.body.classList.remove('in-session');con
 if(typeof planSetup==='function'){const _psP=planSetup;planSetup=function(){const r=_psP.apply(this,arguments);try{const qs=[...document.querySelectorAll('#app .ps-q')];if(qs.length>=2){
   const cur=newPerDay(),en=uiEnP();qs[0].outerHTML=`<div class="ps-q"><b>${en?'Your pace':'Темп вивчення'}</b><div class="pace-cards ps-opts">${[10,15,20].map(n=>{const p=PACE_INFO[n],mo=paceMonths(n,PLAN_OPT&&PLAN_OPT.lvl);return `<button class="pace-card${n===cur?' on':''}" onclick="setPace(${n});planSetup()"><span class="pc-ic">${icn(PACE_IC[n])}</span><span class="pc-t"><b>${en?p.en:p.uk}${n===15?(en?' · recommended':' · радимо'):''}</b><small>${n} ${en?'new words':'нових слів'} · ${paceTime(n,en)}</small><small>${mo.lv?(en?`${mo.lv} in ≈ ${mo.txt}`:`${mo.lv} за ≈ ${mo.txt}`):''}</small></span></button>`}).join('')}</div></div>`;qs[1].remove()}
   // без хвилин (автор: «одна людина робить швидко, інша повільно»): замість «30 хв щодня» — назва темпу
-  const en=uiEnP(),g=document.querySelectorAll('#app .ps-sum .pp-grid > div');const p=PACE_INFO[newPerDay()];if(g[1]&&p)g[1].innerHTML=`<b>≈ ${paceMin(newPerDay())} ${en?'min':'хв'}</b><span>${en?'a day':'на день'}</span>`;
+  const en=uiEnP(),g=document.querySelectorAll('#app .ps-sum .pp-grid > div');const p=PACE_INFO[newPerDay()];if(g[1]&&p)g[1].innerHTML=`<b>${en?'≤':'до'} ${paceMin(newPerDay())} ${en?'min':'хв'}</b><span>${en?'a day':'на день'}</span>`;
   [...document.querySelectorAll('#app .ps small, #app .ps p')].forEach(x=>{if(/^Час, кількість слів/.test(x.textContent))x.textContent=en?'You can change the pace and language any time in Settings.':'Темп і мову можна змінити будь-коли в налаштуваннях.'})}catch(e){}return r}}
 (function(){try{const st_=document.createElement('style');st_.textContent=`.pace-scr{display:flex;flex-direction:column;justify-content:center;min-height:calc(100dvh - 40px);padding:16px}.pace-in{max-width:520px;margin:0 auto;width:100%}
 .pace-scr h1{font:800 28px/1.15 var(--display);margin:4px 0 6px}.pace-scr .kick{color:var(--lime-t,var(--lime));font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
@@ -21045,7 +21046,7 @@ if(typeof ctFit==='function'){ctFit=function(){}}
     setTimeout(()=>{try{const row=b.parentElement||b,r=row.getBoundingClientRect(),vh=window.innerHeight;if(r.bottom>vh-6&&r.height)window.scrollBy({top:r.bottom-vh+18,behavior:'smooth'})}catch(e){}},200)}catch(e){}}).observe(app,{childList:true,subtree:true})}catch(e){}})();
 // головна: у перший день «0 слів знаєш» поруч із уже вивченими сьогодні — показуємо, скільки слів уже вчиш (перевірка агентом 22.11.2026)
 on('home:after',()=>{try{const sm=document.querySelector('#app .nf-lv small');if(!sm)return;const t=sm.firstChild;if(!t||t.nodeType!==3||!/^0\s+\S+\s+знаєш/.test(t.textContent))return;
-  const n=Object.values((S.srs||{})[S.lang]||{}).filter(x=>x&&x.lr).length;if(!n)return;t.textContent=t.textContent.replace(/^0\s+\S+\s+знаєш/,`${n} ${pluralUk(n,['слово','слова','слів'])} вчиш`)}catch(e){}});
+  const n=nxWordCounts().learn;if(!n)return;t.textContent=t.textContent.replace(/^0\s+\S+\s+знаєш/,`${n} ${pluralUk(n,['слово','слова','слів'])} вчиш`)}catch(e){}});
 // сповіщення (досягнення тощо) не закривають верхній рядок: трохи нижче шапки
 (function(){try{const st_=document.createElement('style');st_.textContent=`.toast{top:calc(78px + env(safe-area-inset-top,0px))!important}`;document.head.appendChild(st_)}catch(e){}})();
 // екранні читачі: підписи свайпу на картці («Знаю ✓Не знаю») — лише для очей
@@ -21056,6 +21057,21 @@ if(typeof bkCard==='function'){const _bkC=bkCard;bkCard=function(o){try{if(o&&S.
 if(typeof d9Recent==='function'){const _d9=d9Recent;d9Recent=function(){const r=_d9.apply(this,arguments);try{const seen=new Set();return r.filter(o=>{const k=String((o&&(o.fg||(o.w&&o.w[S.lang])))||'').toLowerCase().trim();if(!k)return true;if(seen.has(k))return false;seen.add(k);return true})}catch(e){return r}}}
 // вправа «Як це перекласти?» для слів без картинки (fru, en, to): порожній пунктирний квадрат зі «?» більше не показуємо
 on('item:render',()=>{setTimeout(()=>{try{document.querySelectorAll('#app .card > .pic, #app .nf-xc > .pic').forEach(p=>{if(!p.querySelector('img,svg'))p.style.display='none'})}catch(e){}},0)});
+
+// ОДИН ПІДРАХУНОК СЛІВ для «Сьогодні», «Словника» і «Я» (перевірка агентом 22.11.2026: усюди були різні числа):
+// вчиш = почав(ла) і ще не вивчено; знаєш = вивчено (етап ≥ 4) + зараховано тестом рівня
+function nxWordCounts(){let learn=0,known=0;try{WORDS.forEach(w=>{if(!w[S.lang])return;const x=st(w);if(!x)return;if(x.pl&&!x.lr){if(!w.my)known++;return}if(learned(w))known++;else if(x.lr)learn++})}catch(e){}return {learn,known}}
+if(typeof d9Counts==='function'){const _d9c=d9Counts;d9Counts=function(){const r=_d9c.apply(this,arguments);try{const c=nxWordCounts();r.learn=c.learn;r.know=c.known}catch(e){}return r}}
+// ДОСТУПНІСТЬ (22.11.2026, перевірка агентом): кнопки й посилання — щонайменше 44 px заввишки там, де це не ламає вигляд;
+// кнопки-значки без підпису отримують назву для екранного читача
+(function(){try{const st_=document.createElement('style');st_.textContent=`
+#app .wc-exq,#app .nf-link.wc-easy{display:inline-flex;align-items:center;min-height:44px}
+#app .wc-slow{min-height:40px}
+#app .k-seg button,#app .pseg button,#app .chip,#app .rt-abcb,#app .pal-dot{min-height:44px}
+#app button.speak{min-width:44px;min-height:44px}`;document.head.appendChild(st_)}catch(e){}})();
+(function(){try{if(typeof MutationObserver!=='function')return;const uk={speak:'Прослухати','k-say':'Прослухати','nf-play':'Прослухати ще раз','wc-slow':'Слухати повільно',back:'Назад','ds-x':'Закрити','sk-x':'Закрити','rd-ib':'Дія'},en={speak:'Listen','k-say':'Listen','nf-play':'Listen again','wc-slow':'Listen slowly',back:'Back','ds-x':'Close','sk-x':'Close','rd-ib':'Action'};
+  const fix=()=>{try{const L=(typeof uiEn==='function'&&uiEn())?en:uk;document.querySelectorAll('#app button:not([aria-label]),#app [role=button]:not([aria-label])').forEach(b=>{if((b.textContent||'').trim())return;const t=b.getAttribute('title');if(t){b.setAttribute('aria-label',t);return}for(const c of b.classList)if(L[c]){b.setAttribute('aria-label',L[c]);return}})}catch(e){}};
+  let q=0;new MutationObserver(()=>{if(q)return;q=1;setTimeout(()=>{q=0;fix()},60)}).observe(document.getElementById('app'),{childList:true,subtree:true})}catch(e){}})();
 
 bootApp();bigLoad();
 </script>
