@@ -16024,7 +16024,7 @@ on('topRow',h=>{
   let label=String(it.phase||SS.title||'').replace(/^[^\wА-яІіЇїЄєҐґ]+/u,'');if(/!\s*$/.test(label))label=NF_KIND_LBL[it.kind]||'Вправа';
   const menu=!it.test;
   return `<div class="top-row nf-top"><button class="back" onclick="${SS.backFn||'home()'}" aria-label="Закрити">${icn('close')}</button>
-    <div class="nf-prog"><div class="nf-prog-h"><b>${esc(label)}</b><span>${Math.min(i+1,n)} / ${n}<span class="nf-time">${icn('clock')}<i class="k-timer">0:00</i></span></span></div><div class="bar nf-bar"><i style="width:${i/n*100}%"></i></div></div>
+    <div class="nf-prog"><div class="nf-prog-h"><b>${esc(label)}</b><span>${(()=>{try{if(!SS.n0)SS.n0=n;const n0=SS.n0;return i<n0?`${i+1} / ${n0}`:`${uiEn&&uiEn()?'mistakes':'помилки'} · ${n-i}`}catch(e){return `${Math.min(i+1,n)} / ${n}`}})()}<span class="nf-time">${icn('clock')}<i class="k-timer">0:00</i></span></span></div><div class="bar nf-bar"><i style="width:${i/n*100}%"></i></div></div>
     ${menu?`<button class="back k-more" onclick="sessMenu(this)" aria-label="Ще">${icn('plus')}</button>`:''}</div>${hp}`});
 function resultRingTime(){return ''}
 
@@ -16068,9 +16068,9 @@ function homeView(){
   // три етапи дня замість восьми окремих кроків (макет 11.11.2026): Повтор → Нові слова → Практика
   const ST=nfStages(B),cur=next?ST.find(x=>x.bs.includes(next)):null,ci=cur?ST.indexOf(cur):-1;
   // 22.11.2026 (автор): у стрічці — лише слова з картинками; якщо картинок у словах дня немає — просто слова текстом, без порожніх квадратів
-  const dw=dayWordList(),rev_=reviewDone(),dwp=dw.filter(w=>{try{const h=picHTML(w);return /<img/.test(h)&&!/nopic/.test(h)}catch(e){return false}}),nP=Math.min(5,dwp.length),tiles=dwp.slice(0,nP).map(w=>nfTile(w,!rev_)).join('');
+  const dw=dayWordList(),rev_=reviewDone(),dwp=dw.filter(w=>{try{if(typeof isSeriesW==='function'&&isSeriesW(w))return false;const h=picHTML(w);return /<img/.test(h)&&!/nopic/.test(h)}catch(e){return false}}),nP=Math.min(5,dwp.length),tiles=dwp.slice(0,nP).map(w=>nfTile(w,!rev_)).join('');
   const wordsRow=!dw.length?'':nP?`<div class="nf-words"><div class="nf-wrow">${tiles}${dw.length>nP?`<div class="nf-wt more"><span class="nf-wt-p">+${dw.length-nP}</span></div>`:''}</div></div>`
-    :`<div class="nf-words nf-wtxt">${dw.slice(0,8).map(w=>`<span lang="${S.lang}">${esc(w[S.lang]||'')}</span>`).join('')}${dw.length>8?`<span class="more">+${dw.length-8}</span>`:''}</div>`;
+    :`<div class="nf-words nf-wtxt">${dw.filter(w=>!(typeof isSeriesW==='function'&&isSeriesW(w))).concat(dw.filter(w=>typeof isSeriesW==='function'&&isSeriesW(w))).slice(0,8).map(w=>`<span lang="${S.lang}">${esc(w[S.lang]||'')}</span>`).join('')}${dw.length>8?`<span class="more">+${dw.length-8}</span>`:''}</div>`;
   const stageRow=x=>{const dn=x.bs.filter(b=>b.done).length,n=x.bs.length,st_=dn===n?'done':x===cur?'cur':'todo',min=x.bs.filter(b=>!b.done).reduce((a,b)=>a+nfMin(b),0);
     return `<details class="nf-stg ${st_} c-${x.c}"><summary><span class="nf-stg-d">${st_==='done'?icn('check'):icn(x.ic)}</span><span class="nf-stg-t"><b>${x.t}</b><small>${n===1?esc(blockSub(x.bs[0])):x.bs.map(b=>esc(nfShort(b))).join(' · ')}</small></span>
       <em>${st_==='done'?'зроблено':st_==='cur'?(n>1?`${Math.min(n,dn+1)} / ${n}`:'зараз'):`≈ ${min} хв`}</em></summary>
@@ -19910,7 +19910,7 @@ function r9Enhance(){try{const a=document.getElementById('app');const lvs=a&&a.q
 {const _r9=readTab;readTab=function(){const r=_r9.apply(this,arguments);r9Enhance();return r}}
 
 // 22.11.2026, автор: «у нас є LEGO-текст — зроби подібну картинку під нього»: власні картинки текстів (FLUX, без логотипів; лише сайт — файл у aipic)
-const R9_TEXT_PIC=[[/LEGO/i,'text_lego']];
+const R9_TEXT_PIC=[[/LEGO/i,'text_lego'],[/Havfrue|Little Mermaid|Русалонька/i,'text_havfrue']]; // 22.11.2026: русалка замість мишки
 {const _r9p=r9Pic;r9Pic=function(t){try{const h=R9_TEXT_PIC.find(([re])=>re.test(String(t&&t.title||'')));if(h&&typeof AIPIC_SET!=='undefined'&&AIPIC_SET.has(h[1]))return `<img class="pimg ai-img" src="aipic/${h[1]}.webp" alt="">`}catch(e){}return _r9p.apply(this,arguments)}}
 
 /* ---------- «Розмова» (вкладка) — покращення без зміни вмісту (16.11.2026, прохання автора: «покращ, оптимізуй і удоскональ»):
@@ -20986,7 +20986,7 @@ function paceNeed(){try{if((/jsdom/i.test(navigator.userAgent)||navigator.webdri
   if(Object.values((S.srs||{})[S.lang]||{}).filter(x=>x&&x.lr).length>20){ // лише справді повторені (lr), не зараховані тестом рівня
   S.paceSet=S.paceSet||{};S.paceSet[S.lang]=newPerDay();save();return false}return true}catch(e){return false}}
 function paceScreen(next){applyTheme();document.body.classList.add('in-session');const en=uiEnP(),rec=15;REDRAW=()=>paceScreen(next);window.__paceNext=next;
-  app.innerHTML=`<div class="ds-scr pace-scr" data-noi18n><button class="ds-x nf-back pace-back" onclick="launchScreen()" aria-label="${en?'Back':'Назад'}">${icn('back')}</button><div class="pace-in"><div class="kick">${en?'Your plan':'Твій план'}</div><h1>${en?'Choose your pace':'Обери темп'}</h1>
+  app.innerHTML=`<div class="ds-scr pace-scr" data-noi18n><button class="ds-x nf-back pace-back" onclick="launchScreen()" aria-label="${en?'Back':'Назад'}">${icn('arrow')}</button><div class="pace-in"><div class="kick">${en?'Your plan':'Твій план'}</div><h1>${en?'Choose your pace':'Обери темп'}</h1>
    <p class="muted">${en?'You can change it any time in Settings.':'Змінити можна будь-коли в «Налаштуваннях».'}</p>
    <div class="pace-cards">${[10,15,20].map(n=>{const p=PACE_INFO[n],mo=paceMonths(n);return `<button class="pace-card${n===rec?' rec':''}" onclick="paceDone(${n})"><span class="pc-ic">${icn(PACE_IC[n])}</span>
      <span class="pc-t"><b>${en?p.en:p.uk}${n===rec?(en?' · recommended':' · радимо'):''}</b><small>${n} ${en?'new words':'нових слів'} · ${paceTime(n,en)}</small><small>${mo.lv?(en?`${mo.lv} in ≈ ${mo.txt}`:`${mo.lv} за ≈ ${mo.txt}`):''}</small></span></button>`}).join('')}</div></div></div>`;
@@ -21043,6 +21043,17 @@ if(typeof ctFit==='function'){ctFit=function(){}}
 (function(){try{const app=document.getElementById('app');if(!app||typeof MutationObserver!=='function')return;
   new MutationObserver(()=>{try{const b=document.getElementById('planNextBtn');if(!b||b.dataset.nxv)return;b.dataset.nxv='1';
     setTimeout(()=>{try{const row=b.parentElement||b,r=row.getBoundingClientRect(),vh=window.innerHeight;if(r.bottom>vh-6&&r.height)window.scrollBy({top:r.bottom-vh+18,behavior:'smooth'})}catch(e){}},200)}catch(e){}}).observe(app,{childList:true,subtree:true})}catch(e){}})();
+// головна: у перший день «0 слів знаєш» поруч із уже вивченими сьогодні — показуємо, скільки слів уже вчиш (перевірка агентом 22.11.2026)
+on('home:after',()=>{try{const sm=document.querySelector('#app .nf-lv small');if(!sm)return;const t=sm.firstChild;if(!t||t.nodeType!==3||!/^0\s+\S+\s+знаєш/.test(t.textContent))return;
+  const n=Object.values((S.srs||{})[S.lang]||{}).filter(x=>x&&x.lr).length;if(!n)return;t.textContent=t.textContent.replace(/^0\s+\S+\s+знаєш/,`${n} ${pluralUk(n,['слово','слова','слів'])} вчиш`)}catch(e){}});
+// сповіщення (досягнення тощо) не закривають верхній рядок: трохи нижче шапки
+(function(){try{const st_=document.createElement('style');st_.textContent=`.toast{top:calc(78px + env(safe-area-inset-top,0px))!important}`;document.head.appendChild(st_)}catch(e){}})();
+// екранні читачі: підписи свайпу на картці («Знаю ✓Не знаю») — лише для очей
+(function(){try{if(typeof MutationObserver!=='function')return;new MutationObserver(()=>{try{document.querySelectorAll('#app .nf-sw-l, #app .nf-sw-r, #app .sw-hint, #app .nf-swipe-hint').forEach(e=>e.getAttribute('aria-hidden')||e.setAttribute('aria-hidden','true'))}catch(e){}}).observe(document.getElementById('app'),{childList:true,subtree:true})}catch(e){}})();
+// «Читання» → «Про країну» у данському курсі: данські будиночки біля каналу замість хмарочосів (картинка слова «city»)
+if(typeof bkCard==='function'){const _bkC=bkCard;bkCard=function(o){try{if(o&&S.lang==='da'&&/Про країну|About the country/.test(o.title||'')&&typeof AIPIC_SET!=='undefined'&&AIPIC_SET.has('text_dk_country'))o=Object.assign({},o,{pic:'<img class="pimg ai-img" src="aipic/text_dk_country.webp" alt="">'})}catch(e){}return _bkC.call(this,o)}}
+// «Словник» → «Нещодавно вивчені»: одне слово з двома перекладами (undskyld = вибачте / вибач) — один рядок, а не два
+if(typeof d9Recent==='function'){const _d9=d9Recent;d9Recent=function(){const r=_d9.apply(this,arguments);try{const seen=new Set();return r.filter(o=>{const k=String((o&&(o.fg||(o.w&&o.w[S.lang])))||'').toLowerCase().trim();if(!k)return true;if(seen.has(k))return false;seen.add(k);return true})}catch(e){return r}}}
 
 bootApp();bigLoad();
 </script>
