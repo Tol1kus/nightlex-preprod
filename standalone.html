@@ -21051,9 +21051,11 @@ on('home:after',()=>{try{const sm=document.querySelector('#app .nf-lv small');if
 // екранні читачі: підписи свайпу на картці («Знаю ✓Не знаю») — лише для очей
 (function(){try{if(typeof MutationObserver!=='function')return;new MutationObserver(()=>{try{document.querySelectorAll('#app .nf-sw-l, #app .nf-sw-r, #app .sw-hint, #app .nf-swipe-hint').forEach(e=>e.getAttribute('aria-hidden')||e.setAttribute('aria-hidden','true'))}catch(e){}}).observe(document.getElementById('app'),{childList:true,subtree:true})}catch(e){}})();
 // «Читання» → «Про країну» у данському курсі: данські будиночки біля каналу замість хмарочосів (картинка слова «city»)
-if(typeof bkCard==='function'){const _bkC=bkCard;bkCard=function(o){try{if(o&&S.lang==='da'&&/Про країну|About the country/.test(o.title||'')&&typeof AIPIC_SET!=='undefined'&&AIPIC_SET.has('text_dk_country'))o=Object.assign({},o,{pic:'<img class="pimg ai-img" src="aipic/text_dk_country.webp" alt="">'})}catch(e){}return _bkC.call(this,o)}}
+if(typeof bkCard==='function'){const _bkC=bkCard;bkCard=function(o){try{if(o&&S.lang==='da'&&/Про країну|About the country/.test(o.title||'')&&typeof AIPIC_SET!=='undefined'&&AIPIC_SET.has('text_dk_country'))o=Object.assign({},o,{pic:'<span class="bk-pic" aria-hidden="true"><img class="pimg ai-img" src="aipic/text_dk_country.webp" alt=""></span>'})}catch(e){}return _bkC.call(this,o)}}
 // «Словник» → «Нещодавно вивчені»: одне слово з двома перекладами (undskyld = вибачте / вибач) — один рядок, а не два
 if(typeof d9Recent==='function'){const _d9=d9Recent;d9Recent=function(){const r=_d9.apply(this,arguments);try{const seen=new Set();return r.filter(o=>{const k=String((o&&(o.fg||(o.w&&o.w[S.lang])))||'').toLowerCase().trim();if(!k)return true;if(seen.has(k))return false;seen.add(k);return true})}catch(e){return r}}}
+// вправа «Як це перекласти?» для слів без картинки (fru, en, to): порожній пунктирний квадрат зі «?» більше не показуємо
+on('item:render',()=>{setTimeout(()=>{try{document.querySelectorAll('#app .card > .pic, #app .nf-xc > .pic').forEach(p=>{if(!p.querySelector('img,svg'))p.style.display='none'})}catch(e){}},0)});
 
 bootApp();bigLoad();
 </script>
