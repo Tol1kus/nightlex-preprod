@@ -3,8 +3,8 @@
 // Встановлення (14.11.2026): не качає заново те, що сторінка щойно завантажила — index.html лише звіряється (304), файли з хешем беруться з HTTP-кешу.
 // 15.11.2026: dev, preprod і main — на одному домені, кеші спільні; назва кешу містить шлях сайту, і кожен SW видаляє лише свої старі кеші
 const PFX='lingvo-'+new URL(self.registration.scope).pathname.replace(/[^a-z0-9-]/gi,'')+'~';  // «~» — щоб «lingvo-nightlex~» не був початком «lingvo-nightlex-main~»
-const CACHE=PFX+'234051ccef';
-const HASHED=["data/core.a391969050.js", "data/more.8321a49a4f.js", "fonts/golos-text-cyrillic.woff2", "fonts/golos-text-latin-ext.woff2", "fonts/golos-text-latin.woff2", "fonts/unbounded-cyrillic.woff2", "fonts/unbounded-latin-ext.woff2", "fonts/unbounded-latin.woff2", "fonts/literata-latin-700-normal.woff2"];
+const CACHE=PFX+'135966d312';
+const HASHED=["data/core.fa23367e66.js", "data/more.8321a49a4f.js", "fonts/golos-text-cyrillic.woff2", "fonts/golos-text-latin-ext.woff2", "fonts/golos-text-latin.woff2", "fonts/unbounded-cyrillic.woff2", "fonts/unbounded-latin-ext.woff2", "fonts/unbounded-latin.woff2", "fonts/literata-latin-700-normal.woff2"];
 const CORE=['./','index.html','manifest.json','icon-192.png','icon-512.png','data/sent_A1.json','data/sent_A2.json','data/sent_B1.json','data/sent_B2.json','data/sent_C1.json','data/sent_C2.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.all([
   c.addAll(CORE.map(u=>new Request(u,{cache:'no-cache'}))),c.addAll(HASHED)])).then(()=>self.skipWaiting()))});
