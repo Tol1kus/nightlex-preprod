@@ -14944,7 +14944,7 @@ RENDER_X.card=function(it){
 /* ---------- розбір помилки (K06): «ви обрали» / «правильно» ---------- */
 on('feedback',(html,ctx)=>{
   if(!ctx||ctx.ok||!ctx.it||!ctx.it.w)return html;const w=ctx.it.w,gw=ctx.gw;
-  const card=(cls,label,pic,main)=>`<div class="k-mis ${cls}"><span class="k-mis-pic">${pic||'❔'}</span><div><small>${label}</small><b>${main}</b></div></div>`;
+  const card=(cls,label,pic,main)=>`<div class="k-mis ${cls}"><span class="k-mis-pic">${pic||''}</span><div><small>${label}</small><b>${main}</b></div></div>`;
   const given=gw?card('bad','Твій вибір',picHTML(gw),artHTML(gw[S.lang]||'')+' — '+esc(gw.uk)):card('bad','Твій вибір','✗',esc(ctx.given||''));
   const right=card('ok','Правильно',picHTML(w),artHTML(w[S.lang]||'')+' — '+esc(w.uk));
   return html.replace(/<div class="feedback bad">[\s\S]*?<\/div>(?=<div class="hintbox">|<div class="row">)/,`<div class="k-mistake"><div class="q-label">Розбір помилки</div>${given}${right}</div>`)
@@ -21072,6 +21072,11 @@ if(typeof d9Counts==='function'){const _d9c=d9Counts;d9Counts=function(){const r
 (function(){try{if(typeof MutationObserver!=='function')return;const uk={speak:'Прослухати','k-say':'Прослухати','nf-play':'Прослухати ще раз','wc-slow':'Слухати повільно',back:'Назад','ds-x':'Закрити','sk-x':'Закрити','rd-ib':'Дія'},en={speak:'Listen','k-say':'Listen','nf-play':'Listen again','wc-slow':'Listen slowly',back:'Back','ds-x':'Close','sk-x':'Close','rd-ib':'Action'};
   const fix=()=>{try{const L=(typeof uiEn==='function'&&uiEn())?en:uk;document.querySelectorAll('#app button:not([aria-label]),#app [role=button]:not([aria-label])').forEach(b=>{if((b.textContent||'').trim())return;const t=b.getAttribute('title');if(t){b.setAttribute('aria-label',t);return}for(const c of b.classList)if(L[c]){b.setAttribute('aria-label',L[c]);return}})}catch(e){}};
   let q=0;new MutationObserver(()=>{if(q)return;q=1;setTimeout(()=>{q=0;fix()},60)}).observe(document.getElementById('app'),{childList:true,subtree:true})}catch(e){}})();
+// «Як це перекласти?» (і в «Ще раз»): квадрат «?» (картинка-загадка, що відкривається після відповіді) — лише для слів, де картинка справді є і має сенс;
+// числа (картинка = сама цифра), вигуки, частки — без квадрата (перевірка агентом 22.11.2026)
+if(typeof picQ==='function'){const _pq=picQ;picQ=function(w){try{if(typeof aiIsNum==='function'&&aiIsNum(w))return false;if(typeof picPosOk==='function'&&!picPosOk(w))return false}catch(e){}return _pq.apply(this,arguments)}}
+// розбір помилки «Твій вибір / Правильно»: без «❔» замість картинки
+(function(){try{const st_=document.createElement('style');st_.textContent=`.k-mis-pic:empty{display:none}`;document.head.appendChild(st_)}catch(e){}})();
 
 bootApp();bigLoad();
 </script>
