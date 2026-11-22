@@ -21077,6 +21077,9 @@ if(typeof d9Counts==='function'){const _d9c=d9Counts;d9Counts=function(){const r
 if(typeof picQ==='function'){const _pq=picQ;picQ=function(w){try{if(typeof aiIsNum==='function'&&aiIsNum(w))return false;if(typeof picPosOk==='function'&&!picPosOk(w))return false}catch(e){}return _pq.apply(this,arguments)}}
 // розбір помилки «Твій вибір / Правильно»: без «❔» замість картинки
 (function(){try{const st_=document.createElement('style');st_.textContent=`.k-mis-pic:empty{display:none}`;document.head.appendChild(st_)}catch(e){}})();
+// картинки екрана «Для чого тобі …?» (мета) підвантажуємо заздалегідь, ще на старті — інакше з'являлись із запізненням (знімок автора 22.11.2026)
+function nxPrefetchPics(){try{if(typeof goalPic!=='function'||typeof GOAL_PIC==='undefined')return;Object.keys(GOAL_PIC).forEach(k=>{const m=String(goalPic(k)).match(/src="([^"]+)"/);if(m){const i=new Image();i.decoding='async';i.src=m[1]}})}catch(e){}}
+(function(){try{const go=()=>setTimeout(nxPrefetchPics,600);if(document.readyState==='complete')go();else addEventListener('load',go)}catch(e){}})();
 
 /* ====================== НАГАДУВАННЯ НА ТЕЛЕФОН (Web Push, 22.11.2026, рішення автора «Push-нагадування») ======================
    «Налаштування» → «Нагадування»: кнопка «Увімкнути сповіщення». Сервер api.nightlex.com (Cloudflare, cloudflare/push.js) щодня у вибраний час
