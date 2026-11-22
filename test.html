@@ -172,6 +172,9 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
 </section>
 </main>
 <script>
+// 22.11.2026 (автор): мова за браузером — українська → UA, данська → DA, англійська й усі інші → EN
+function nxBrowserLang(){try{const ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];for(const l of ls){const c=String(l).toLowerCase().slice(0,2);if(c==='uk')return 'uk';if(c==='da')return 'da';if(c==='en')return 'en'}}catch(e){}return 'en'}
+
 (function(){
   const KEY='nightlex-test-survey';let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
   const store=()=>{try{const o={};document.querySelectorAll('[data-q]').forEach(el=>{o[el.id||el.dataset.name]=val(el)});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}};
@@ -182,7 +185,7 @@ textarea,input[type=text]{background:rgba(25,24,27,.7)}
   function val(el){if(el.classList.contains('scale')){const c=el.querySelector('input:checked');return c?c.value:''}return el.value.trim()}
   document.addEventListener('input',store);document.addEventListener('change',store);
   // мова сторінки: англійська типово (тестувальники — данці, італійці, українці), ?lang=uk або збережений вибір — українська
-  let LANG='en';try{const q=new URLSearchParams(location.search).get('lang');LANG=q==='uk'||q==='en'||q==='da'?q:(localStorage.getItem(KEY+'-lang')||'en')}catch(e){}
+  let LANG='en';try{const q=new URLSearchParams(location.search).get('lang');LANG=q==='uk'||q==='en'||q==='da'?q:(localStorage.getItem(KEY+'-lang')||nxBrowserLang())}catch(e){}
   const MSG={en:{sent:'Thank you! Your answers have been sent.',copied:'Answers copied — paste them into a message to the person who gave you the link.',copied2:'Answers copied — paste them into a message.',fail:'Could not copy — select the answers manually.',title:'Nightlex — 7-day form'},
     da:{sent:'Tak! Dine svar er sendt.',copied:'Svarene er kopieret — indsæt dem i en besked til den person, der gav dig linket.',copied2:'Svarene er kopieret — indsæt dem i en besked.',fail:'Kunne ikke kopiere — markér svarene manuelt.',title:'Nightlex — formular efter 7 dage'},
     uk:{sent:'Дякуємо! Відповіді надіслано.',copied:'Відповіді скопійовано — встав їх у повідомлення тому, хто дав посилання.',copied2:'Відповіді скопійовано — встав їх у повідомлення.',fail:'Не вдалося скопіювати — виділи відповіді вручну.',title:'Nightlex — анкета'}};

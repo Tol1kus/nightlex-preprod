@@ -9102,6 +9102,8 @@ if(typeof picQ==='function'){const _pq=picQ;picQ=function(w){try{if(typeof aiIsN
    надсилає нагадування — лише якщо сьогодні заняття ще не було (гра повідомляє «день зроблено»). Серія ≥ 2 дні → «Серія N днів 🔥».
    iPhone: працює лише з іконки на екрані «Додому» (iOS 16.4+). Зберігається: адреса підписки браузера, час, часовий пояс, мова, серія, дата заняття.
    Відкритий ключ VAPID — не секрет (приватний — у .env і в секретах Worker). */
+// 22.11.2026, автор: «пуш-повідомлення будемо робити перед запуском» — кнопку в «Нагадуваннях» сховано; увімкнути: PUSH_UI=true (сервер і код готові)
+const PUSH_UI=false;
 const PUSH_KEY='BJz3ZDh478PEkgYhKvf8w0Tv6CtpfAIcryHFX2sbGcC9hg3QQRiVhfimAEWQgHqUZ6RdPqQlGCXranvpQJToNrU',PUSH_API='https://api.nightlex.com';
 function pushEn(){try{return typeof uiEn==='function'&&uiEn()}catch(e){return false}}
 function pushOk(){try{return location.protocol==='https:'&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window}catch(e){return false}}
@@ -9128,7 +9130,7 @@ function puSync(extra){try{if(!S.push||!S.push.id||!pushOk())return;pushPost('/p
 on('plan:done',()=>puSync({done:today()}));
 if(typeof remindSave==='function'){const _rs=remindSave;remindSave=function(){const r=_rs.apply(this,arguments);puSync();return r}}
 // блок у вікні «Нагадування»
-if(typeof remindSheet==='function'){const _rsh=remindSheet;remindSheet=function(){const r=_rsh.apply(this,arguments);try{const sh=document.querySelector('.rm-bg .rt-sheet');const lab=sh&&sh.querySelector('.rm-time');if(!sh||!lab)return r;
+if(typeof remindSheet==='function'){const _rsh=remindSheet;remindSheet=function(){const r=_rsh.apply(this,arguments);try{if(!PUSH_UI&&!(S.push&&S.push.id))return r;const sh=document.querySelector('.rm-bg .rt-sheet');const lab=sh&&sh.querySelector('.rm-time');if(!sh||!lab)return r;
   const en=pushEn(),on=!!(S.push&&S.push.id),art=typeof remindInArtifact==='function'&&remindInArtifact();if(art)return r;
   const html=`<div class="pu-box" data-noi18n><b>${en?'Notifications on this phone':'Сповіщення на цьому телефоні'}</b>
     <p>${on?(en?'On. We’ll remind you at the chosen time — only if you haven’t studied yet today.':'Увімкнено. Нагадаємо у вибраний час — лише якщо сьогодні ти ще не займав(ла)ся.')

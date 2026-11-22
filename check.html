@@ -155,7 +155,7 @@ async function startScreen(){CUR=null;HIST=[];document.documentElement.lang=ST.l
   const name=el('input',{class:'t',id:'nm',value:ST.name||'',placeholder:t.namePh,autocomplete:'given-name','aria-label':t.name,oninput:e=>{ST.name=e.target.value.trim().slice(0,40);save()}});
   m.replaceChildren(
     el('div',{class:'mut sm'},'Nightlex'),el('h1',{},t.title),el('p',{},t.intro),el('p',{class:'mut sm'},t.two),el('p',{class:'friends'},t.friends),
-    el('div',{class:'sec'},t.lang),el('div',{class:'chips'},...[['da','Dansk'],['en','English (US)']].map(([k,n])=>el('button',{class:'chip'+(ST.lang===k?' on':''),onclick:()=>{ST.lang=k;ITEMS=null;save();startScreen()}},n))),
+    el('div',{class:'sec'},t.lang),el('div',{class:'chips'},...[['da','Dansk'],['en','English (US)']].map(([k,n])=>el('button',{class:'chip'+(ST.lang===k?' on':''),onclick:()=>{ST.langSet=1;ST.lang=k;ITEMS=null;save();startScreen()}},n))),
     el('div',{class:'sec'},t.name),name,
     // 18.11.2026: «продовжити за іншим» — великою кнопкою одразу під ім'ям (унизу її не помічали)
 
@@ -276,7 +276,10 @@ function sendSheet(){const t=T(),p=payload(),v=Object.values(p.items),n=k=>v.fil
 // кожні 10 відповідей — тихе збереження на сервері, щоб нічого не загубилось
 let NX_N=0;{const _st=store;store=function(){const r=_st.apply(this,arguments);try{if(++NX_N%10===0){const p=payload();if(Object.keys(p.items).length)nxSave('check',p.lang,p.name,p).then(ok=>{if(ok)toast(T().savedTx)})}}catch(e){}return r}}
 // пряме посилання за мовою: check.html?lang=da — для данців, ?lang=en — для американців
-try{const q=new URLSearchParams(location.search).get('lang');if(q==='da'||q==='en'){if(ST.lang!==q)ITEMS=null;ST.lang=q;save()}}catch(e){}
+// 22.11.2026 (автор): без ?lang= — мова за браузером: данська → перевірка данської, решта → англійської (поки людина сама не обрала мову і не почала перевірку)
+function nxBrowserLang(){try{const ls=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];for(const l of ls){const c=String(l).toLowerCase().slice(0,2);if(c==='da')return 'da';if(c==='en'||c==='uk')return 'en'}}catch(e){}return 'en'}
+try{const q=new URLSearchParams(location.search).get('lang');if(q==='da'||q==='en'){if(ST.lang!==q)ITEMS=null;ST.lang=q;ST.langSet=1;save()}
+  else if(!ST.langSet&&!Object.values(ST.res||{}).reduce((a,o)=>a+Object.keys(o||{}).length,0)){const b=nxBrowserLang();if(ST.lang!==b)ITEMS=null;ST.lang=b;save()}}catch(e){}
 startScreen();
 </script>
 </body>
