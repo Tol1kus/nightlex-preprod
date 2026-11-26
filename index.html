@@ -7004,14 +7004,14 @@ function dlLevelHTML(all,lv,D){if(!lvOK(lv))return `<div class="nf-card rd-lock"
    і «Видалити все» (pvDeleteAll: localStorage + копія прогресу в хмарі claude.ai, якщо є; двокрокове підтвердження).
    Вхід: Налаштування → «Дані» → «Приватність». Текст оновлювати разом зі змінами в зборі даних (нова аналітика, AI-посередник, акаунти). */
 let PV_LANG=null,PV_ARM=0;   // 22.11.2026: мова сторінки за замовчуванням = мова інтерфейсу (визначається при відкритті — 99g ще не завантажено)
-const PV_DATE='22.11.2026';
+const PV_DATE='26.11.2026';
 const PV_TXT={
  uk:{title:'Приватність',sub:'що зберігається, де і навіщо',upd:'Оновлено',
   intro:'Nightlex збирає мінімум даних: лише те, без чого не працює навчання. Без реклами, аналітики, трекерів і файлів cookie. Пошту, паролі й платіжні дані гра не просить і не зберігає.',
   sec:[
    ['layers','Що зберігається на твоєму пристрої','Прогрес навчання (які слова ти вчиш і коли їх повторити, відповіді, помилки), налаштування, власний словник, чернетки листів, копії твоїх скарг на помилки та ім\'я для привітання, якщо ти його вписав(ла). Усе це лежить у сховищі браузера (localStorage) на цьому пристрої й саме нікуди не надсилається — лише те, що ти сам(а) надішлеш (див. «Що ти надсилаєш сам(а)»). Мета — щоб навчання продовжувалось з того місця, де ти зупинився(лась).'],
    ['link','Версія на claude.ai','Якщо ти відкриваєш гру всередині claude.ai, копія прогресу зберігається в базі даних цього застосунку у твоєму акаунті Claude — щоб прогрес був на всіх твоїх пристроях. Ця копія приватна: її не бачить ні автор гри, ні інші люди. Скарги на помилки («Повідомити про помилку») теж зберігаються там: текст скарги, мова і час — щоб автор міг виправити помилку; гра не додає до них ні імені, ні пошти. Дані обробляє Anthropic за своєю політикою приватності.'],
-   ['camera','Що ти надсилаєш сам(а)','Лише коли ти натискаєш кнопку: «Звіт для тесту», «Повідомити про проблему» (знімок екрана з коментарем), анкета й перевірка мови на сторінках для тестувальників. Це потрапляє на наш сервер api.nightlex.com (Cloudflare, ЄС): текст, знімок, мова, час і випадковий номер пристрою (не ім\'я). IP-адресу й дані браузера ми не зберігаємо. Мета — знайти й виправити помилки. Видалити надіслане — напиши через «Повідомити про проблему». Якщо ти увімкнеш нагадування («Нагадування» → «Увімкнути сповіщення»), сервер зберігає адресу підписки твого браузера (без неї сповіщення не доставити), обраний час, часовий пояс, мову, кількість днів поспіль і дату останнього заняття — щоб не нагадувати, коли ти вже позаймався(лась). Вимкнення видаляє ці дані.'],
+   ['camera','Що ти надсилаєш сам(а)','Лише коли ти натискаєш кнопку: «Звіт для тесту», «Повідомити про проблему» (знімок екрана з коментарем), анкета й перевірка мови на сторінках для тестувальників. Це потрапляє на наш сервер api.nightlex.com (Cloudflare, ЄС): текст, знімок, мова, час і випадковий номер пристрою, а також ім\'я, якщо ти його вписав(ла) (його можна змінити або стерти в «Налаштуваннях»). IP-адресу й дані браузера ми не зберігаємо. Мета — знайти й виправити помилки. Видалити надіслане — напиши через «Повідомити про проблему». Якщо ти увімкнеш нагадування («Нагадування» → «Увімкнути сповіщення»), сервер зберігає адресу підписки твого браузера (без неї сповіщення не доставити), обраний час, часовий пояс, мову, кількість днів поспіль і дату останнього заняття — щоб не нагадувати, коли ти вже позаймався(лась). Вимкнення видаляє ці дані.'],
    ['globe','Сторонні сервіси','Гру розміщено на GitHub Pages (app.nightlex.com) — як і будь-який сервер, GitHub бачить IP-адресу під час завантаження сторінки. Шрифти, картинки й звуки лежать на самому сайті, тож до Google та інших сервісів сторінка не звертається. Голосове введення (кнопка мікрофона) використовує розпізнавання мови твого браузера: у Chrome звук обробляє Google, у Safari — Apple. Мікрофон працює лише після натискання кнопки. Скарга через GitHub відкривається лише якщо ти сам(а) натиснеш «Відкрити GitHub» — тоді вона стає публічною.'],
    ['lock','Чого гра не робить','Не продає й не передає дані. Не показує рекламу. Не веде аналітику і не стежить за тобою на інших сайтах. Не вимагає акаунта. Сторінка забороняє браузеру надсилати дані будь-куди, крім нашого сервера api.nightlex.com (Content-Security-Policy).'],
    ['user','Твої права (GDPR)','Ти можеш будь-коли отримати копію своїх даних (кнопка нижче — файл JSON), перенести їх на інший пристрій («Відновити з файлу») або видалити все. Питання й запити — через «Повідомити про помилку» в налаштуваннях. Якщо вважаєш, що з даними поводяться неправильно, можна звернутися до Datatilsynet (данський орган захисту даних).']],
@@ -7023,7 +7023,7 @@ const PV_TXT={
   sec:[
    ['layers','Stored on your device','Your learning progress (which words you study and when to review them, answers, mistakes), settings, your own dictionary, writing drafts, copies of your error reports and the name for the greeting, if you entered one. It all stays in your browser storage (localStorage) on this device and is not sent anywhere by itself — only what you choose to send (see “What you send yourself”). Purpose: so you can continue where you left off.'],
    ['link','The claude.ai version','If you open the app inside claude.ai, a copy of your progress is stored in this app\'s database under your Claude account, so your progress follows you across devices. This copy is private: neither the app author nor other people can see it. Error reports ("Report a mistake") are stored there too: the report text, language and time, so the author can fix the mistake; the app adds neither your name nor your email. Anthropic processes this data under its privacy policy.'],
-   ['camera','What you send yourself','Only when you press a button: “Test report”, “Report a problem” (a screenshot with a comment), and the survey and language check on the tester pages. This goes to our server api.nightlex.com (Cloudflare, EU): the text, screenshot, language, time and a random device number (not your name). We do not store your IP address or browser details. Purpose: to find and fix mistakes. To delete what you sent, write to us via “Report a problem”. If you turn on reminders (“Reminders” → “Turn on reminders”), the server stores your browser’s subscription address (needed to deliver a notification), the chosen time, time zone, language, your day streak and the date of your last lesson — so it doesn’t remind you after you’ve already studied. Turning reminders off deletes this data.'],
+   ['camera','What you send yourself','Only when you press a button: “Test report”, “Report a problem” (a screenshot with a comment), and the survey and language check on the tester pages. This goes to our server api.nightlex.com (Cloudflare, EU): the text, screenshot, language, time and a random device number, plus your name if you entered one (you can change or clear it in Settings). We do not store your IP address or browser details. Purpose: to find and fix mistakes. To delete what you sent, write to us via “Report a problem”. If you turn on reminders (“Reminders” → “Turn on reminders”), the server stores your browser’s subscription address (needed to deliver a notification), the chosen time, time zone, language, your day streak and the date of your last lesson — so it doesn’t remind you after you’ve already studied. Turning reminders off deletes this data.'],
    ['globe','Third-party services','The game is hosted on GitHub Pages (app.nightlex.com); like any server, GitHub sees your IP address when the page loads. Fonts, pictures and sounds are served from the site itself, so the page does not contact Google or other services. Voice input (the microphone button) uses your browser\'s speech recognition: in Chrome the audio is processed by Google, in Safari by Apple. The microphone only works after you press the button. A GitHub report only opens if you choose "Open GitHub", and then it becomes public.'],
    ['lock','What the app does not do','It does not sell or share your data, show ads, run analytics or track you on other sites, and it needs no account. The page tells the browser not to send data anywhere except our server api.nightlex.com (Content-Security-Policy).'],
    ['user','Your rights (GDPR)','You can get a copy of your data at any time (button below, a JSON file), move it to another device ("Restore from file") or delete everything. Questions and requests: use "Report a mistake" in Settings. If you think your data is handled wrongly, you can contact Datatilsynet (the Danish data protection authority).']],
@@ -8605,7 +8605,7 @@ const NX_API='https://api.nightlex.com';
 function nxClient(){try{let c=localStorage.getItem('nightlex-client');if(!c){c=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2));localStorage.setItem('nightlex-client',c)}return c}catch(e){return ''}}
 async function nxSave(kind,lang,name,data){try{if(typeof AUDIO_MODE==='undefined'||AUDIO_MODE!=='file'||!/^https:/.test(location.protocol))return false;const c=nxClient();if(!c)return false;
   const r=await fetch(NX_API+'/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,client:c,lang,name,data})});const j=await r.json().catch(()=>({}));return r.ok&&j.ok}catch(e){return false}}
-async function trShare(){const txt=trText();nxSave('report',S.lang,'',{text:txt,ui:typeof uiEn==='function'&&uiEn()?'en':'uk',date:TODAY_REAL?TODAY_REAL():today()}).then(ok=>{if(ok)toast(uiEn()?'Report saved ✓':'Звіт збережено ✓')});
+async function trShare(){const txt=trText();nxSave('report',S.lang,S.name||'',{name:S.name||'',text:txt,ui:typeof uiEn==='function'&&uiEn()?'en':'uk',date:TODAY_REAL?TODAY_REAL():today()}).then(ok=>{if(ok)toast(uiEn()?'Report saved ✓':'Звіт збережено ✓')});
   try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e&&e.name==='AbortError')return}
   try{await navigator.clipboard.writeText(txt);toast(uiEn()?'Report copied — paste it into a message':'Звіт скопійовано — встав його в повідомлення')}
   catch(e){toast(uiEn()?'Could not copy the report':'Не вдалося скопіювати звіт')}}
@@ -8621,7 +8621,7 @@ async function nxShrink(file){const url=await new Promise((ok,no)=>{const r=new 
   const c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
   let q=.82,d=c.toDataURL('image/jpeg',q);while(d.length>1900000&&q>.4){q-=.12;d=c.toDataURL('image/jpeg',q)}return d}finally{}}
 async function nxShot(file,comment,page,lang){try{const img=await nxShrink(file);const c=nxClient();if(!c)return 'err';
-  const r=await fetch(NX_API+'/shot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client:c,lang,page,comment:String(comment||'').slice(0,2000),img})});
+  const r=await fetch(NX_API+'/shot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client:c,lang,page,comment:((typeof S!=='undefined'&&S.name)?'['+S.name+'] ':'')+String(comment||'').slice(0,2000),img})  /* 26.11.2026: ім'я — на початку коментаря (у таблиці знімків немає окремого поля) */});
   const j=await r.json().catch(()=>({}));return r.ok&&j.ok?'ok':(j.error==='limit'?'limit':'err')}catch(e){return 'err'}}
 // «📷 Повідомити про проблему» на «Я» (лише сайт): знімок з галереї + речення → сервер Nightlex (адмінка → «Знімки»)
 let SHOT_F=null;
@@ -8688,7 +8688,11 @@ function uiChooseHTML(){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';
     ${opt('uk','UA','Українська','вчу англійську (US) або данську')}
     ${opt('en','EN','English','learn Danish with English explanations')}
   </div>`}
-function uiChooseScreen(){applyTheme();document.body.classList.add('in-session');REDRAW=uiChooseScreen;app.innerHTML=uiChooseHTML()}
+// поки йде заставка — екран вибору прихований, з'являється, коли вона тане (інакше логотип заставки висить поверх кнопок).
+// 26.11.2026 (знімок автора): після «Пройти тест заново» сторінка перезавантажується, і uiChooseScreen() малював екран одразу — без очікування.
+function uiWaitSplash(){const el=document.querySelector('#app .ui-first');if(!el||!document.querySelector('.nf-splash:not(.out)'))return;el.classList.add('ui-wait');
+  const t=setInterval(()=>{const sp=document.querySelector('.nf-splash');if(!sp||sp.classList.contains('out')){clearInterval(t);el.classList.remove('ui-wait')}},120)}
+function uiChooseScreen(){applyTheme();document.body.classList.add('in-session');REDRAW=uiChooseScreen;app.innerHTML=uiChooseHTML();uiWaitSplash()}
 function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASKED=true;
   if(k===cur){try{localStorage.setItem(UI_KEY,k)}catch(e){}launchScreen();return}
   try{flushSave()}catch(e){}try{localStorage.setItem(UI_KEY,k)}catch(e){}try{sessionStorage.setItem('nf-ui-asked','1')}catch(e){}
@@ -8697,9 +8701,7 @@ function uiChoose(k){const cur=typeof uiEn==='function'&&uiEn()?'en':'uk';UI_ASK
 {const _lp=launchScreen;launchScreen=function(){const r=_lp.apply(this,arguments);try{
   // ще не обрано мову інтерфейсу: на місці старту — екран вибору (заставка, якщо вона йде, тане поверх нього)
   if(!uiChosen()&&!window.NF_SKIP_UI_CHOOSE){app.innerHTML=uiChooseHTML();REDRAW=uiChooseScreen;
-    // поки йде заставка — екран вибору прихований, з'являється, коли вона тане (інакше просвічує крізь анімацію)
-    const el=document.querySelector('#app .ui-first');if(el&&document.querySelector('.nf-splash')){el.classList.add('ui-wait');
-      const t=setInterval(()=>{const sp=document.querySelector('.nf-splash');if(!sp||sp.classList.contains('out')){clearInterval(t);el.classList.remove('ui-wait')}},120)}
+    uiWaitSplash();
     return r}
   const root=document.querySelector('#app .nf-launch');if(!root||root.dataset.uip)return r;root.dataset.uip='1';
   const u=root.querySelector('.ul-btn');if(u)u.remove();
@@ -9143,6 +9145,42 @@ if(typeof remindSheet==='function'){const _rsh=remindSheet;remindSheet=function(
       :`<button class="btn big nf-cta" onclick="pushOn()">${icn('clock')} ${en?'Turn on reminders':'Увімкнути сповіщення'}</button>`}</div>`;
   lab.insertAdjacentHTML('afterend',html)}catch(e){}return r}}
 (function(){try{const st_=document.createElement('style');st_.textContent=`.pu-box{margin:14px 0 6px;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,var(--lime) 10%,var(--s1));border:1px solid color-mix(in srgb,var(--lime) 35%,transparent)}.pu-box b{display:block;margin-bottom:4px}.pu-box p{margin:0 0 12px;color:var(--muted);font-size:14px;line-height:1.45}.pu-row{display:flex;gap:8px;flex-wrap:wrap}.pu-row .btn{flex:1}`;document.head.appendChild(st_)}catch(e){}})();
+
+/* ====================== «ЯК ТЕБЕ ЗВАТИ?» (26.11.2026, рішення автора) ======================
+   Після вибору мови інтерфейсу — один раз короткий екран з іменем (необов'язково: «Пропустити»).
+   Ім'я — S.name (воно ж у «Налаштуваннях» → «Твоє ім'я» і на головній); S.nameAsked — дата, коли питали (більше не питаємо).
+   Ім'я йде разом зі «Звітом для тесту» і знімками екрана (99h), щоб автор бачив, хто що надіслав. Хто вже вчився — побачить екран
+   один раз після оновлення. jsdom і автотести (webdriver) — без екрана (NF_FORCE_NAME — для перевірки). */
+function nmNeed(){try{if(S.name||S.nameAsked)return false;if(/jsdom/i.test(navigator.userAgent||''))return false;
+  if(navigator.webdriver&&!window.NF_FORCE_NAME)return false;return true}catch(e){return false}}
+function nmClean(v){return String(v||'').replace(/<[^>]*>/g,'').replace(/[<>"`{}\\]/g,'').replace(/\s+/g,' ').trim().slice(0,30)}
+function nmScreen(){applyTheme();document.body.classList.add('in-session');REDRAW=nmScreen;
+  const en=typeof uiEn==='function'&&uiEn();
+  app.innerHTML=`<div class="onb nf-onb nf-full nf-launch ui-first nm-first" data-noi18n>
+    <div class="nf-brand"><b class="nl-wm" aria-label="NightLex"><i>Night</i><i class="lx">Lex</i><svg class="nl-wm-s" viewBox="-10 -10 20 20" aria-hidden="true"><path d="${nfSpark(0,0,9)}"/></svg></b></div>
+    <h2 class="ui-q">${en?'What’s your name?':'Як тебе звати?'}<small>${en?'So we can greet you — and know who sent a report':'Щоб вітатись — і знати, хто надсилає звіт'}</small></h2>
+    <form class="nm-form" onsubmit="event.preventDefault();nmSave()">
+      <input class="nm-in" id="nmIn" type="text" maxlength="30" autocomplete="given-name" autocapitalize="words" enterkeyhint="done" placeholder="${en?'Your name':'Твоє ім’я'}" aria-label="${en?'Your name':'Твоє ім’я'}">
+      <button class="btn big nf-cta nm-go" type="submit">${en?'Continue':'Далі'}</button>
+    </form>
+    <button class="ui-link nm-skip" type="button" onclick="nmSkip()">${en?'Skip':'Пропустити'}</button>
+    <p class="nm-note">${en?'You can change it anytime in Settings.':'Змінити можна будь-коли в «Налаштуваннях».'}</p>
+  </div>`;
+  if(typeof uiWaitSplash==='function')uiWaitSplash()}
+function nmSave(){const v=nmClean((document.getElementById('nmIn')||{}).value);if(!v){nmSkip();return}
+  S.name=v;S.nameAsked=today();save();launchScreen()}
+function nmSkip(){S.nameAsked=today();save();launchScreen()}
+{const _nmL=launchScreen;launchScreen=function(){
+  // спершу мова інтерфейсу (99j), потім ім'я, потім звичайний старт
+  if(typeof uiChosen==='function'&&uiChosen()&&nmNeed()){nmScreen();return}
+  return _nmL.apply(this,arguments)}}
+(function(){try{const st=document.createElement('style');st.textContent=
+  '.nm-form{display:flex;flex-direction:column;gap:12px;margin-top:4px}'+
+  '.nm-in{font:600 19px "Golos Text",sans-serif;color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent);border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);border-radius:18px;padding:0 18px;min-height:58px;width:100%;box-sizing:border-box}'+
+  '.nm-in:focus{outline:none;border-color:var(--lime)}.nm-in::placeholder{color:color-mix(in srgb,var(--ink) 45%,transparent)}'+
+  '.nm-first .nm-go{width:100%;min-height:56px}.nm-first .nm-skip{margin-top:8px;min-height:44px}'+
+  '.nm-first .nm-note{text-align:center!important;font-size:13px;opacity:.55;margin:6px 0 0}';
+  document.head.appendChild(st)}catch(e){}})();
 
 bootApp();bigLoad();
 </script>
