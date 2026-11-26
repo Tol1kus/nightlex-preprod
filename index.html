@@ -2894,7 +2894,8 @@ function genderOf(t,lang){lang=lang||S.lang;t=String(t||'').trim();
   if(lang==='da'){const a=typeof daArt==='function'?daArt(t):((t.match(/^(en|et)\s/i)||[])[1]||'').toLowerCase();return a?'g-'+a:null}
   if(lang==='it'){const m=t.match(/^(il|lo|i|gli|la|le)\s/i);if(!m)return null;return ['la','le'].includes(m[1].toLowerCase())?'g-f':'g-m'}
   return null}
-function artHTML(t,lang){const g=S.genderColors!==false&&genderOf(t,lang);if(!g)return esc(t);const m=String(t).match(/^(\S+)(\s+)(.*)$/);
+function artHTML(t,lang){const g=S.genderColors!==false&&genderOf(t,lang);if(!g)return esc(t);const m=String(t).match(/^(en|et)(\s+)(.*)$/i);
+  if(!m)return `<span class="art-w ${g}">${esc(t)}</span>`;  /* 26.11.2026: незлічуване без артикля (kaffe, mælk) — рід є, артикля немає */
   return `<span class="art ${g}">${esc(m[1])}</span> ${esc(m[3])}`}
 const GNAME={'g-en':'en-ord','g-et':'et-ord','g-m':'чоловічий рід','g-f':'жіночий рід'};
 // фарбування артиклів у старих екранах (картки, словник, результати)
@@ -3410,7 +3411,7 @@ on('result',()=>{if(!BONUS_JUST)return;BONUS_JUST=false;const row=document.query
   row.insertAdjacentHTML('beforebegin',`<div class="plan-flow ph-bonus"><div class="pf-bar"><i style="width:${k/all.length*100}%"></i></div><small>⭐ Бонус-раунд: ${k} з ${all.length}</small></div>`);
   row.classList.add('pf-row');
   row.innerHTML=n?`<button class="btn big" onclick="bonusGo()"><span class="pf-lab">Далі: ${esc(n.t)}</span></button><button class="btn ghost" onclick="home()">Пауза</button>`
-    :`<button class="btn big" onclick="home()">🏆 На головну</button><button class="btn ghost" onclick="trainScreen()">🎮 Вільна практика</button>`});
+    :`<button class="btn big" onclick="bonusDoneScreen()">🏆 Підсумок дня</button><button class="btn ghost" onclick="home()">На головну</button>`});
 // текст для бонусу: непрочитаний, свого рівня, не той, що був текстом дня
 function bonusTextPick(){const ts=textsFor().filter(t=>(typeof lvOK!=='function'||lvOK(t.lv))&&S.read[S.lang][t.idx]==null);
   const T=S.todayText&&S.todayText[S.lang],skip=T&&T.d===today()?T.idx:-1,c=ts.filter(t=>t.idx!==skip);if(!c.length)return null;
@@ -3675,7 +3676,7 @@ on('session:end',o=>{if(o)o._sec=Math.round((Date.now()-(ACT_T0||Date.now()))/10
 function resultHTML(o){
   const acc=o.graded?Math.min(1,o.right/o.graded):1,pct=Math.round(acc*100),stars=!o.graded?3:acc>=.95?3:acc>=.75?2:1;
   const tone=!o.graded||acc>=.85?'great':acc>=.6?'good':'keep';
-  const title=!o.graded?'Готово!':acc>=.95?'Бездоганно!':acc>=.85?'Чудово!':acc>=.6?'Добре!':'Є над чим попрацювати';
+  const title=!o.graded?'Готово!':acc>=.95?'Бездоганно!':acc>=.85?'Чудово!':acc>=.6?'Добре!':'Добрий початок — повторимо!';
   const r=40,c=2*Math.PI*r,sec=o._sec||0;
   return `<div class="card result rs ${tone}">
     <div class="rs-hero"><div class="rs-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${r}" class="rb"/><circle cx="50" cy="50" r="${r}" class="rf" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-acc)}"/></svg>
@@ -5675,7 +5676,7 @@ function rdQuizEnd(){const t=RD.t,n=QZ.qs.length,r=QZ.res.filter(Boolean).length
     QZ.bon=!QZ.blk&&typeof BONUS_CUR!=='undefined'&&BONUS_CUR==='text';if(QZ.bon){bonusMark('text');BONUS_JUST=false}}
   const nws=rdNw(t).length?rdNw(t):textWordsSafe(t).slice(0,6).map(w=>[w.en,w.uk]);const inDict=wd=>(S.my[S.lang]||[]).some(m=>norm(m.fg,S.lang)===norm(wd,S.lang));
   let next='',lab='До наступного кроку';
-  if(QZ.blk){next='planNext()';try{if(planBlocks().every(b=>b.done))lab='Завершити день'}catch(e){}} // 22.11.2026: останній крок плану — не «До наступного кроку»else if(QZ.bon){const bn=bonusNext();next=bn?'bonusGo()':'home()'}
+  if(QZ.blk){next='planNext()';try{if(planBlocks().every(b=>b.done))lab='Завершити день'}catch(e){}} /* 22.11.2026: останній крок плану — не «До наступного кроку» */ else if(QZ.bon){const bn=bonusNext();next=bn?'bonusGo()':'bonusDoneScreen()'}  /* 26.11.2026: раніше коментар «//» з'їдав цю гілку — після бонусного тексту гра лишалась у «Читанні» */
   else if(t.lib){const b=libItems().find(x=>x.id===t.lib.id),nx=b&&b._idx[t.lib.part];if(nx!=null){next=`openText(${nx})`;lab=`Далі · частина ${t.lib.part+1}`}else{next='libraryScreen()';lab='До бібліотеки'}}
   else{next='readingList()';lab='До текстів'}
   app.innerHTML=`<div class="rd reader nf-full rd-end"><header class="rd-top"><button class="rd-ib" onclick="rdRender()" aria-label="Назад до тексту">${icn('back')}</button><b class="rd-ttl">${esc(t.title)}</b><span></span></header>
@@ -6665,7 +6666,7 @@ function fbPolish(el){if(!el||el.dataset.fp)return;el.dataset.fp=1;
   const head=`<div class="fb-h"><span class="fb-ic">${icn('check')}</span><b>${esc(title)}</b>${xp?`<span class="fb-xp">${esc(xp)}</span>`:''}</div>`;
   const la=el.querySelector(':scope > .listen-ans'),w=fbWord();let body='';
   if(la){const sp=la.querySelector('span');const t=sp?sp.textContent:'';const [a,b]=t.split(/\s+—\s+/);la.remove();body=fbAnsHTML(w,a||'',b||'')}
-  else if(mid&&/\s—\s/.test(mid)&&mid.length<80){const [a,b]=mid.split(/\s+—\s+/);body=fbAnsHTML(w,a,b)}
+  else if(mid&&/\s—\s/.test(mid)&&mid.length<80&&(()=>{const l=mid.split(/\s+—\s+/)[0];return l.length<=32&&l.split(/\s+/).length<=5&&!/[.!?]\s|\(/.test(l)})()){const [a,b]=mid.split(/\s+—\s+/);body=fbAnsHTML(w,a,b)}  /* 26.11.2026: пояснення з « — » («en avis. Український рід (газета — жіночий)…») — не «слово — переклад», а примітка */
   else{if(mid)body=`<p class="fb-note">${esc(mid)}</p>`;if(w&&!el.querySelector('.pimg,.om,.fb-ans'))body=fbAnsHTML(w,w[S.lang],w.uk||'')+body}
   el.insertAdjacentHTML('afterbegin',head+body);el.classList.add('fb-pol')}
 // відгук з'являється в #fb після відповіді — стежимо за застосунком і поліруємо новий
@@ -7401,7 +7402,7 @@ dayDoneScreen=function(){
     ${typeof epOutroHTML==='function'?epOutroHTML():''}${daySummaryHTML().replace(/<div class="k-tomorrow">[\s\S]*$/,'')}
     <div class="k-tomorrow dd-tm"><small>Завтра: ${nW(t.due)} на повторення · ${t.newW} нових${t.grammar?` · ${esc(t.grammar)}`:''}</small></div>
     <div class="k-helper jr-bcard dd-bonus"><div class="k-hb"><b class="dd-bt">Бонус-раунд · ≈ ${bmin} хв</b>
-      <small>${rem>=3?`До норми ${m} хв лишилось ${rem} хв`:`Норму ${m} хв виконано`} · <button class="dd-what" onclick="ddBonusList()">Що в бонусі</button></small>
+      <small>${rem>=3?`Сьогодні вже ${Math.max(1,m-rem)} хв — бонус за бажанням`:`Норму ${m} хв виконано`} · <button class="dd-what" onclick="ddBonusList()">Що в бонусі</button></small>
       <div class="k-hbtns"><button class="btn big" onclick="bonusGo()">Почати бонус-раунд</button></div><small class="dd-later">Можна й пізніше — бонус чекатиме на вкладці «Сьогодні»</small></div></div>`;
   emit('screen','home')};
 
@@ -7990,9 +7991,9 @@ function d9Recent(){return WORDS.filter(w=>w[S.lang]&&st(w)&&st(w).lr).sort((a,b
 const M9_SUB={'Прогрес':'звіт за тиждень і досягнення','Тест рівня':'заново або наступний рівень','Налаштування':'час, звук, тема й колір'};
 function m9Week(){const t=new Date(today()+'T12:00:00'),dow=(t.getDay()+6)%7,act=S.act||{},L=['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
   const f=d=>{const x=new Date(t);x.setDate(t.getDate()+d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
-  let n=0;const days=L.map((l,i)=>{const k=f(i-dow),a=act[k],on=!!(a&&((a.sec|0)>=60||(a.a|0)>0)),fut=i>dow;if(on)n++;
+  let n=0;const days=L.map((l,i)=>{const k=f(i-dow),a=act[k],on=typeof wgActive==='function'?wgActive(k):!!(a&&((a.sec|0)>=60||(a.a|0)>0)),fut=i>dow;if(on)n++;
     return `<span class="m9-d${on?' on':''}${i===dow?' now':''}${fut?' fut':''}"><i>${on?icn('check'):''}</i><small>${l}</small></span>`}).join('');
-  return `<div class="m9-wk"><div class="m9-wk-h"><b>Цей тиждень</b><small>${n} ${pluralUk(n,["день","дні","днів"])} з 7</small></div><div class="m9-days">${days}</div></div>`}
+  return `<div class="m9-wk"><div class="m9-wk-h"><b>Цей тиждень</b><small>${n} з ${(S.weekGoal&&S.weekGoal[S.lang])||5} ${pluralUk((S.weekGoal&&S.weekGoal[S.lang])||5,["дня","днів","днів"])}</small></div><div class="m9-days">${days}</div></div>`}
 function m9Enhance(){try{const a=document.getElementById('app'),me=a&&a.querySelector('.nf-me');if(!me||me.dataset.m9)return;me.dataset.m9='1';me.classList.add('m9');const pcs=a.querySelector('.nf-pcs');if(pcs)pcs.classList.add('m9');
   const m=S.minutes||30,sec=((S.act||{})[today()]||{}).sec||0,known=nxWordCounts().known,learnN=nxWordCounts().learn;
   const ch=me.querySelector('.nf-chips');const tile=(cls,ic,v,t)=>`<span class="m9-t ${cls}">${icn(ic)}<b>${v}</b><small>${t}</small></span>`;
@@ -9045,11 +9046,11 @@ if(typeof acceptPlan==='function'){const _apP=acceptPlan;acceptPlan=function(){t
 function nxStickNext(){try{if(!document.body.classList.contains('in-session'))return;const b=typeof anNextBtn==='function'?anNextBtn():null;if(!b)return;
   const row=b.closest('.row')||b.parentElement;if(row&&!row.classList.contains('nx-stick'))row.classList.add('nx-stick');
   // якщо «Далі» все одно нижче краю екрана (обгортка вправи не дає прилипнути) — один раз плавно підтягнути сторінку
-  if(!b.dataset.nxv){b.dataset.nxv='1';setTimeout(()=>{try{/* 26.11.2026 (знімок автора): кнопка «прилипає» й сама завжди на екрані — дивимось на ВЕСЬ блок розбору (#fb), щоб він став видно повністю */const box=b.closest('#fb')||row||b,r=box.getBoundingClientRect(),vh=window.innerHeight;if(r.bottom>vh-6&&r.height)window.scrollBy({top:Math.min(r.bottom-vh+18,Math.max(0,r.top-70)),behavior:'smooth'})}catch(e){}},120)}}catch(e){}}
+  if(!b.dataset.nxv){b.dataset.nxv='1';setTimeout(()=>{try{/* 26.11.2026 (знімок автора): кнопка «прилипає» й сама завжди на екрані — дивимось на ВЕСЬ блок розбору (#fb), щоб він став видно повністю */const fb=b.closest('#fb'),box=row||b,r=box.getBoundingClientRect(),vh=window.innerHeight,ft=fb?fb.getBoundingClientRect().top:r.top;if(r.bottom>vh-6&&r.height)window.scrollBy({top:Math.min(r.bottom-vh+22,Math.max(0,ft-70)),behavior:'smooth'})}catch(e){}},120)}}catch(e){}}
 (function(){try{const app=document.getElementById('app');if(!app||typeof MutationObserver!=='function')return;let q=0;
   new MutationObserver(()=>{if(q)return;q=1;requestAnimationFrame(()=>{q=0;nxStickNext()})}).observe(app,{childList:true,subtree:true})}catch(e){}})();
 (function(){try{const st_=document.createElement('style');st_.textContent=`
-#fb .nx-stick,#app .nx-stick{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:6;margin-top:12px}
+#fb .nx-stick,#app .nx-stick{position:static;margin-top:14px}  /* 26.11.2026 (знімок автора: «все ще закриває»): кнопка не прилипає — стоїть під розбором, сторінка під'їжджає до неї */
 #fb .nx-stick .btn{box-shadow:0 8px 22px -8px var(--accent)}`;document.head.appendChild(st_)}catch(e){}})();
 // аудіювання «Обери переклад» (2 колонки): довге слово + значок ✓/✕ виштовхували праву колонку за край екрана (B1, 390 px)
 (function(){try{const st_=document.createElement('style');st_.textContent=`.nf-optgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nf-optgrid .opt{min-width:0;overflow-wrap:anywhere;hyphens:auto}`;document.head.appendChild(st_)}catch(e){}})();
@@ -9275,6 +9276,52 @@ function rtQuietCard(){try{const en=typeof uiEn==='function'&&uiEn(),n=S.streak|
   '@keyframes rtRock{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}'+
   '@media (prefers-reduced-motion:reduce){.rt-qn,.rt-qn *{animation:none!important;transition:opacity .2s!important}}';
   document.head.appendChild(st)}catch(e){}})();
+
+/* ====================== ПРАВКИ ПІСЛЯ ОГЛЯДУ ЕКСПЕРТАМИ (26.11.2026, docs/review/experts_2026-11-26.md) ======================
+   1) Сповіщення не налазять на шапку вправи й підсумок: «План виконано» / «Нове досягнення» під час заняття чекають до головної,
+      інші — під час заняття внизу екрана (не над хрестиком і прогресом). «Тиха ніч» — лише на головній, не поверх підсумку.
+   2) Сторінка повертається вгору на кожному новому кроці / екрані.
+   («DK» на скрінах — прапор 🇩🇰 у браузері без емодзі-шрифту, на iPhone це прапор; код мови вже DA.) */
+let PW_Q=[];
+{const _pwT=toast;toast=function(m){try{const inS=document.body.classList.contains('in-session')||!!document.querySelector('#app > .top-row, #app .card.result, #app .k-daydone');
+  if(inS&&/План на сьогодні виконано|Нове досягнення|New achievement|plan.*done/i.test(String(m))){if(!PW_Q.includes(m))PW_Q.push(m);return}
+  document.body.classList.toggle('pw-toast-low',inS)}catch(e){}return _pwT.apply(this,arguments)}}
+function pwFlush(){try{if(!PW_Q.length)return;const q=PW_Q.slice(0,2);PW_Q=[];q.forEach((m,i)=>setTimeout(()=>toast(m),500+i*2300))}catch(e){}}
+on('home:after',()=>{setTimeout(pwFlush,300);try{if(S.frzShow2===today()){S.frzShow2=null;save();setTimeout(()=>{if(typeof rtQuietCard==='function')rtQuietCard()},700)}}catch(e){}});
+// «Тиха ніч» показуємо на головній, а не поверх підсумку уроку
+if(typeof rtQuietCard==='function'){const _pwQ=rtQuietCard;rtQuietCard=function(){try{if(document.querySelector('#app .card.result, #app .k-daydone')||document.body.classList.contains('in-session')){S.frzShow2=today();save();return}}catch(e){}return _pwQ.apply(this,arguments)}}
+// новий крок / екран — з початку сторінки
+on('item:render',()=>{try{if(window.scrollY>0)window.scrollTo(0,0)}catch(e){}});
+on('session:start',()=>{try{window.scrollTo(0,0)}catch(e){}});
+on('screen',()=>{try{window.scrollTo(0,0)}catch(e){}});
+(function(){try{const st=document.createElement('style');st.textContent=
+  /* приклад на картці слова: кнопка-речення була flex — пробіли біля виділеного слова зникали («kaffe.Tak!», «atbestillenu») */
+  '#app .wc-exq,#app .nf-exm strong{display:block!important;white-space:normal}'+
+  /* слова не ламаються посередині («undskyl/d»): переносимо лише цілі слова, довгі — з дефісом */
+  '#app .nf-optgrid .opt,#app .opt{overflow-wrap:break-word!important;word-break:normal!important;hyphens:manual}'+
+  /* картки правил: приклад поруч із плашкою не обрізається — якщо місця мало, переходить на свій рядок («bilen», «den nye bil») */
+  '.rl-top > :not(:first-child){flex:1 1 140px;min-width:0;overflow-wrap:break-word}'+
+  /* читалка: переклад нових слів — до 2 рядків, а не «текстові повідомл…» (знімок автора 26.11.2026) */
+  '.rp-w .rp-t{min-width:0}.rp-w .rp-t small{white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.25}'+
+  '.rp-w .rp-t b{white-space:normal!important;overflow-wrap:break-word}.rp-w{align-items:center;height:auto!important;min-height:64px}'+
+  /* «Обери картинку» після відповіді (автор 26.11.2026: «переклад треба якось виділити»): переклад — кольорова плашка кольору дня,
+     слово мовою вивчення — над нею жирним; на правильній плитці плашка зелена; з'являються м'яко по черзі (вау, без ривків) */
+  '.k-tile:disabled{display:flex;flex-direction:column}.k-tile:disabled .k-cap2{order:2;font-size:15px!important;font-weight:800!important;color:var(--ink)!important;opacity:1!important;margin-top:2px}'+
+  '.k-tile:disabled .k-cap{order:3;display:inline-block;align-self:center;padding:3px 10px;border-radius:999px;font-size:13px!important;font-weight:700!important;'+
+  'color:color-mix(in srgb,var(--lime) 82%,var(--ink))!important;background:color-mix(in srgb,var(--lime) 18%,transparent);border:1px solid color-mix(in srgb,var(--lime) 35%,transparent);animation:pwCap .4s ease both}'+
+  '.k-tile.ok .k-cap{color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 16%,transparent);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}'+
+  '.k-tile:disabled .k-cap2{animation:pwCap .4s ease both}.k-tile:nth-child(2) .k-cap,.k-tile:nth-child(2) .k-cap2{animation-delay:.06s}.k-tile:nth-child(3) .k-cap,.k-tile:nth-child(3) .k-cap2{animation-delay:.12s}.k-tile:nth-child(4) .k-cap,.k-tile:nth-child(4) .k-cap2{animation-delay:.18s}'+
+  '@keyframes pwCap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.k-tile .k-cap,.k-tile .k-cap2{animation:none!important}}'+
+  'body.pw-toast-low .toast{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 96px)!important;transform:translateX(-50%) translateY(160%)!important}'+
+  'body.pw-toast-low .toast.show{transform:translateX(-50%) translateY(0)!important}';
+  document.head.appendChild(st)}catch(e){}})();
+// підсумок після всього бонус-раунду (26.11.2026, автор: «результат за день і коли пройшов весь бонус»)
+function bonusDoneScreen(){try{applyTheme();document.body.classList.remove('in-session');REDRAW=bonusDoneScreen;window.scrollTo(0,0);
+  const en=typeof uiEn==='function'&&uiEn(),sum=typeof daySummaryHTML==='function'?daySummaryHTML():'';
+  app.innerHTML=`<div class="k-daydone dd-short bd-done"><div class="k-dd-hero">🏆</div><h1>${en?'Bonus round done!':'Бонус-раунд пройдено!'}</h1>
+    <p class="muted" style="text-align:center;margin:-4px 0 10px">${en?'Extra practice today — great work.':'Сьогодні ти зробив(ла) більше, ніж план. Чудова робота!'}</p></div>${sum}
+    <div class="row" style="margin-top:14px"><button class="btn big nf-cta" onclick="home()">${en?'Home':'На головну'}</button></div>`;
+  try{if(typeof snd==='function')snd('win')}catch(e){}}catch(e){home()}}
 
 bootApp();bigLoad();
 </script>
