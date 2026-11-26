@@ -9347,28 +9347,30 @@ function pwChunk(){try{if(/jsdom/i.test(navigator.userAgent||'')||window.NF_NO_C
 {const _pwR=renderItem;renderItem=function(){try{const c=pwChunk();if(c&&SS.i>0&&SS.i<SS.items.length&&SS.i%c.size===0){SS._cp=SS._cp||{};if(!SS._cp[SS.i]){SS._cp[SS.i]=1;return pwCheckpoint(c)}}}catch(e){}return _pwR.apply(this,arguments)}}
 function pwCheckpoint(c){const part=Math.round(SS.i/c.size),left=Math.min(c.size,SS.items.length-SS.i),en=typeof uiEn==='function'&&uiEn(),mins=Math.max(1,Math.round(left*0.25));
   const dots=Array.from({length:c.k},(_,i)=>`<i class="${i<part?'on':''}${i===part?' nx':''}"></i>`).join('');
-  app.innerHTML=`<div class="pw-cp"><div class="pw-cp-ring">${icn('check')}</div>
+  app.innerHTML=(typeof topRow==='function'?topRow():'')+`<div class="pw-cp"><div class="pw-cp-ring">${icn('check')}</div>
     <h2>${en?`Part ${part} of ${c.k} done`:`Частина ${part} з ${c.k} готова`}</h2>
     <p class="muted">${en?`Next: ${left} tasks · ≈ ${mins} min`:`Далі: ${left} ${pluralUk(left,['завдання','завдання','завдань'])} · ≈ ${mins} хв`}</p>
     <div class="pw-cp-dots">${dots}</div>
     <button class="btn big nf-cta" onclick="pwCpGo()">${en?'Continue':'Далі'} ${icn('arrow')}</button></div>`;
+  try{const h=document.querySelector('#app .top-row .nf-prog-h'),pl=c.size;if(h){const sp=h.querySelector(':scope > span'),tn=sp&&[...sp.childNodes].find(n=>n.nodeType===3&&/\d+\s*\/\s*\d+/.test(n.textContent));if(tn)tn.textContent=pl+' / '+pl+' ';
+    const b=h.querySelector(':scope > b');if(b&&!b.querySelector('.pw-pt'))b.insertAdjacentHTML('beforeend',`<span class="pw-pt">&nbsp;· ${en?'part':'частина'} ${part} ${en?'of':'з'} ${c.k} ✓</span>`)}
+    const bar=document.querySelector('#app .top-row .nf-bar > i');if(bar)bar.style.width='100%'}catch(e){}
   window.scrollTo(0,0);try{if(typeof snd==='function')snd('ok')}catch(e){}}
 function pwCpGo(){try{renderItem()}catch(e){}}
-// угорі уроку — «частина N з M»
-if(typeof topRow==='function'){const _pwTop=topRow;topRow=function(){let h=_pwTop.apply(this,arguments);try{const c=pwChunk();if(c){const part=Math.min(c.k,Math.floor(SS.i/c.size)+1),idx=SS.i%c.size+1,len=Math.min(c.size,SS.items.length-(part-1)*c.size);
-  h=h+`<div class="pw-part">${typeof uiEn==='function'&&uiEn()?'part':'частина'} ${part} ${typeof uiEn==='function'&&uiEn()?'of':'з'} ${c.k}</div>`}}catch(e){}return h}}
 (function(){try{const st=document.createElement('style');st.textContent=
   '.pw-cp{min-height:70dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 16px}'+
   '.pw-cp h2{font:800 24px/1.2 Unbounded,sans-serif;margin:8px 0 0}.pw-cp .btn{margin-top:18px;min-width:220px}'+
   '.pw-cp-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;color:#fff;background:radial-gradient(circle at 35% 35%,color-mix(in srgb,var(--lime) 80%,#fff),color-mix(in srgb,var(--lime) 55%,#000));box-shadow:0 0 34px color-mix(in srgb,var(--lime) 60%,transparent);animation:pwPop .5s cubic-bezier(.2,1.4,.4,1) both}'+
   '.pw-cp-ring svg{width:44px;height:44px}@keyframes pwPop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}'+
   '.pw-cp-dots{display:flex;gap:8px;margin-top:6px}.pw-cp-dots i{width:28px;height:6px;border-radius:6px;background:color-mix(in srgb,var(--ink) 15%,transparent)}.pw-cp-dots i.on{background:var(--lime)}.pw-cp-dots i.nx{background:color-mix(in srgb,var(--lime) 40%,transparent)}'+
-  '.pw-part{font-size:12px;font-weight:700;opacity:.6;margin:-2px 0 4px 2px;text-transform:uppercase;letter-spacing:.06em}'+
+  '.pw-pt{font-weight:600;opacity:.7}'+
   '@media (prefers-reduced-motion:reduce){.pw-cp-ring{animation:none}}';
   document.head.appendChild(st)}catch(e){}})();
-// лічильник угорі («7 / 33») — у межах частини («2 / 11»)
-on('item:render',()=>{try{const c=pwChunk();if(!c)return;const part=Math.floor(SS.i/c.size),idx=SS.i%c.size+1,len=Math.min(c.size,SS.items.length-part*c.size);
-  document.querySelectorAll('#app .top-row *').forEach(el=>{if(el.children.length)return;if(/^\s*\d+\s*\/\s*\d+\s*$/.test(el.textContent))el.textContent=idx+' / '+len})}catch(e){}});
+// лічильник угорі («7 / 33») — у межах частини («2 / 8»), назва кроку — «· частина 1 з 3», смужка — прогрес частини
+on('item:render',()=>{try{const c=pwChunk();if(!c)return;const part=Math.floor(SS.i/c.size),idx=SS.i%c.size+1,len=Math.min(c.size,SS.items.length-part*c.size),en=typeof uiEn==='function'&&uiEn();
+  const h=document.querySelector('#app .top-row .nf-prog-h');if(h){const sp=h.querySelector(':scope > span'),tn=sp&&[...sp.childNodes].find(n=>n.nodeType===3&&/\d+\s*\/\s*\d+/.test(n.textContent));if(tn)tn.textContent=idx+' / '+len+' ';
+    const b=h.querySelector(':scope > b');if(b&&!b.querySelector('.pw-pt'))b.insertAdjacentHTML('beforeend',`<span class="pw-pt">&nbsp;· ${en?'part':'частина'} ${part+1} ${en?'of':'з'} ${c.k}</span>`)}
+  const bar=document.querySelector('#app .top-row .nf-bar > i');if(bar)bar.style.width=((idx-1)/len*100)+'%'}catch(e){}});
 
 bootApp();bigLoad();
 </script>
