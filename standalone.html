@@ -15203,7 +15203,7 @@ function nextOptions(){
 function nextOptionsHTML(limit){return `<div class="k-next">${nextOptions().slice(0,limit||6).map(([ic,t,d,f,rec],i)=>`<button class="k-row ${i===0?'rec':''}" onclick="${f}"><span>${ic}</span><span class="k-t"><b>${esc(t)}${i===0?' <i class="k-rec">радимо</i>':''}</b><small>${esc(d)}</small></span><span class="k-chev">›</span></button>`).join('')}</div>`}
 function daySummaryHTML(){const s=todayStats(),t=tomorrowPreview();
   return `<div class="k-sum">
-    <div><b>${s.min} хв</b><small>навчання</small></div><div><b>${s.ans}</b><small>відповідей${s.ans?' · '+s.acc+'%':''}</small></div><div><b>${s.newW}</b><small>нових слів</small></div><div><b>🔥 ${s.streak}</b><small>${pluralUk(s.streak,['день','дні','днів'])} поспіль</small></div></div>
+    <div><b>${s.min} хв</b><small>навчання</small></div><div><b>${s.ans}</b><small>${pluralUk(s.ans,['відповідь','відповіді','відповідей'])}${s.ans?' · '+s.acc+'%':''}</small></div><div><b>${s.newW}</b><small>нових слів</small></div><div><b>🔥 ${s.streak}</b><small>${pluralUk(s.streak,['день','дні','днів'])} поспіль</small></div></div>
    <div class="k-tomorrow"><b>Завтра в плані</b><small>🔁 ${nW(t.due)} на повторення · 🆕 ${t.newW} нових${t.grammar?` · 📘 ${esc(t.grammar)}`:''}</small><small>Новий план відкриється о 00:00 · <b id="midnight">${untilMidnight()}</b></small></div>`}
 // закріпити сьогоднішнє: короткий мікс по словах, з якими працювали сьогодні
 function startToday(){const ws=shuffle(touchedToday()).slice(0,10);if(ws.length<3)return toast('Сьогодні ще замало слів для закріплення');
@@ -16081,7 +16081,7 @@ function homeView(){
   let step;
   if(next){const first=next.id==='review',left=cur.bs.filter(b=>!b.done),min=left.reduce((a,b)=>a+nfMin(b),0),k=cur.bs.indexOf(next)+1;
     const sub=cur.id==='new'&&next.id==='new'?`${dw.length} ${pluralUk(dw.length,['слово','слова','слів'])} теми «${esc(dayTopicName())}»`:`${cur.bs.length>1?`Зараз: ${esc(stepName(next).toLowerCase())} · `:''}${esc(blockSub(next))}`;
-    step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">Етап ${ci+1} / ${ST.length} · ≈ ${Math.max(1,min)} хв${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${cur.t}</h2><p>${sub}</p></div>
+    step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">Крок ${ci+1} з ${ST.length} · ≈ ${Math.max(1,min)} хв${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${cur.t}</h2><p>${sub}</p></div>
       ${cur.id==='review'?(!rev_&&dw.length?`<p class="nf-step-n">Слова дня відкриються після повтору.</p>`:''):wordsRow}
       <button class="btn big nf-cta c-lime" onclick="heroGo('${next.id}')">${doneN||(sec>30&&typeof touchedToday==='function'&&touchedToday().length)?'Продовжити':'Почати'}${first&&!doneN?' повтор':''} ${icn('play')}</button></div>`}
   else if(bnext){
@@ -17878,9 +17878,10 @@ on('item:render',it=>{try{if(!it||!NF_EX_KINDS.has(it.kind))return;const c=docum
 }catch(e){}});
 
 // 3) розбір помилки: «чому» з лампочкою; для «вибери переклад» — коротке пояснення, що означає обране слово
-on('feedback',(html,ctx)=>{try{if(!ctx||ctx.ok||!/k-mistake/.test(html))return html;const w=ctx.it&&ctx.it.w,gw=ctx.gw;
+on('feedback',(html,ctx)=>{try{if(!ctx||ctx.ok||!/k-mistake/.test(html))return html;const w=ctx.it&&ctx.it.w;
   let out=html.replace('<div class="k-mistake">','<div class="k-mistake nf-fbk">');
-  if(!/hl-line/.test(out)&&w&&w[S.lang]){
+  const gw=ctx.gw||(()=>{try{const it=ctx.it,o=it&&it.opts;if(!o||!ctx.given)return null;return o.find(x=>x&&(x.uk===ctx.given||x[S.lang]===ctx.given))||null}catch(e){return null}})();
+  if(!/означає|Обрано «/.test(out)&&w&&w[S.lang]){  /* 26.11.2026: пара «обране означає X, а правильне — Y» — завжди, навіть коли є підказка про рід */
     const why=gw&&gw[S.lang]?`«${esc(gw[S.lang])}» означає «${esc(gw.uk)}». А «${esc(w.uk)}» — це <b>${esc(w[S.lang])}</b>.`:`«${esc(w.uk)}» — це <b>${esc(w[S.lang])}</b>.`;
     out=out.replace('<div class="hintbox">',`<div class="hintbox"><div class="hl-line">${why}</div>`)}
   return out.replace('<div class="hintbox">',`<div class="hintbox nf-whyb"><span class="nf-why-ic">${icn('bulb')}</span>`)}catch(e){return html}});
@@ -21218,7 +21219,7 @@ on('result',o=>{try{const box=document.querySelector('#app .result.rs');if(!box|
     ${C.known?row(icn('star'),C.known,en?'words you know':pluralUk(C.known,['слово ти знаєш','слова ти знаєш','слів ти знаєш'])):row(icn('star'),C.learn||nw,en?'words you are learning':pluralUk(C.learn||nw,['слово вже вчиш','слова вже вчиш','слів уже вчиш']))}
     ${pct!=null&&P.nx&&P.nx!==P.lv?`<div class="rt-r rt-lv"><span class="rt-ic">${icn('target')}</span><span>${en?'To':'До'} <b>${P.nx}</b> — ${pct}%</span></div><div class="rt-bar"><i style="width:${pct}%"></i></div>`:''}
     ${row(icn('moon'),rtNights(),en?'nights of learning in total':pluralUk(rtNights(),['ніч навчання загалом','ночі навчання загалом','ночей навчання загалом']))}
-    ${nwr?`<button class="btn rt-again" onclick="rtAgain()">${en?'Practise mistakes':'Повторити помилки'} · ${nwr}</button>`:''}
+    ${nwr?`<button class="btn rt-again" onclick="rtAgain()">${en?'Practise these words':'Повторити ці слова'} · ${nwr}</button>`:''}
   </div>`;
   const anchor=box.querySelector('.rs-wrong')||box.querySelector('.row');if(anchor)anchor.insertAdjacentHTML('beforebegin',html);else box.insertAdjacentHTML('beforeend',html)}catch(e){}});
 (function(){try{const st=document.createElement('style');st.textContent=
@@ -21269,7 +21270,7 @@ let PW_Q=[];
 const PW_NEWS=/План на сьогодні виконано|Нове досягнення|Бонус-раунд пройдено|New achievement|plan.*done|Bonus round/i;
 function pwOnHome(){try{return REDRAW===home||!!document.querySelector('#app > .nf-hd')&&!document.body.classList.contains('in-session')}catch(e){return false}}
 {const _pwT=toast;toast=function(m){try{if(PW_NEWS.test(String(m))&&!pwOnHome()){if(!PW_Q.includes(m))PW_Q.push(m);return}
-  const tb=document.getElementById('tabbar'),tbOn=!!(tb&&tb.offsetParent&&getComputedStyle(tb).display!=='none'&&!document.body.classList.contains('in-session'));
+  const tb=document.getElementById('tabbar'),tr=tb&&tb.getBoundingClientRect(),cs=tb&&getComputedStyle(tb),tbOn=!!(tb&&tr.height>0&&cs.display!=='none'&&cs.visibility!=='hidden'&&+cs.opacity>0.1&&!document.body.classList.contains('in-session'));  /* меню fixed — offsetParent завжди null, тому міряємо розмір */
   document.body.classList.add('pw-toast-low');document.body.classList.toggle('pw-toast-tb',tbOn)}catch(e){}return _pwT.apply(this,arguments)}}
 function pwHideToast(){try{const t=document.getElementById('toast');if(t)t.classList.remove('show')}catch(e){}}
 function pwFlush(){try{if(!PW_Q.length)return;const q=PW_Q.slice(0,2);PW_Q=[];q.forEach((m,i)=>setTimeout(()=>toast(m),500+i*2300))}catch(e){}}
@@ -21311,7 +21312,7 @@ on('screen',()=>{pwHideToast();try{window.scrollTo(0,0)}catch(e){}});
 function bonusDoneScreen(){try{applyTheme();document.body.classList.remove('in-session');REDRAW=bonusDoneScreen;window.scrollTo(0,0);
   const en=typeof uiEn==='function'&&uiEn(),sum=typeof daySummaryHTML==='function'?daySummaryHTML():'';
   app.innerHTML=`<div class="k-daydone dd-short bd-done"><div class="k-dd-hero">🏆</div><h1>${en?'Bonus round done!':'Бонус-раунд пройдено!'}</h1>
-    <p class="muted" style="text-align:center;margin:-4px 0 10px">${en?'Extra practice today — great work.':'Сьогодні ти зробив(ла) більше, ніж план. Чудова робота!'}</p></div>${sum}
+    <p class="muted" style="text-align:center;margin:-4px 0 10px">${(()=>{let done=false;try{done=planBlocks().every(b=>b.done)}catch(e){}return done?(en?'Extra practice on top of your plan — great work.':'План виконано, і ще бонус зверху — чудова робота!'):(en?'Bonus done. Your plan for today is waiting on the home screen.':'Бонус пройдено. План на сьогодні чекає на головній.')})()}</p></div>${sum}
     <div class="row" style="margin-top:14px"><button class="btn big nf-cta" onclick="home()">${en?'Home':'На головну'}</button></div>`;
   try{if(typeof snd==='function')snd('win')}catch(e){}}catch(e){home()}}
 
@@ -21352,6 +21353,7 @@ on('item:render',()=>{try{const c=pwChunk();if(!c)return;const part=Math.floor(S
   const h=document.querySelector('#app .top-row .nf-prog-h');if(h){const sp=h.querySelector(':scope > span'),tn=sp&&[...sp.childNodes].find(n=>n.nodeType===3&&/\d+\s*\/\s*\d+/.test(n.textContent));if(tn)tn.textContent=idx+' / '+len+' ';
     const b=h.querySelector(':scope > b');if(b&&!b.querySelector('.pw-pt'))b.insertAdjacentHTML('beforeend',`<span class="pw-pt">&nbsp;· ${en?'part':'частина'} ${part+1} ${en?'of':'з'} ${c.k}</span>`)}
   const bar=document.querySelector('#app .top-row .nf-bar > i');if(bar)bar.style.width=((idx-1)/len*100)+'%'}catch(e){}});
+(function(){try{let q_=0;new MutationObserver(()=>{if(q_)return;q_=1;requestAnimationFrame(()=>{q_=0;pwTightBlank()})}).observe(document.getElementById('app'),{childList:true,subtree:true})}catch(e){}})();  // пропуск, заповнений після відповіді, теж без зайвого відступу перед комою
 
 bootApp();bigLoad();
 </script>
