@@ -21501,7 +21501,7 @@ on('result',o=>{try{const box=document.querySelector('#app .result.rs');if(!box|
   '.le-pr-v{margin-left:auto;color:var(--ink)}.le-pr{display:flex;gap:10px;align-items:center;font-weight:700;font-size:14px;animation:leIn .5s ease-out .6s both}.le-pr-ic{color:#F5B301;display:inline-flex}.le-pr-ic svg{width:18px;height:18px}'+
   '.result.rs.le-on .rt-lv,.result.rs.le-on .rt-bar{display:none}'+
   '.le-more{margin:4px 0 8px;text-align:left}.le-more>summary{cursor:pointer;list-style:none;color:var(--muted);font-weight:700;font-size:14px;padding:10px 4px;min-height:44px;display:flex;align-items:center;gap:6px}.le-more>summary::-webkit-details-marker{display:none}.le-more>summary::after{content:"›";transform:rotate(90deg);transition:transform .2s}.le-more[open]>summary::after{transform:rotate(-90deg)}'+
-  '.le-sticky{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:3;flex-direction:column;gap:8px;padding:10px 0 0;background:linear-gradient(to bottom,transparent,var(--card,var(--bg)) 30%)}.le-sticky .btn{width:100%;min-height:48px}'+
+  '.le-sticky{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:3;flex-direction:column;gap:8px;padding:10px 0 0;background:linear-gradient(to bottom,transparent,var(--card,var(--bg)) 18%);padding-top:20px}.le-sticky .btn{width:100%;min-height:48px}'+
   '@keyframes leIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}@keyframes leBar{from{width:var(--f0)}to{width:var(--f1)}}'+
   '@media (prefers-reduced-motion:reduce){.le-say,.le-lv,.le-pr,.le-bar i{animation:none}}';
   document.head.appendChild(st)}catch(e){}})();
@@ -21530,7 +21530,9 @@ on('result',o=>{try{const box=document.querySelector('#app .result.rs');if(!box|
         <button class="btn big cf-sec cf-know" onclick="cfKnow()" aria-label="Знаю — одним дотиком">${icn('check')}<span>Знаю</span></button></div></div>
     </div>`}catch(e){return _wcFront.apply(this,arguments)}}}
 /* 27.11.2026 (панель, Андрій): «Знаю» одним дотиком — без перевороту (як у Anki «Good») */
-function cfKnow(){try{const it=SS.items[SS.i];if(!it)return;it.shown=true;cardAnswer('good')}catch(e){}}
+function cfKnow(){try{const it=SS.items[SS.i];if(!it||it.knowing)return;it.knowing=true;it.shown=true;const w=it.w,t=w[S.lang],c=document.querySelector('#app .cf-card');
+  // 0,8 с — данське слово з ✓: людина звіряє себе (Anki / Duolingo), а не лише вірить собі
+  if(c&&!matchMedia('(prefers-reduced-motion: reduce)').matches){c.classList.add('cf-knew');c.innerHTML=`<span class="cf-ok">${icn('check')}</span><h1 class="cf-uk cf-t" lang="${S.lang}">${typeof nfArt==='function'?nfArt(t):esc(t)}</h1><p class="cf-heard" style="display:block">${esc(w.uk||'')}</p>`;try{if(S.tts!==false)speak(t)}catch(e){}setTimeout(()=>cardAnswer('good'),850)}else cardAnswer('good')}catch(e){try{cardAnswer('good')}catch(_){}}}
 function cfFlip(){try{const it=SS.items[SS.i];if(!it||it.shown)return;const c=document.querySelector('#app .cf-card');
   const go=()=>{it.shown=true;renderItem();const b=document.querySelector('#app .nf-wcard');if(b&&!matchMedia('(prefers-reduced-motion: reduce)').matches)b.classList.add('cf-in')};
   if(c&&!matchMedia('(prefers-reduced-motion: reduce)').matches){c.classList.add('cf-out');setTimeout(go,260)}else go()}catch(e){}}
@@ -21559,6 +21561,7 @@ function cfSay(btn){try{const it=SS.items[SS.i];if(!it)return;const t=String(it.
   '#app .wc-word .cf-btns{margin-top:18px;padding:0 0 calc(env(safe-area-inset-bottom,0px) + 8px)}'+
   '.cf-btns{display:flex;flex-direction:column;gap:10px}'+
   'html body #app .cf-btns .btn.cf-sec,html body #app .cf-btns .btn.cf-sec:hover{background:color-mix(in srgb,var(--ink) 7%,transparent)!important;color:var(--ink)!important;border:1px solid color-mix(in srgb,var(--ink) 16%,transparent)!important;box-shadow:none!important;background-image:none!important;font-weight:700}.cf-btns .btn{width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px}.cf-btns .btn svg{width:20px;height:20px}'+
+  '.cf-knew{justify-content:center!important;animation:cfIn .35s ease-out}.cf-ok{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--ok,#7ee2a8);color:#0b2a17;margin-bottom:8px;box-shadow:0 0 26px color-mix(in srgb,var(--ok,#7ee2a8) 50%,transparent)}.cf-ok svg{width:28px;height:28px}'+
   '.cf-row{display:flex;gap:10px;align-items:stretch}#app .cf-row .btn{flex:1 1 0;height:56px!important;min-height:56px!important;margin:0!important}'+
   '.cf-mic.on{animation:cfPulse 1s ease-in-out infinite}'+
   '.cf-out{animation:cfOut .26s ease-in forwards}.cf-in{animation:cfIn .42s cubic-bezier(.2,1.2,.4,1) both}.cf-win{box-shadow:0 0 0 3px var(--ok,#7ee2a8),0 0 34px color-mix(in srgb,var(--ok,#7ee2a8) 40%,transparent)!important}'+
@@ -21577,7 +21580,8 @@ const UX_NEXT=/^\s*(зрозуміло,\s*далі|далі\s*→?|next\s*→?|g
 function uxDockFit(d){try{const a=document.getElementById('app').getBoundingClientRect();d.style.left=Math.round(a.left)+'px';d.style.width=Math.round(a.width)+'px'}catch(e){}}
 function uxSystem(){try{const inS=document.body.classList.contains('in-session');const app=document.getElementById('app');if(!app)return;
   let dock=null;
-  if(inS&&!app.querySelector('.wc-word,.result.rs')){
+  const cfb=inS&&app.querySelector('.cf-word .cf-btns');if(cfb)dock=cfb;
+  if(!dock&&inS&&!app.querySelector('.wc-word,.result.rs')){
     // 1) «Далі» після відповіді
     const nx=[...app.querySelectorAll('#fb button, .an-next, #rdNext')].filter(b=>b.offsetParent!==null&&(/nextItem\(\)/.test(b.getAttribute('onclick')||'')||b.classList.contains('an-next')||b.id==='nextBtn'||b.id==='rdNext')).pop();
     if(nx){if(UX_NEXT.test(nx.textContent)&&!nx.dataset.ux){nx.innerHTML=`<span>Далі</span>${typeof icn==='function'?icn('arrow'):''}`;nx.dataset.ux='1'}
@@ -21591,7 +21595,9 @@ function uxSystem(){try{const inS=document.body.classList.contains('in-session')
   }
   app.querySelectorAll('.ux-dock').forEach(r=>{if(r!==dock){r.classList.remove('ux-dock');r.style.left=r.style.width=''}});
   if(dock){dock.classList.add('ux-dock');uxDockFit(dock)}
-  document.body.classList.toggle('ux-docked',!!dock);
+  document.body.classList.toggle('ux-docked',!!dock);document.body.classList.toggle('ux-cf',!!cfb);
+  // «Питання до тексту»: помилка теж починається з ✗
+  app.querySelectorAll('.rd-exp.bad .rd-why').forEach(w=>{const t=w.firstChild;if(t&&t.nodeType===3&&!/^\s*✗/.test(t.nodeValue))t.nodeValue='✗ '+t.nodeValue.replace(/^\s+/,'')});
   // 3) однаковий заголовок розбору: «Правильна відповідь»
   app.querySelectorAll('.k-mis.ok small').forEach(s=>{if(/^Правильно$/.test(s.textContent.trim()))s.textContent='Правильна відповідь'});
   app.querySelectorAll('.feedback.bad').forEach(f=>{const t=f.firstChild;if(!t||t.nodeType!==3)return;const v=t.nodeValue;
@@ -21609,6 +21615,11 @@ function uxSystem(){try{const inS=document.body.classList.contains('in-session')
   'body.in-session #app .ux-dock .btn svg{width:20px;height:20px}'+
   'body.in-session #app .ux-main,body.in-session #app .ux-main:focus{outline:none!important}body.in-session #app .ux-main:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 55%,transparent)!important}'+
   'body.in-session.ux-docked #app{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 104px)!important}'+
+  // перша сторона картки: «Скажи…» над рядом «Показати / Знаю», ряд — рівно на місці «Далі»
+  'body.in-session #app .cf-btns.ux-dock{flex-direction:column;align-items:stretch;gap:10px}body.in-session #app .cf-btns.ux-dock .cf-row{display:flex;gap:10px}'+
+  'body.in-session.ux-cf #app{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 104px)!important}body.in-session.ux-cf #app .cf-word{min-height:calc(100dvh - 96px - 226px - env(safe-area-inset-bottom,0px))}'+
+  // підписи не дрібніші за 13 px (огляд: дні тижня 10,5–11 px, «іменник · A1» 11,5 px)
+  '#app .m9-d small,#app .wg-day small,#app .wc-card .wc-pos{font-size:13px!important}'+
   'body.in-session #app .k-back-note{margin:10px 0 0}'+
   // верхній рядок вправи: ✕ і ⋯ / + на одній лінії (було 21 і 24 px)
   '#app .nf-top{align-items:center}#app .nf-top > .k-more,#app .nf-top .k-more{margin-top:0!important;align-self:center}'+
