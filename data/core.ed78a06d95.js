@@ -19,7 +19,7 @@ const RAW = `#cur_a1_01|Привітання і ввічливість|👋|A1
 пані|Mrs.|fru|la signora|👩|||cur_a1_02.mrs
 панна|Miss|frøken|la signorina|👱‍♀️|||cur_a1_02.miss
 дама|lady|en dame|la signora|👒|||cur_a1_02.lady
-приємний|nice|rar|simpatico|😊|||cur_a1_02.nice
+приємний (про людину)|nice|rar|simpatico|😊|||cur_a1_02.nice
 радий|glad|glad|contento|😀|||cur_a1_02.glad
 знайомити|to introduce|at præsentere|presentare|🤝|||cur_a1_02.to_introduce
 вітати|to greet|at hilse|salutare|🙋|hello||cur_a1_02.to_greet
@@ -1395,7 +1395,7 @@ ID-картка|ID card|et ID-kort|la carta d'identità|🪪|||cur_a2_23.id_card
 галасливий|noisy|støjende|rumoroso|📢|noisy|hałaśliwy|a2x01_adjectives.noisy
 порожній|empty|tom|vuoto|🫙|empty|pusty|a2x01_adjectives.empty
 незручний|uncomfortable|ubekvem|scomodo|😣|||cur_a2_26.uncomfortable
-приємний|pleasant|behagelig|piacevole|😊|||cur_a2_26.pleasant
+приємний (про погоду, запах)|pleasant|behagelig|piacevole|😊|||cur_a2_26.pleasant
 неприємний|unpleasant|ubehagelig|spiacevole|😖|||cur_a2_26.unpleasant
 спокійний (мирний)|peaceful|fredelig|tranquillo|🕊️|||cur_a2_26.peaceful
 кошмарний|awful|forfærdelig|orribile|😫|||cur_a2_26.awful
